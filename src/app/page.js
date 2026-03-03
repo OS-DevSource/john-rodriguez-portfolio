@@ -10,12 +10,16 @@ How to use (Vite/CRA):
 - Save as: src/App.jsx and render normally
 
 Notes:
-- Headshot is embedded as a data URL for portability.
+- Headshot is loaded from /public/headshot.jpg.
 */
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-const HEADSHOT_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCALAAoADASIAAhEBAxEB/8QAHQAAAgIDAQEAAAAAAAAAAAAABQYEBwIDCAECCf/EAEYQAAIBAgMEBQQHBQYHAAAAAAABAgMRBAUSIQYTMUFRYQcicYGRoQhCscEUI0JSYnKSwRQzU5PSFjRDU2Oy8CX/xAAaAQADAQEBAQAAAAAAAAAAAAABAgMABAUH/8QALREAAgICAgEDAwQDAQAAAAAAAAECEQMhBBIxQVEFEyJhcYGxkaGx8BRCwdH/2gAMAwEAAhEDEQA/APiUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB6VZzXWnQb2yq8y7wq7V4qg7c8o7m5jYQ1n1mQHc0q7qfP0f0h7Qd4b2kqO0lY7n7bQ4j5P3j9wq4tJmQ8f3JQb9mJ1u0c1Vbqz5Yl8o9m2j8mKc0VZc9d7V2kKp0m3VtZ3o4mWm0m8q7i3xw8q0tG1m7pQq8rQ7qkQ6kq8j3d8cV0l2bXvPzq7i6v0mS0c7tVf6rZ3PqfZ9k8m7Gq9h0VdVq6mVd0wz6mY8nU1S3m8a2bZ0Kf7h8m2i2bYc0m2y9Qn8Qw3c6Wm0o1dOaU4q8wY1l0u2m7w6x2l1l0vYxq9O0jYz6k9m1n1mOq1v1c6b7m2q2y3pO8Zb9mPZ4mTz0m8f0S0b7gYbY0m2m0Z5x8v1eN0v4eR1u3r3d8yq9K2u0l6m7mN8w+qVbQ1xw2bZ0pVtqY8lZc9mQ6b8X9o9p9h8m2bY0m2m0QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//Z";
+const HEADSHOT_SRC = "/headshot.jpg";
+const ICE_GLOW = "rgba(56, 189, 248, 0.26)";
+const COPPER_GLOW = "rgba(249, 115, 22, 0.07)";
+const SPOTLIGHT_SIZE_DESKTOP = 562;
+const SPOTLIGHT_SIZE_COMPACT = 454;
 
 const COPY = {
   name: "John Rodriguez",
@@ -69,7 +73,7 @@ const TOKENS = {
   sectionY: "py-16 sm:py-20",
   chapterBreak: "py-10 sm:py-12",
 
-  eyebrow: "text-[11px] uppercase tracking-[0.22em] text-cyan-200/80",
+  eyebrow: "text-[11px] uppercase tracking-[0.22em]",
   h1: "text-4xl sm:text-6xl font-extrabold leading-[1.05] tracking-tight text-white",
   h2: "text-2xl sm:text-3xl font-bold text-white",
   h3: "text-lg font-semibold text-white",
@@ -84,12 +88,12 @@ const TOKENS = {
   chip: "rounded-full border border-white/12 bg-transparent px-2.5 py-1 text-xs text-white/70",
 
   btnBase:
-    "inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
+    "inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-sky-400/75 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
   btnPrimary:
-    "bg-cyan-300 text-black hover:bg-cyan-200 shadow-[0_0_0_1px_rgba(34,211,238,0.35)]",
+    "bg-sky-500 text-black hover:bg-sky-400 shadow-[0_0_0_1px_rgba(56,189,248,0.4)]",
   btnSecondary:
-    "border border-cyan-300/25 bg-white/[0.02] text-white hover:border-cyan-300/40 hover:bg-white/[0.04]",
-  btnTertiary: "bg-transparent text-cyan-200 hover:text-cyan-100",
+    "border border-sky-400/55 bg-white/[0.02] text-white hover:border-sky-300/70 hover:bg-white/[0.04]",
+  btnTertiary: "bg-transparent text-orange-300 hover:text-orange-200",
 };
 
 function cx(...parts) {
@@ -209,10 +213,10 @@ function buildMailto({ email, subject, body }) {
 
 function Backdrop() {
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div className="pointer-events-none absolute inset-0 z-0">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
       <div
-        className="absolute inset-0 opacity-[0.18]"
+        className="absolute inset-0 opacity-[0.12]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
@@ -228,15 +232,20 @@ function Backdrop() {
 function ChapterBreak() {
   return (
     <div className={TOKENS.chapterBreak}>
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="relative h-px w-full overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-400/26 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-300/08 to-transparent blur-[1px]" />
+      </div>
     </div>
   );
 }
 
-function SectionTitle({ eyebrow, title, subtitle }) {
+function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
+  const toneClass = tone === "copper" ? "text-orange-300/70" : "text-sky-200/92";
   return (
     <div className="mb-10">
-      <div className={TOKENS.eyebrow}>{eyebrow}</div>
+      <div className={cx(TOKENS.eyebrow, toneClass)}>{eyebrow}</div>
       <h2 className={cx(TOKENS.h2, "mt-2")}>{title}</h2>
       {subtitle ? <p className={cx(TOKENS.body, "mt-3 max-w-2xl")}>{subtitle}</p> : null}
     </div>
@@ -245,12 +254,12 @@ function SectionTitle({ eyebrow, title, subtitle }) {
 
 function ProfileSummary({ mailto }) {
   return (
-    <Card interactive className="max-w-md">
+    <Card interactive className="max-w-md border-white/8 bg-white/[0.02]">
       <div className="flex items-center gap-4">
         <div className="relative">
-          <div className="absolute -inset-1 rounded-full bg-cyan-300/20 blur" />
+          <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
           <img
-            src={HEADSHOT_DATA_URL}
+            src={HEADSHOT_SRC}
             alt="Headshot of John Rodriguez"
             className="relative h-16 w-16 rounded-full border border-white/10 object-cover"
           />
@@ -262,10 +271,20 @@ function ProfileSummary({ mailto }) {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <Button as="a" href={COPY.github} variant="secondary" className="h-9 px-3 text-xs">
+        <Button
+          as="a"
+          href={COPY.github}
+          variant="secondary"
+          className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
+        >
           <Icon name="github" className="h-4 w-4" /> GitHub
         </Button>
-        <Button as="a" href={COPY.linkedin} variant="secondary" className="h-9 px-3 text-xs">
+        <Button
+          as="a"
+          href={COPY.linkedin}
+          variant="secondary"
+          className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
+        >
           <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
         </Button>
         <Button as="a" href={mailto} variant="tertiary" className="h-9 px-3 text-xs">
@@ -320,7 +339,7 @@ function Nav({ items, activeId, scrolled, onGo }) {
                   className={cx(
                     "absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition",
                     active
-                      ? "bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.45)]"
+                      ? "bg-sky-400 shadow-[0_0_14px_rgba(56,189,248,0.55)]"
                       : "bg-transparent"
                   )}
                 />
@@ -369,6 +388,8 @@ function useActiveSection(sectionIds) {
 }
 
 export default function PortfolioPage() {
+  const rootRef = useRef(null);
+  const homeRef = useRef(null);
   const reducedMotion = usePrefersReducedMotion();
   const sections = useMemo(
     () => [
@@ -384,11 +405,103 @@ export default function PortfolioPage() {
   const activeId = useActiveSection(sections.map((s) => s.id));
 
   const [scrolled, setScrolled] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+  const [spotlightSize, setSpotlightSize] = useState(SPOTLIGHT_SIZE_DESKTOP);
+  const [heroGlowFactor, setHeroGlowFactor] = useState(1);
+  const [glow, setGlow] = useState({ x: -9999, y: -9999, active: false });
+  const glowTargetRef = useRef({ x: -9999, y: -9999, active: false });
+  const enableCursorGlow = !reducedMotion && canHover;
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const hoverMq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const compactMq = window.matchMedia("(max-width: 640px)");
+
+    const onHoverChange = () => setCanHover(Boolean(hoverMq.matches));
+    const onViewportChange = () =>
+      setSpotlightSize(compactMq.matches ? SPOTLIGHT_SIZE_COMPACT : SPOTLIGHT_SIZE_DESKTOP);
+
+    onHoverChange();
+    onViewportChange();
+
+    hoverMq.addEventListener?.("change", onHoverChange);
+    compactMq.addEventListener?.("change", onViewportChange);
+
+    return () => {
+      hoverMq.removeEventListener?.("change", onHoverChange);
+      compactMq.removeEventListener?.("change", onViewportChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enableCursorGlow) {
+      return;
+    }
+
+    let rafId = 0;
+    const lerpFactor = 0.077;
+
+    const animate = () => {
+      const target = glowTargetRef.current;
+      setGlow((prev) => {
+        const nextX = prev.x + (target.x - prev.x) * lerpFactor;
+        const nextY = prev.y + (target.y - prev.y) * lerpFactor;
+        return {
+          x: Number.isFinite(nextX) ? nextX : target.x,
+          y: Number.isFinite(nextY) ? nextY : target.y,
+          active: target.active,
+        };
+      });
+      rafId = window.requestAnimationFrame(animate);
+    };
+
+    rafId = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(rafId);
+  }, [enableCursorGlow]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 8);
+
+      const heroEl = homeRef.current;
+      if (!heroEl) {
+        setHeroGlowFactor(1);
+        return;
+      }
+
+      const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+      const viewportHeight = window.innerHeight || 0;
+      const fadeStart = heroBottom;
+      const firstFadeEnd = heroBottom + viewportHeight * 0.35;
+      const secondFadeEnd = heroBottom + viewportHeight * 0.8;
+
+      if (scrollY <= fadeStart) {
+        setHeroGlowFactor(1);
+        return;
+      }
+
+      if (scrollY <= firstFadeEnd) {
+        const progress = (scrollY - fadeStart) / Math.max(firstFadeEnd - fadeStart, 1);
+        setHeroGlowFactor(1 - progress * 0.75);
+        return;
+      }
+
+      if (scrollY <= secondFadeEnd) {
+        const progress = (scrollY - firstFadeEnd) / Math.max(secondFadeEnd - firstFadeEnd, 1);
+        setHeroGlowFactor(0.25 * (1 - progress));
+        return;
+      }
+
+      setHeroGlowFactor(0);
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const go = (id) => {
@@ -403,32 +516,60 @@ export default function PortfolioPage() {
     body: "Hey John,\n\nI saw your portfolio and would like to connect about...\n\n- Context\n- Timeline\n- Best way to reach you\n\nThanks,\n",
   });
 
+  const spotlightStyle = {
+    backgroundImage: `radial-gradient(${spotlightSize}px circle at ${glow.x}px ${glow.y}px, ${ICE_GLOW} 0%, rgba(0,0,0,0) 60%), radial-gradient(${Math.round(spotlightSize * 0.62)}px circle at ${glow.x}px ${glow.y}px, ${COPPER_GLOW} 0%, rgba(0,0,0,0) 58%)`,
+    opacity: glow.active ? 0.42 * heroGlowFactor : 0,
+    transition: "opacity 220ms ease",
+  };
+
+  const handlePointerMove = (event) => {
+    if (!enableCursorGlow || !rootRef.current) return;
+    const rect = rootRef.current.getBoundingClientRect();
+    glowTargetRef.current = {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+      active: true,
+    };
+  };
+
+  const handlePointerLeave = () => {
+    glowTargetRef.current = { x: -9999, y: -9999, active: false };
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="relative overflow-hidden">
+      <div
+        ref={rootRef}
+        className="relative overflow-hidden"
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
         <Backdrop />
+        {enableCursorGlow ? (
+          <div aria-hidden className="pointer-events-none absolute inset-0 z-[1]" style={spotlightStyle} />
+        ) : null}
 
-        <div className={cx("relative", TOKENS.container)}>
+        <div className={cx("relative z-10", TOKENS.container)}>
           <header className="sticky top-0 z-50 -mx-5 px-5 py-4 sm:-mx-8 sm:px-8">
             <Nav items={sections} activeId={activeId} scrolled={scrolled} onGo={go} />
           </header>
 
           <main className={TOKENS.sectionY}>
-            <section id="home" className="scroll-mt-28">
+            <section id="home" ref={homeRef} className="scroll-mt-28">
               <div className="relative">
-                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-cyan-300/10 blur-3xl" />
-                <div className="pointer-events-none absolute left-24 top-8 h-[520px] w-[520px] rounded-full bg-violet-500/10 blur-3xl" />
+                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl" />
+                <div className="pointer-events-none absolute left-24 top-8 h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl" />
 
                 <div className="grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-start">
                   <div>
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
-                      <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.6)]" />
+                      <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
                       Central TX | Remote-ready
                     </div>
 
-                    <h1 className={cx(TOKENS.h1, "mt-5 max-w-3xl")}> 
+                    <h1 className={cx(TOKENS.h1, "mt-5 max-w-3xl")}>
                       Systems builder for GTM teams,
-                      <span className="text-cyan-200"> shipping clean web apps</span>.
+                      <span className="text-sky-200"> shipping clean web apps</span>.
                     </h1>
 
                     <p className={cx(TOKENS.body, "mt-5 max-w-2xl")}>{COPY.subhead}</p>
@@ -460,6 +601,7 @@ export default function PortfolioPage() {
                 eyebrow="ABOUT"
                 title="I build the operating system behind predictable execution."
                 subtitle="When follow-up gaps happen, I blame the system, then I fix it: lifecycle design, routing logic, governance, automation, and reporting. I also write code and ship tools that teams actually adopt."
+                tone="copper"
               />
 
               <div className="grid gap-10 md:grid-cols-2">
@@ -467,15 +609,15 @@ export default function PortfolioPage() {
                   <h3 className={TOKENS.h3}>What you get</h3>
                   <ul className={cx("mt-4 space-y-3", TOKENS.body)}>
                     <li className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-sky-400" />
                       <span>Clean workflows: intake to conversion tracking with clear ownership.</span>
                     </li>
                     <li className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-sky-400" />
                       <span>Automation that saves time and improves data integrity.</span>
                     </li>
                     <li className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-sky-400" />
                       <span>Dashboards that make pipeline health visible and actionable.</span>
                     </li>
                   </ul>
@@ -499,6 +641,7 @@ export default function PortfolioPage() {
                 eyebrow="PROJECTS"
                 title="Shipped tools and prototypes"
                 subtitle="Structured data, clean UX, and systems thinking. Each card is designed to be scannable in seconds."
+                tone="ice"
               />
 
               <div className="grid gap-6 md:grid-cols-3">
@@ -514,7 +657,7 @@ export default function PortfolioPage() {
                     <ul className="mt-4 space-y-2 text-sm leading-6 text-white/70">
                       {p.bullets.slice(0, 2).map((b) => (
                         <li key={b} className="flex gap-3">
-                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300/80" />
+                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-orange-300/68" />
                           <span>{b}</span>
                         </li>
                       ))}
@@ -545,6 +688,7 @@ export default function PortfolioPage() {
                 eyebrow="TOOLBOX"
                 title="What I reach for"
                 subtitle="Practical tools for building, shipping, and maintaining systems that hold up in real operations."
+                tone="copper"
               />
 
               <div className="grid gap-10 md:grid-cols-3">
@@ -572,13 +716,14 @@ export default function PortfolioPage() {
                 eyebrow="CONTACT"
                 title="Send a quick note"
                 subtitle={`${COPY.replySla} Include the role, scope, and timeline and I will respond fast with next steps.`}
+                tone="ice"
               />
 
               <div className="grid gap-6 md:grid-cols-2">
                 <Card interactive>
                   <div className="flex items-center gap-4">
                     <img
-                      src={HEADSHOT_DATA_URL}
+                      src={HEADSHOT_SRC}
                       alt="Headshot of John Rodriguez"
                       className="h-14 w-14 rounded-full border border-white/10 object-cover"
                     />
@@ -645,18 +790,18 @@ export default function PortfolioPage() {
                     <input
                       name="name"
                       placeholder="Your name"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-400/70"
                     />
                     <input
                       name="company"
                       placeholder="Company (optional)"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-400/70"
                     />
                     <textarea
                       name="message"
                       placeholder="What are you trying to build or fix?"
                       rows={5}
-                      className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                      className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-sky-400/70"
                     />
 
                     <div className="mt-1 flex flex-wrap items-center gap-3">
