@@ -13,9 +13,13 @@ Notes:
 - Headshot is loaded from /public/headshot.jpg.
 */
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const HEADSHOT_SRC = "/headshot.jpg";
+const TEAL_GLOW = "rgba(45, 212, 191, 0.16)";
+const AMBER_GLOW = "rgba(251, 191, 36, 0.10)";
+const SPOTLIGHT_SIZE_DESKTOP = 440;
+const SPOTLIGHT_SIZE_COMPACT = 360;
 
 const COPY = {
   name: "John Rodriguez",
@@ -69,7 +73,7 @@ const TOKENS = {
   sectionY: "py-16 sm:py-20",
   chapterBreak: "py-10 sm:py-12",
 
-  eyebrow: "text-[11px] uppercase tracking-[0.22em] text-cyan-200/80",
+  eyebrow: "text-[11px] uppercase tracking-[0.22em]",
   h1: "text-4xl sm:text-6xl font-extrabold leading-[1.05] tracking-tight text-white",
   h2: "text-2xl sm:text-3xl font-bold text-white",
   h3: "text-lg font-semibold text-white",
@@ -84,12 +88,12 @@ const TOKENS = {
   chip: "rounded-full border border-white/12 bg-transparent px-2.5 py-1 text-xs text-white/70",
 
   btnBase:
-    "inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
+    "inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-teal-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
   btnPrimary:
-    "bg-cyan-300 text-black hover:bg-cyan-200 shadow-[0_0_0_1px_rgba(34,211,238,0.35)]",
+    "bg-teal-300 text-black hover:bg-teal-200 shadow-[0_0_0_1px_rgba(45,212,191,0.35)]",
   btnSecondary:
-    "border border-cyan-300/25 bg-white/[0.02] text-white hover:border-cyan-300/40 hover:bg-white/[0.04]",
-  btnTertiary: "bg-transparent text-cyan-200 hover:text-cyan-100",
+    "border border-teal-300/25 bg-white/[0.02] text-white hover:border-teal-300/40 hover:bg-white/[0.04]",
+  btnTertiary: "bg-transparent text-amber-200 hover:text-amber-100",
 };
 
 function cx(...parts) {
@@ -209,7 +213,7 @@ function buildMailto({ email, subject, body }) {
 
 function Backdrop() {
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div className="pointer-events-none absolute inset-0 z-0">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
       <div
         className="absolute inset-0 opacity-[0.18]"
@@ -228,15 +232,20 @@ function Backdrop() {
 function ChapterBreak() {
   return (
     <div className={TOKENS.chapterBreak}>
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="relative h-px w-full overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-teal-300/28 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-300/16 to-transparent blur-[1px]" />
+      </div>
     </div>
   );
 }
 
-function SectionTitle({ eyebrow, title, subtitle }) {
+function SectionTitle({ eyebrow, title, subtitle, tone = "teal" }) {
+  const toneClass = tone === "amber" ? "text-amber-200/80" : "text-teal-200/80";
   return (
     <div className="mb-10">
-      <div className={TOKENS.eyebrow}>{eyebrow}</div>
+      <div className={cx(TOKENS.eyebrow, toneClass)}>{eyebrow}</div>
       <h2 className={cx(TOKENS.h2, "mt-2")}>{title}</h2>
       {subtitle ? <p className={cx(TOKENS.body, "mt-3 max-w-2xl")}>{subtitle}</p> : null}
     </div>
@@ -248,7 +257,7 @@ function ProfileSummary({ mailto }) {
     <Card interactive className="max-w-md">
       <div className="flex items-center gap-4">
         <div className="relative">
-          <div className="absolute -inset-1 rounded-full bg-cyan-300/20 blur" />
+          <div className="absolute -inset-1 rounded-full bg-teal-300/20 blur" />
           <img
             src={HEADSHOT_SRC}
             alt="Headshot of John Rodriguez"
@@ -320,7 +329,7 @@ function Nav({ items, activeId, scrolled, onGo }) {
                   className={cx(
                     "absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition",
                     active
-                      ? "bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.45)]"
+                      ? "bg-teal-300 shadow-[0_0_14px_rgba(45,212,191,0.45)]"
                       : "bg-transparent"
                   )}
                 />
@@ -369,6 +378,7 @@ function useActiveSection(sectionIds) {
 }
 
 export default function PortfolioPage() {
+  const rootRef = useRef(null);
   const reducedMotion = usePrefersReducedMotion();
   const sections = useMemo(
     () => [
@@ -384,6 +394,30 @@ export default function PortfolioPage() {
   const activeId = useActiveSection(sections.map((s) => s.id));
 
   const [scrolled, setScrolled] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+  const [spotlightSize, setSpotlightSize] = useState(SPOTLIGHT_SIZE_DESKTOP);
+  const [glow, setGlow] = useState({ x: -9999, y: -9999, active: false });
+
+  useEffect(() => {
+    const hoverMq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const compactMq = window.matchMedia("(max-width: 640px)");
+
+    const onHoverChange = () => setCanHover(Boolean(hoverMq.matches));
+    const onViewportChange = () =>
+      setSpotlightSize(compactMq.matches ? SPOTLIGHT_SIZE_COMPACT : SPOTLIGHT_SIZE_DESKTOP);
+
+    onHoverChange();
+    onViewportChange();
+
+    hoverMq.addEventListener?.("change", onHoverChange);
+    compactMq.addEventListener?.("change", onViewportChange);
+
+    return () => {
+      hoverMq.removeEventListener?.("change", onHoverChange);
+      compactMq.removeEventListener?.("change", onViewportChange);
+    };
+  }, []);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -403,12 +437,41 @@ export default function PortfolioPage() {
     body: "Hey John,\n\nI saw your portfolio and would like to connect about...\n\n- Context\n- Timeline\n- Best way to reach you\n\nThanks,\n",
   });
 
+  const enableCursorGlow = !reducedMotion && canHover;
+  const spotlightStyle = {
+    backgroundImage: `radial-gradient(${spotlightSize}px circle at ${glow.x}px ${glow.y}px, ${TEAL_GLOW} 0%, rgba(0,0,0,0) 60%), radial-gradient(${Math.round(spotlightSize * 0.62)}px circle at ${glow.x}px ${glow.y}px, ${AMBER_GLOW} 0%, rgba(0,0,0,0) 58%)`,
+    opacity: glow.active ? 0.45 : 0,
+    transition: "opacity 220ms ease",
+  };
+
+  const handlePointerMove = (event) => {
+    if (!enableCursorGlow || !rootRef.current) return;
+    const rect = rootRef.current.getBoundingClientRect();
+    setGlow({
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+      active: true,
+    });
+  };
+
+  const handlePointerLeave = () => {
+    setGlow((prev) => ({ ...prev, active: false, x: -9999, y: -9999 }));
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="relative overflow-hidden">
+      <div
+        ref={rootRef}
+        className="relative overflow-hidden"
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
         <Backdrop />
+        {enableCursorGlow ? (
+          <div aria-hidden className="pointer-events-none absolute inset-0 z-[1]" style={spotlightStyle} />
+        ) : null}
 
-        <div className={cx("relative", TOKENS.container)}>
+        <div className={cx("relative z-10", TOKENS.container)}>
           <header className="sticky top-0 z-50 -mx-5 px-5 py-4 sm:-mx-8 sm:px-8">
             <Nav items={sections} activeId={activeId} scrolled={scrolled} onGo={go} />
           </header>
@@ -416,19 +479,19 @@ export default function PortfolioPage() {
           <main className={TOKENS.sectionY}>
             <section id="home" className="scroll-mt-28">
               <div className="relative">
-                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-cyan-300/10 blur-3xl" />
-                <div className="pointer-events-none absolute left-24 top-8 h-[520px] w-[520px] rounded-full bg-violet-500/10 blur-3xl" />
+                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-teal-300/12 blur-3xl" />
+                <div className="pointer-events-none absolute left-24 top-8 h-[520px] w-[520px] rounded-full bg-amber-400/10 blur-3xl" />
 
                 <div className="grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-start">
                   <div>
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
-                      <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.6)]" />
+                      <span className="h-2 w-2 rounded-full bg-teal-300 ring-1 ring-amber-300/50 shadow-[0_0_16px_rgba(45,212,191,0.55)]" />
                       Central TX | Remote-ready
                     </div>
 
-                    <h1 className={cx(TOKENS.h1, "mt-5 max-w-3xl")}> 
+                    <h1 className={cx(TOKENS.h1, "mt-5 max-w-3xl")}>
                       Systems builder for GTM teams,
-                      <span className="text-cyan-200"> shipping clean web apps</span>.
+                      <span className="text-teal-100"> shipping clean web apps</span>.
                     </h1>
 
                     <p className={cx(TOKENS.body, "mt-5 max-w-2xl")}>{COPY.subhead}</p>
@@ -460,6 +523,7 @@ export default function PortfolioPage() {
                 eyebrow="ABOUT"
                 title="I build the operating system behind predictable execution."
                 subtitle="When follow-up gaps happen, I blame the system, then I fix it: lifecycle design, routing logic, governance, automation, and reporting. I also write code and ship tools that teams actually adopt."
+                tone="amber"
               />
 
               <div className="grid gap-10 md:grid-cols-2">
@@ -467,15 +531,15 @@ export default function PortfolioPage() {
                   <h3 className={TOKENS.h3}>What you get</h3>
                   <ul className={cx("mt-4 space-y-3", TOKENS.body)}>
                     <li className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-teal-300" />
                       <span>Clean workflows: intake to conversion tracking with clear ownership.</span>
                     </li>
                     <li className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-teal-300" />
                       <span>Automation that saves time and improves data integrity.</span>
                     </li>
                     <li className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-teal-300" />
                       <span>Dashboards that make pipeline health visible and actionable.</span>
                     </li>
                   </ul>
@@ -499,6 +563,7 @@ export default function PortfolioPage() {
                 eyebrow="PROJECTS"
                 title="Shipped tools and prototypes"
                 subtitle="Structured data, clean UX, and systems thinking. Each card is designed to be scannable in seconds."
+                tone="teal"
               />
 
               <div className="grid gap-6 md:grid-cols-3">
@@ -514,7 +579,7 @@ export default function PortfolioPage() {
                     <ul className="mt-4 space-y-2 text-sm leading-6 text-white/70">
                       {p.bullets.slice(0, 2).map((b) => (
                         <li key={b} className="flex gap-3">
-                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300/80" />
+                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-amber-300/80" />
                           <span>{b}</span>
                         </li>
                       ))}
@@ -545,6 +610,7 @@ export default function PortfolioPage() {
                 eyebrow="TOOLBOX"
                 title="What I reach for"
                 subtitle="Practical tools for building, shipping, and maintaining systems that hold up in real operations."
+                tone="amber"
               />
 
               <div className="grid gap-10 md:grid-cols-3">
@@ -572,6 +638,7 @@ export default function PortfolioPage() {
                 eyebrow="CONTACT"
                 title="Send a quick note"
                 subtitle={`${COPY.replySla} Include the role, scope, and timeline and I will respond fast with next steps.`}
+                tone="teal"
               />
 
               <div className="grid gap-6 md:grid-cols-2">
@@ -645,18 +712,18 @@ export default function PortfolioPage() {
                     <input
                       name="name"
                       placeholder="Your name"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-teal-300/35"
                     />
                     <input
                       name="company"
                       placeholder="Company (optional)"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-teal-300/35"
                     />
                     <textarea
                       name="message"
                       placeholder="What are you trying to build or fix?"
                       rows={5}
-                      className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                      className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-teal-300/35"
                     />
 
                     <div className="mt-1 flex flex-wrap items-center gap-3">
