@@ -1,0 +1,694 @@
+"use client";
+
+/*
+John Rodriguez - Portfolio Site (Product-grade UI v2)
+
+How to use (Next.js App Router):
+- Save as: app/page.jsx
+
+How to use (Vite/CRA):
+- Save as: src/App.jsx and render normally
+
+Notes:
+- Headshot is embedded as a data URL for portability.
+*/
+
+import React, { useEffect, useMemo, useState } from "react";
+
+const HEADSHOT_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCALAAoADASIAAhEBAxEB/8QAHQAAAgIDAQEAAAAAAAAAAAAABQYEBwIDCAECCf/EAEYQAAIBAgMEBQQHBQYHAAAAAAABAgMRBAUSIQYTMUFRYQcicYGRoQhCscEUI0JSYnKSwRQzU5PSFjRDU2Oy8CX/xAAaAQADAQEBAQAAAAAAAAAAAAABAgMABAUH/8QALREAAgICAgEDAwQDAQAAAAAAAAECEQMhBBIxQVEFEyJhcYGxkaGx8BRCwdH/2gAMAwEAAhEDEQA/APiUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB6VZzXWnQb2yq8y7wq7V4qg7c8o7m5jYQ1n1mQHc0q7qfP0f0h7Qd4b2kqO0lY7n7bQ4j5P3j9wq4tJmQ8f3JQb9mJ1u0c1Vbqz5Yl8o9m2j8mKc0VZc9d7V2kKp0m3VtZ3o4mWm0m8q7i3xw8q0tG1m7pQq8rQ7qkQ6kq8j3d8cV0l2bXvPzq7i6v0mS0c7tVf6rZ3PqfZ9k8m7Gq9h0VdVq6mVd0wz6mY8nU1S3m8a2bZ0Kf7h8m2i2bYc0m2y9Qn8Qw3c6Wm0o1dOaU4q8wY1l0u2m7w6x2l1l0vYxq9O0jYz6k9m1n1mOq1v1c6b7m2q2y3pO8Zb9mPZ4mTz0m8f0S0b7gYbY0m2m0Z5x8v1eN0v4eR1u3r3d8yq9K2u0l6m7mN8w+qVbQ1xw2bZ0pVtqY8lZc9mQ6b8X9o9p9h8m2bY0m2m0QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//Z";
+
+const COPY = {
+  name: "John Rodriguez",
+  headline: "Sales & Marketing Director (Central TX) | GTM Systems + Web Dev (JS) + Automation",
+  titleOneLine: "GTM systems builder + web dev (JS) + automation",
+  signal: "Strategy + implementation. I ship systems teams actually adopt.",
+  subhead:
+    "I build revenue systems people actually use: lifecycle design, routing, governance, automation, and reporting. Also shipping web apps with clean UX and reliable data models.",
+  location: "Jarrell, TX (Central Time)",
+  email: "os.devsource@gmail.com",
+  github: "https://github.com/OS-DevSource",
+  linkedin: "https://www.linkedin.com/in/john-rodriguez-626136387/",
+  replySla: "Typically replies within 24 hours on weekdays.",
+};
+
+const PROJECTS = [
+  {
+    title: "ScaleView",
+    oneLiner: "Measure brand visibility in LLM answers using repeatable prompt sweeps.",
+    bullets: [
+      "Orchestrates prompt sweeps with consistent scoring and evidence capture.",
+      "Produces audit-friendly reports that track visibility over time.",
+    ],
+    tags: ["Next.js", "Postgres", "Automation"],
+    cta: { label: "GitHub", href: COPY.github },
+  },
+  {
+    title: "AlphaCore",
+    oneLiner: "Operations cockpit for workflows, reporting, and automation glue.",
+    bullets: [
+      "Standardized intake and structured data for clean execution.",
+      "Dashboards for funnel health, SLAs, and accountability.",
+    ],
+    tags: ["React", "Dashboards", "Data models"],
+    cta: { label: "GitHub", href: COPY.github },
+  },
+  {
+    title: "Trinity Generator Quote Tool",
+    oneLiner: "Guided sizing + quoting flow that reduces back-and-forth.",
+    bullets: [
+      "Questionnaire flow designed for accurate sizing and fast use.",
+      "Consistent quote outputs and follow-up structure.",
+    ],
+    tags: ["Next.js", "Forms", "Pricing logic"],
+    cta: { label: "GitHub", href: COPY.github },
+  },
+];
+
+const TOKENS = {
+  container: "mx-auto w-full max-w-6xl px-5 sm:px-8",
+  sectionY: "py-16 sm:py-20",
+  chapterBreak: "py-10 sm:py-12",
+
+  eyebrow: "text-[11px] uppercase tracking-[0.22em] text-cyan-200/80",
+  h1: "text-4xl sm:text-6xl font-extrabold leading-[1.05] tracking-tight text-white",
+  h2: "text-2xl sm:text-3xl font-bold text-white",
+  h3: "text-lg font-semibold text-white",
+  body: "text-[15px] leading-7 text-white/80",
+  muted: "text-sm leading-6 text-white/60",
+
+  card: "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur",
+  cardInteractive:
+    "transition hover:border-white/20 hover:bg-white/[0.04] focus-within:border-white/25",
+  cardPad: "p-6",
+
+  chip: "rounded-full border border-white/12 bg-transparent px-2.5 py-1 text-xs text-white/70",
+
+  btnBase:
+    "inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
+  btnPrimary:
+    "bg-cyan-300 text-black hover:bg-cyan-200 shadow-[0_0_0_1px_rgba(34,211,238,0.35)]",
+  btnSecondary:
+    "border border-cyan-300/25 bg-white/[0.02] text-white hover:border-cyan-300/40 hover:bg-white/[0.04]",
+  btnTertiary: "bg-transparent text-cyan-200 hover:text-cyan-100",
+};
+
+function cx(...parts) {
+  return parts.filter(Boolean).join(" ");
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    const onChange = () => setReduced(Boolean(mq.matches));
+    onChange();
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
+  return reduced;
+}
+
+const ICONS = {
+  arrow: (p) => (
+    <svg {...p}>
+      <path d="M5 12h14" />
+      <path d="M13 5l7 7-7 7" />
+    </svg>
+  ),
+  mail: (p) => (
+    <svg {...p}>
+      <path d="M4 4h16v16H4z" />
+      <path d="M4 6l8 6 8-6" />
+    </svg>
+  ),
+  pin: (p) => (
+    <svg {...p}>
+      <path d="M12 21s7-4.5 7-11a7 7 0 10-14 0c0 6.5 7 11 7 11z" />
+      <path d="M12 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+    </svg>
+  ),
+  github: (p) => (
+    <svg {...p}>
+      <path d="M9 19c-4 1.5-4-2.5-5-3" />
+      <path d="M14 22v-3.5c0-1 .4-1.5 1-2-3 0-6-1-6-5 0-1 .3-2 1-3-.1-.3-.4-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C19.9 3.2 21 3.5 21 3.5c.5 1.6.2 2.9.1 3.2.7 1 1 2 1 3 0 4-3 5-6 5 .6.5 1 1.4 1 2.8V22" />
+    </svg>
+  ),
+  linkedin: (p) => (
+    <svg {...p}>
+      <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z" />
+      <path d="M2 9h4v12H2z" />
+      <path d="M4 4a2 2 0 110 4 2 2 0 010-4z" />
+    </svg>
+  ),
+};
+
+function Icon({ name, className }) {
+  const p = {
+    className: cx("inline-block", className),
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  };
+  const render = ICONS[name];
+  return render ? render(p) : null;
+}
+
+function Card({ interactive = false, className, children }) {
+  return (
+    <div className={cx(TOKENS.card, interactive && TOKENS.cardInteractive, className)}>
+      <div className={TOKENS.cardPad}>{children}</div>
+    </div>
+  );
+}
+
+function Button({ as = "button", href, variant = "primary", className, children, ...rest }) {
+  const styles = {
+    primary: TOKENS.btnPrimary,
+    secondary: TOKENS.btnSecondary,
+    tertiary: TOKENS.btnTertiary,
+  };
+
+  if (as === "a") {
+    const isExternal = typeof href === "string" && /^https?:\/\//.test(href);
+    const target = rest.target ?? (isExternal ? "_blank" : undefined);
+    const rel = rest.rel ?? (isExternal ? "noreferrer" : undefined);
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        className={cx(TOKENS.btnBase, styles[variant], className)}
+        {...rest}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  const type = rest.type ?? "button";
+  return (
+    <button
+      type={type}
+      className={cx(TOKENS.btnBase, styles[variant], className)}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+}
+
+function buildMailto({ email, subject, body }) {
+  const s = encodeURIComponent(subject || "Portfolio inquiry");
+  const b = encodeURIComponent(body || "Hey John,\n\n...");
+  return `mailto:${email}?subject=${s}&body=${b}`;
+}
+
+function Backdrop() {
+  return (
+    <div className="pointer-events-none absolute inset-0">
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
+      <div
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "52px 52px",
+          backgroundPosition: "-2px -2px",
+          maskImage: "radial-gradient(circle at 18% 0%, black 0%, transparent 60%)",
+        }}
+      />
+    </div>
+  );
+}
+
+function ChapterBreak() {
+  return (
+    <div className={TOKENS.chapterBreak}>
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    </div>
+  );
+}
+
+function SectionTitle({ eyebrow, title, subtitle }) {
+  return (
+    <div className="mb-10">
+      <div className={TOKENS.eyebrow}>{eyebrow}</div>
+      <h2 className={cx(TOKENS.h2, "mt-2")}>{title}</h2>
+      {subtitle ? <p className={cx(TOKENS.body, "mt-3 max-w-2xl")}>{subtitle}</p> : null}
+    </div>
+  );
+}
+
+function ProfileSummary({ mailto }) {
+  return (
+    <Card interactive className="max-w-md">
+      <div className="flex items-center gap-4">
+        <div className="relative">
+          <div className="absolute -inset-1 rounded-full bg-cyan-300/20 blur" />
+          <img
+            src={HEADSHOT_DATA_URL}
+            alt="Headshot of John Rodriguez"
+            className="relative h-16 w-16 rounded-full border border-white/10 object-cover"
+          />
+        </div>
+        <div className="min-w-0">
+          <div className="truncate text-base font-bold text-white">{COPY.name}</div>
+          <div className="mt-1 truncate text-sm text-white/70">{COPY.titleOneLine}</div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Button as="a" href={COPY.github} variant="secondary" className="h-9 px-3 text-xs">
+          <Icon name="github" className="h-4 w-4" /> GitHub
+        </Button>
+        <Button as="a" href={COPY.linkedin} variant="secondary" className="h-9 px-3 text-xs">
+          <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
+        </Button>
+        <Button as="a" href={mailto} variant="tertiary" className="h-9 px-3 text-xs">
+          <Icon name="mail" className="h-4 w-4" /> Email
+        </Button>
+      </div>
+
+      <div className="mt-3 text-sm leading-6 text-white/70">{COPY.signal}</div>
+    </Card>
+  );
+}
+
+function Nav({ items, activeId, scrolled, onGo }) {
+  return (
+    <div
+      className={cx(
+        "rounded-2xl border border-white/10",
+        scrolled ? "bg-black/70 backdrop-blur" : "bg-black/40 backdrop-blur",
+        "px-4 py-3"
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => onGo("home")}
+          className="flex items-center gap-3 text-left"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03]">
+            <span className="text-sm font-extrabold text-white">JR</span>
+          </div>
+          <div className="leading-tight">
+            <div className="text-sm font-semibold text-white">{COPY.name}</div>
+            <div className="text-xs text-white/60">Portfolio</div>
+          </div>
+        </button>
+
+        <div className="hidden items-center gap-6 md:flex">
+          {items.map((it) => {
+            const active = it.id === activeId;
+            return (
+              <button
+                key={it.id}
+                type="button"
+                onClick={() => onGo(it.id)}
+                className={cx(
+                  "relative text-sm font-semibold transition",
+                  active ? "text-white" : "text-white/70 hover:text-white"
+                )}
+              >
+                {it.label}
+                <span
+                  className={cx(
+                    "absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition",
+                    active
+                      ? "bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.45)]"
+                      : "bg-transparent"
+                  )}
+                />
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button as="a" href={COPY.github} variant="secondary" className="hidden sm:inline-flex">
+            <Icon name="github" className="h-4 w-4" /> GitHub
+          </Button>
+          <Button as="a" href={COPY.linkedin} variant="secondary" className="hidden sm:inline-flex">
+            <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function useActiveSection(sectionIds) {
+  const [activeId, setActiveId] = useState(sectionIds[0] || "home");
+
+  useEffect(() => {
+    const els = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    if (!els.length) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0));
+        if (visible[0]?.target?.id) setActiveId(visible[0].target.id);
+      },
+      { root: null, threshold: [0.2, 0.35, 0.5, 0.65] }
+    );
+
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [sectionIds]);
+
+  return activeId;
+}
+
+export default function PortfolioPage() {
+  const reducedMotion = usePrefersReducedMotion();
+  const sections = useMemo(
+    () => [
+      { id: "home", label: "Home" },
+      { id: "about", label: "About" },
+      { id: "projects", label: "Projects" },
+      { id: "toolbox", label: "Toolbox" },
+      { id: "contact", label: "Contact" },
+    ],
+    []
+  );
+
+  const activeId = useActiveSection(sections.map((s) => s.id));
+
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const go = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+  };
+
+  const mailto = buildMailto({
+    email: COPY.email,
+    subject: `Portfolio inquiry: ${COPY.name}`,
+    body: "Hey John,\n\nI saw your portfolio and would like to connect about...\n\n- Context\n- Timeline\n- Best way to reach you\n\nThanks,\n",
+  });
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <div className="relative overflow-hidden">
+        <Backdrop />
+
+        <div className={cx("relative", TOKENS.container)}>
+          <header className="sticky top-0 z-50 -mx-5 px-5 py-4 sm:-mx-8 sm:px-8">
+            <Nav items={sections} activeId={activeId} scrolled={scrolled} onGo={go} />
+          </header>
+
+          <main className={TOKENS.sectionY}>
+            <section id="home" className="scroll-mt-28">
+              <div className="relative">
+                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-cyan-300/10 blur-3xl" />
+                <div className="pointer-events-none absolute left-24 top-8 h-[520px] w-[520px] rounded-full bg-violet-500/10 blur-3xl" />
+
+                <div className="grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-start">
+                  <div>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
+                      <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.6)]" />
+                      Central TX | Remote-ready
+                    </div>
+
+                    <h1 className={cx(TOKENS.h1, "mt-5 max-w-3xl")}> 
+                      Systems builder for GTM teams,
+                      <span className="text-cyan-200"> shipping clean web apps</span>.
+                    </h1>
+
+                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl")}>{COPY.subhead}</p>
+
+                    <div className="mt-7 flex flex-wrap items-center gap-3">
+                      <Button onClick={() => go("projects")}>
+                        View projects <Icon name="arrow" className="h-4 w-4" />
+                      </Button>
+                      <Button as="a" href={mailto} variant="secondary">
+                        <Icon name="mail" className="h-4 w-4" /> Email me
+                      </Button>
+                      <div className="flex items-center gap-2 text-xs text-white/60">
+                        <Icon name="pin" className="h-4 w-4" /> {COPY.location}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="md:pt-2">
+                    <ProfileSummary mailto={mailto} />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <ChapterBreak />
+
+            <section id="about" className="scroll-mt-28">
+              <SectionTitle
+                eyebrow="ABOUT"
+                title="I build the operating system behind predictable execution."
+                subtitle="When follow-up gaps happen, I blame the system, then I fix it: lifecycle design, routing logic, governance, automation, and reporting. I also write code and ship tools that teams actually adopt."
+              />
+
+              <div className="grid gap-10 md:grid-cols-2">
+                <div>
+                  <h3 className={TOKENS.h3}>What you get</h3>
+                  <ul className={cx("mt-4 space-y-3", TOKENS.body)}>
+                    <li className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span>Clean workflows: intake to conversion tracking with clear ownership.</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span>Automation that saves time and improves data integrity.</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300" />
+                      <span>Dashboards that make pipeline health visible and actionable.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className={TOKENS.h3}>How I work</h3>
+                  <div className={cx("mt-4 space-y-3", TOKENS.body)}>
+                    <div>Start with the problem, then the data model.</div>
+                    <div>Make states explicit and test the edges.</div>
+                    <div>Ship small, iterate fast, document decisions.</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <ChapterBreak />
+
+            <section id="projects" className="scroll-mt-28">
+              <SectionTitle
+                eyebrow="PROJECTS"
+                title="Shipped tools and prototypes"
+                subtitle="Structured data, clean UX, and systems thinking. Each card is designed to be scannable in seconds."
+              />
+
+              <div className="grid gap-6 md:grid-cols-3">
+                {PROJECTS.map((p) => (
+                  <Card key={p.title} interactive className="h-full">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="text-base font-bold text-white">{p.title}</div>
+                        <div className="mt-2 text-sm leading-6 text-white/75">{p.oneLiner}</div>
+                      </div>
+                    </div>
+
+                    <ul className="mt-4 space-y-2 text-sm leading-6 text-white/70">
+                      {p.bullets.slice(0, 2).map((b) => (
+                        <li key={b} className="flex gap-3">
+                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-cyan-300/80" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {p.tags.slice(0, 3).map((t) => (
+                        <span key={t} className={TOKENS.chip}>
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-6">
+                      <Button as="a" href={p.cta.href} variant="secondary" className="w-full">
+                        {p.cta.label} <Icon name="arrow" className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </section>
+
+            <ChapterBreak />
+
+            <section id="toolbox" className="scroll-mt-28">
+              <SectionTitle
+                eyebrow="TOOLBOX"
+                title="What I reach for"
+                subtitle="Practical tools for building, shipping, and maintaining systems that hold up in real operations."
+              />
+
+              <div className="grid gap-10 md:grid-cols-3">
+                <div>
+                  <h3 className={TOKENS.h3}>Frontend</h3>
+                  <p className={cx(TOKENS.body, "mt-3")}>JavaScript, React, Next.js, Tailwind, forms, design systems.</p>
+                </div>
+                <div>
+                  <h3 className={TOKENS.h3}>Backend + data</h3>
+                  <p className={cx(TOKENS.body, "mt-3")}>
+                    Postgres, APIs, webhooks, data modeling, automation glue, dashboards.
+                  </p>
+                </div>
+                <div>
+                  <h3 className={TOKENS.h3}>Ops</h3>
+                  <p className={cx(TOKENS.body, "mt-3")}>Lead lifecycle, routing, governance, SLAs, reporting, documentation.</p>
+                </div>
+              </div>
+            </section>
+
+            <ChapterBreak />
+
+            <section id="contact" className="scroll-mt-28">
+              <SectionTitle
+                eyebrow="CONTACT"
+                title="Send a quick note"
+                subtitle={`${COPY.replySla} Include the role, scope, and timeline and I will respond fast with next steps.`}
+              />
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <Card interactive>
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={HEADSHOT_DATA_URL}
+                      alt="Headshot of John Rodriguez"
+                      className="h-14 w-14 rounded-full border border-white/10 object-cover"
+                    />
+                    <div className="min-w-0">
+                      <div className="text-base font-bold text-white">{COPY.name}</div>
+                      <div className="mt-1 truncate text-sm text-white/70">{COPY.headline}</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid gap-3">
+                    <a
+                      href={mailto}
+                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Icon name="mail" className="h-4 w-4" /> {COPY.email}
+                      </span>
+                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                    </a>
+
+                    <a
+                      href={COPY.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Icon name="github" className="h-4 w-4" /> GitHub
+                      </span>
+                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                    </a>
+
+                    <a
+                      href={COPY.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
+                      </span>
+                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                    </a>
+                  </div>
+                </Card>
+
+                <Card interactive>
+                  <div className="text-base font-bold text-white">Message</div>
+                  <p className={cx(TOKENS.muted, "mt-2")}>This opens your email client with the details prefilled.</p>
+
+                  <form
+                    className="mt-5 grid gap-3"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const fd = new FormData(e.currentTarget);
+                      const name = String(fd.get("name") || "").trim();
+                      const company = String(fd.get("company") || "").trim();
+                      const message = String(fd.get("message") || "").trim();
+                      const subject = `Portfolio inquiry${company ? ` - ${company}` : ""}`;
+                      const body = `Name: ${name || "(no name)"}\nCompany: ${company || "(none)"}\n\n${message || ""}`;
+                      window.location.href = buildMailto({ email: COPY.email, subject, body });
+                    }}
+                  >
+                    <input
+                      name="name"
+                      placeholder="Your name"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                    />
+                    <input
+                      name="company"
+                      placeholder="Company (optional)"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                    />
+                    <textarea
+                      name="message"
+                      placeholder="What are you trying to build or fix?"
+                      rows={5}
+                      className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-cyan-300/35"
+                    />
+
+                    <div className="mt-1 flex flex-wrap items-center gap-3">
+                      <Button type="submit" className="w-full sm:w-auto">
+                        Send <Icon name="arrow" className="h-4 w-4" />
+                      </Button>
+                      <Button as="a" href={mailto} variant="tertiary" className="w-full sm:w-auto">
+                        Open email
+                      </Button>
+                    </div>
+                  </form>
+                </Card>
+              </div>
+
+              <footer className="mt-14 border-t border-white/10 pt-6 text-xs text-white/50">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    © {new Date().getFullYear()} {COPY.name}. Built with React + Tailwind.
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => go("home")}
+                    className="text-left transition hover:text-white"
+                  >
+                    Back to top
+                  </button>
+                </div>
+              </footer>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
