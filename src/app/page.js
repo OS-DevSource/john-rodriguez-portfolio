@@ -16,8 +16,8 @@ Notes:
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const HEADSHOT_SRC = "/headshot.jpg";
-const ICE_GLOW = "rgba(125, 211, 252, 0.18)";
-const COPPER_GLOW = "rgba(249, 115, 22, 0.10)";
+const ICE_GLOW = "rgba(56, 189, 248, 0.22)";
+const COPPER_GLOW = "rgba(249, 115, 22, 0.11)";
 const SPOTLIGHT_SIZE_DESKTOP = 562;
 const SPOTLIGHT_SIZE_COMPACT = 454;
 
@@ -90,9 +90,9 @@ const TOKENS = {
   btnBase:
     "inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-sky-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
   btnPrimary:
-    "bg-sky-300 text-black hover:bg-sky-200 shadow-[0_0_0_1px_rgba(125,211,252,0.35)]",
+    "bg-sky-200 text-black hover:bg-sky-100 shadow-[0_0_0_1px_rgba(125,211,252,0.35)]",
   btnSecondary:
-    "border border-sky-300/30 bg-white/[0.02] text-white hover:border-sky-300/40 hover:bg-white/[0.04]",
+    "border border-sky-300/40 bg-white/[0.02] text-white hover:border-sky-300/50 hover:bg-white/[0.04]",
   btnTertiary: "bg-transparent text-orange-300 hover:text-orange-200",
 };
 
@@ -234,15 +234,15 @@ function ChapterBreak() {
     <div className={TOKENS.chapterBreak}>
       <div className="relative h-px w-full overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-300/34 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-300/12 to-transparent blur-[1px]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-300/42 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-300/18 to-transparent blur-[1px]" />
       </div>
     </div>
   );
 }
 
 function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
-  const toneClass = tone === "copper" ? "text-orange-200/80" : "text-sky-200/80";
+  const toneClass = tone === "copper" ? "text-orange-300/85" : "text-sky-200/90";
   return (
     <div className="mb-10">
       <div className={cx(TOKENS.eyebrow, toneClass)}>{eyebrow}</div>
@@ -426,7 +426,7 @@ export default function PortfolioPage() {
     }
 
     let rafId = 0;
-    const lerpFactor = 0.068;
+    const lerpFactor = 0.071;
 
     const animate = () => {
       const target = glowTargetRef.current;
@@ -467,7 +467,7 @@ export default function PortfolioPage() {
 
   const spotlightStyle = {
     backgroundImage: `radial-gradient(${spotlightSize}px circle at ${glow.x}px ${glow.y}px, ${ICE_GLOW} 0%, rgba(0,0,0,0) 60%), radial-gradient(${Math.round(spotlightSize * 0.62)}px circle at ${glow.x}px ${glow.y}px, ${COPPER_GLOW} 0%, rgba(0,0,0,0) 58%)`,
-    opacity: glow.active ? 0.43 : 0,
+    opacity: glow.active ? 0.42 : 0,
     transition: "opacity 220ms ease",
   };
 
@@ -506,13 +506,13 @@ export default function PortfolioPage() {
           <main className={TOKENS.sectionY}>
             <section id="home" className="scroll-mt-28">
               <div className="relative">
-                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-sky-300/[0.13] blur-3xl" />
-                <div className="pointer-events-none absolute left-24 top-8 h-[520px] w-[520px] rounded-full bg-orange-300/[0.08] blur-3xl" />
+                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-sky-300/[0.18] blur-3xl" />
+                <div className="pointer-events-none absolute left-24 top-8 h-[520px] w-[520px] rounded-full bg-orange-400/[0.10] blur-3xl" />
 
                 <div className="grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-start">
                   <div>
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
-                      <span className="h-2 w-2 rounded-full bg-sky-300 ring-1 ring-orange-200/35 shadow-[0_0_16px_rgba(125,211,252,0.62)]" />
+                      <span className="h-2 w-2 rounded-full bg-sky-300 ring-1 ring-orange-300/45 shadow-[0_0_16px_rgba(56,189,248,0.72)]" />
                       Central TX | Remote-ready
                     </div>
 
@@ -606,7 +606,7 @@ export default function PortfolioPage() {
                     <ul className="mt-4 space-y-2 text-sm leading-6 text-white/70">
                       {p.bullets.slice(0, 2).map((b) => (
                         <li key={b} className="flex gap-3">
-                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-orange-300/70" />
+                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-orange-400/85" />
                           <span>{b}</span>
                         </li>
                       ))}
@@ -739,18 +739,18 @@ export default function PortfolioPage() {
                     <input
                       name="name"
                       placeholder="Your name"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-300/45"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-300/55"
                     />
                     <input
                       name="company"
                       placeholder="Company (optional)"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-300/45"
+                      className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-300/55"
                     />
                     <textarea
                       name="message"
                       placeholder="What are you trying to build or fix?"
                       rows={5}
-                      className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-sky-300/45"
+                      className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-sky-300/55"
                     />
 
                     <div className="mt-1 flex flex-wrap items-center gap-3">
