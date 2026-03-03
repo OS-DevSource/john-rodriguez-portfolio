@@ -10,12 +10,12 @@ How to use (Vite/CRA):
 - Save as: src/App.jsx and render normally
 
 Notes:
-- Headshot is embedded as a data URL for portability.
+- Headshot is loaded from /public/headshot.jpg.
 */
 
 import React, { useEffect, useMemo, useState } from "react";
 
-const HEADSHOT_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCALAAoADASIAAhEBAxEB/8QAHQAAAgIDAQEAAAAAAAAAAAAABQYEBwIDCAECCf/EAEYQAAIBAgMEBQQHBQYHAAAAAAABAgMRBAUSIQYTMUFRYQcicYGRoQhCscEUI0JSYnKSwRQzU5PSFjRDU2Oy8CX/xAAaAQADAQEBAQAAAAAAAAAAAAABAgMABAUH/8QALREAAgICAgEDAwQDAQAAAAAAAAECEQMhBBIxQVEFEyJhcYGxkaGx8BRCwdH/2gAMAwEAAhEDEQA/APiUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB6VZzXWnQb2yq8y7wq7V4qg7c8o7m5jYQ1n1mQHc0q7qfP0f0h7Qd4b2kqO0lY7n7bQ4j5P3j9wq4tJmQ8f3JQb9mJ1u0c1Vbqz5Yl8o9m2j8mKc0VZc9d7V2kKp0m3VtZ3o4mWm0m8q7i3xw8q0tG1m7pQq8rQ7qkQ6kq8j3d8cV0l2bXvPzq7i6v0mS0c7tVf6rZ3PqfZ9k8m7Gq9h0VdVq6mVd0wz6mY8nU1S3m8a2bZ0Kf7h8m2i2bYc0m2y9Qn8Qw3c6Wm0o1dOaU4q8wY1l0u2m7w6x2l1l0vYxq9O0jYz6k9m1n1mOq1v1c6b7m2q2y3pO8Zb9mPZ4mTz0m8f0S0b7gYbY0m2m0Z5x8v1eN0v4eR1u3r3d8yq9K2u0l6m7mN8w+qVbQ1xw2bZ0pVtqY8lZc9mQ6b8X9o9p9h8m2bY0m2m0QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//Z";
+const HEADSHOT_SRC = "/headshot.jpg";
 
 const COPY = {
   name: "John Rodriguez",
@@ -250,7 +250,7 @@ function ProfileSummary({ mailto }) {
         <div className="relative">
           <div className="absolute -inset-1 rounded-full bg-cyan-300/20 blur" />
           <img
-            src={HEADSHOT_DATA_URL}
+            src={HEADSHOT_SRC}
             alt="Headshot of John Rodriguez"
             className="relative h-16 w-16 rounded-full border border-white/10 object-cover"
           />
@@ -578,7 +578,7 @@ export default function PortfolioPage() {
                 <Card interactive>
                   <div className="flex items-center gap-4">
                     <img
-                      src={HEADSHOT_DATA_URL}
+                      src={HEADSHOT_SRC}
                       alt="Headshot of John Rodriguez"
                       className="h-14 w-14 rounded-full border border-white/10 object-cover"
                     />
