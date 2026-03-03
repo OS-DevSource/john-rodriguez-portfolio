@@ -1,148 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #02030a;
-  --foreground: #edf4ff;
-  --surface: rgba(8, 12, 22, 0.78);
-  --surface-border: rgba(172, 200, 255, 0.2);
-  --accent-cyan: #67e5ff;
-  --accent-violet: #a46bff;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-space-grotesk);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  min-height: 100%;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 body {
-  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), ui-sans-serif, sans-serif;
-  text-rendering: optimizeLegibility;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent-cyan);
-  outline-offset: 2px;
-}
-
-.module-surface {
-  position: relative;
-  border: 1px solid var(--surface-border);
-  border-radius: 1rem;
-  background: linear-gradient(180deg, rgba(11, 16, 28, 0.95), rgba(7, 11, 20, 0.86));
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 24px 70px rgba(0, 0, 0, 0.42);
-}
-
-.control-room-grid {
-  background-image:
-    linear-gradient(rgba(111, 204, 255, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(111, 204, 255, 0.09) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: -1px -1px;
-}
-
-.control-room-noise {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 0.6px, transparent 0.6px);
-  background-size: 3px 3px;
-}
-
-.nav-rail-scroll {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.nav-rail-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.crt-soft-lines {
-  background-image: linear-gradient(
-    to bottom,
-    rgba(194, 230, 255, 0.082) 0,
-    rgba(194, 230, 255, 0.082) 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  background-size: 100% 5px;
-  mix-blend-mode: screen;
-}
-
-.crt-curvature {
-  background:
-    radial-gradient(circle at center, transparent 56%, rgba(4, 6, 14, 0.22) 100%),
-    radial-gradient(circle at center, rgba(183, 225, 255, 0.035), transparent 60%);
-}
-
-.crt-phosphor {
-  background-image:
-    linear-gradient(90deg, rgba(130, 240, 255, 0.037), transparent 32%, rgba(140, 202, 255, 0.029) 70%, transparent),
-    radial-gradient(circle at 50% 50%, rgba(164, 226, 255, 0.036), transparent 62%);
-  background-size: 220px 100%, 100% 100%;
-  mix-blend-mode: screen;
-}
-
-.crt-digital-mask {
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      rgba(142, 222, 255, 0.018) 0px,
-      rgba(142, 222, 255, 0.018) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(92, 190, 255, 0.013) 0px,
-      rgba(92, 190, 255, 0.013) 1px,
-      transparent 1px,
-      transparent 6px
-    );
-  background-size: 4px 100%, 100% 6px;
-  mix-blend-mode: screen;
-}
-
-.crt-scanlines {
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.04) 0,
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-  background-size: 100% 4px;
-}
-
-.vignette-layer {
-  background: radial-gradient(circle at center, transparent 30%, rgba(2, 3, 10, 0.72) 92%);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  font-family: Arial, Helvetica, sans-serif;
 }
