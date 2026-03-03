@@ -17,7 +17,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const HEADSHOT_SRC = "/headshot.jpg";
 const ICE_GLOW = "rgba(56, 189, 248, 0.26)";
-const COPPER_GLOW = "rgba(249, 115, 22, 0.12)";
+const COPPER_GLOW = "rgba(249, 115, 22, 0.07)";
 const SPOTLIGHT_SIZE_DESKTOP = 562;
 const SPOTLIGHT_SIZE_COMPACT = 454;
 
@@ -216,7 +216,7 @@ function Backdrop() {
     <div className="pointer-events-none absolute inset-0 z-0">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
       <div
-        className="absolute inset-0 opacity-[0.18]"
+        className="absolute inset-0 opacity-[0.12]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
@@ -234,15 +234,15 @@ function ChapterBreak() {
     <div className={TOKENS.chapterBreak}>
       <div className="relative h-px w-full overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-400/46 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-300/20 to-transparent blur-[1px]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-400/26 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-300/08 to-transparent blur-[1px]" />
       </div>
     </div>
   );
 }
 
 function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
-  const toneClass = tone === "copper" ? "text-orange-300/90" : "text-sky-200/92";
+  const toneClass = tone === "copper" ? "text-orange-300/70" : "text-sky-200/92";
   return (
     <div className="mb-10">
       <div className={cx(TOKENS.eyebrow, toneClass)}>{eyebrow}</div>
@@ -254,10 +254,10 @@ function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
 
 function ProfileSummary({ mailto }) {
   return (
-    <Card interactive className="max-w-md">
+    <Card interactive className="max-w-md border-white/8 bg-white/[0.02]">
       <div className="flex items-center gap-4">
         <div className="relative">
-          <div className="absolute -inset-1 rounded-full bg-sky-400/20 blur" />
+          <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
           <img
             src={HEADSHOT_SRC}
             alt="Headshot of John Rodriguez"
@@ -271,10 +271,20 @@ function ProfileSummary({ mailto }) {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <Button as="a" href={COPY.github} variant="secondary" className="h-9 px-3 text-xs">
+        <Button
+          as="a"
+          href={COPY.github}
+          variant="secondary"
+          className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
+        >
           <Icon name="github" className="h-4 w-4" /> GitHub
         </Button>
-        <Button as="a" href={COPY.linkedin} variant="secondary" className="h-9 px-3 text-xs">
+        <Button
+          as="a"
+          href={COPY.linkedin}
+          variant="secondary"
+          className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
+        >
           <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
         </Button>
         <Button as="a" href={mailto} variant="tertiary" className="h-9 px-3 text-xs">
@@ -379,6 +389,7 @@ function useActiveSection(sectionIds) {
 
 export default function PortfolioPage() {
   const rootRef = useRef(null);
+  const homeRef = useRef(null);
   const reducedMotion = usePrefersReducedMotion();
   const sections = useMemo(
     () => [
@@ -396,6 +407,7 @@ export default function PortfolioPage() {
   const [scrolled, setScrolled] = useState(false);
   const [canHover, setCanHover] = useState(false);
   const [spotlightSize, setSpotlightSize] = useState(SPOTLIGHT_SIZE_DESKTOP);
+  const [heroGlowFactor, setHeroGlowFactor] = useState(1);
   const [glow, setGlow] = useState({ x: -9999, y: -9999, active: false });
   const glowTargetRef = useRef({ x: -9999, y: -9999, active: false });
   const enableCursorGlow = !reducedMotion && canHover;
@@ -447,10 +459,49 @@ export default function PortfolioPage() {
   }, [enableCursorGlow]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 8);
+
+      const heroEl = homeRef.current;
+      if (!heroEl) {
+        setHeroGlowFactor(1);
+        return;
+      }
+
+      const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+      const viewportHeight = window.innerHeight || 0;
+      const fadeStart = heroBottom;
+      const firstFadeEnd = heroBottom + viewportHeight * 0.35;
+      const secondFadeEnd = heroBottom + viewportHeight * 0.8;
+
+      if (scrollY <= fadeStart) {
+        setHeroGlowFactor(1);
+        return;
+      }
+
+      if (scrollY <= firstFadeEnd) {
+        const progress = (scrollY - fadeStart) / Math.max(firstFadeEnd - fadeStart, 1);
+        setHeroGlowFactor(1 - progress * 0.75);
+        return;
+      }
+
+      if (scrollY <= secondFadeEnd) {
+        const progress = (scrollY - firstFadeEnd) / Math.max(secondFadeEnd - firstFadeEnd, 1);
+        setHeroGlowFactor(0.25 * (1 - progress));
+        return;
+      }
+
+      setHeroGlowFactor(0);
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const go = (id) => {
@@ -467,7 +518,7 @@ export default function PortfolioPage() {
 
   const spotlightStyle = {
     backgroundImage: `radial-gradient(${spotlightSize}px circle at ${glow.x}px ${glow.y}px, ${ICE_GLOW} 0%, rgba(0,0,0,0) 60%), radial-gradient(${Math.round(spotlightSize * 0.62)}px circle at ${glow.x}px ${glow.y}px, ${COPPER_GLOW} 0%, rgba(0,0,0,0) 58%)`,
-    opacity: glow.active ? 0.42 : 0,
+    opacity: glow.active ? 0.42 * heroGlowFactor : 0,
     transition: "opacity 220ms ease",
   };
 
@@ -504,10 +555,10 @@ export default function PortfolioPage() {
           </header>
 
           <main className={TOKENS.sectionY}>
-            <section id="home" className="scroll-mt-28">
+            <section id="home" ref={homeRef} className="scroll-mt-28">
               <div className="relative">
                 <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl" />
-                <div className="pointer-events-none absolute left-24 top-8 h-[520px] w-[520px] rounded-full bg-orange-400/[0.11] blur-3xl" />
+                <div className="pointer-events-none absolute left-24 top-8 h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl" />
 
                 <div className="grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-start">
                   <div>
@@ -606,7 +657,7 @@ export default function PortfolioPage() {
                     <ul className="mt-4 space-y-2 text-sm leading-6 text-white/70">
                       {p.bullets.slice(0, 2).map((b) => (
                         <li key={b} className="flex gap-3">
-                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-orange-400/92" />
+                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-orange-300/68" />
                           <span>{b}</span>
                         </li>
                       ))}
