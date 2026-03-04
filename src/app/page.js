@@ -20,6 +20,7 @@ const ICE_GLOW = "rgba(56, 189, 248, 0.26)";
 const COPPER_GLOW = "rgba(249, 115, 22, 0.07)";
 const SPOTLIGHT_SIZE_DESKTOP = 562;
 const SPOTLIGHT_SIZE_COMPACT = 454;
+const CURSOR_GLOW_LERP_FACTOR = 0.14;
 
 const COPY = {
   name: "John Rodriguez",
@@ -438,7 +439,7 @@ export default function PortfolioPage() {
     }
 
     let rafId = 0;
-    const lerpFactor = 0.077;
+    const lerpFactor = CURSOR_GLOW_LERP_FACTOR;
 
     const animate = () => {
       const target = glowTargetRef.current;
