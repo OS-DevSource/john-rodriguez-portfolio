@@ -13,6 +13,7 @@ Notes:
 - Headshot is loaded from /public/headshot.jpg.
 */
 
+import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const HEADSHOT_SRC = "/headshot.jpg";
@@ -272,9 +273,13 @@ function ProfileSummary({ mailto }) {
       <div className="flex items-center gap-4">
         <div className="relative">
           <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
-          <img
+          <Image
             src={HEADSHOT_SRC}
             alt="Headshot of John Rodriguez"
+            width={64}
+            height={64}
+            sizes="64px"
+            priority
             className="relative h-16 w-16 rounded-full border border-white/10 object-cover"
           />
         </div>
@@ -863,9 +868,12 @@ export default function PortfolioPage() {
               <div className="grid gap-6 md:grid-cols-2">
                 <Card interactive className="min-w-0 w-full">
                   <div className="flex min-w-0 items-start gap-4">
-                    <img
+                    <Image
                       src={HEADSHOT_SRC}
                       alt="Headshot of John Rodriguez"
+                      width={56}
+                      height={56}
+                      sizes="56px"
                       className="h-14 w-14 rounded-full border border-white/10 object-cover"
                     />
                     <div className="min-w-0">
