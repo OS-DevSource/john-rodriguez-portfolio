@@ -678,6 +678,18 @@ export default function PortfolioPage() {
         onPointerLeave={handlePointerLeave}
       >
         <Backdrop />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-[72px] z-[2] block h-[620px] md:hidden"
+          style={{
+            backgroundImage:
+              "radial-gradient(96% 74% at 14% 18%, rgba(56,189,248,0.23) 0%, rgba(56,189,248,0.12) 38%, rgba(56,189,248,0) 76%), radial-gradient(82% 62% at 84% 20%, rgba(249,115,22,0.11) 0%, rgba(249,115,22,0.05) 40%, rgba(249,115,22,0) 78%)",
+            WebkitMaskImage:
+              "radial-gradient(124% 94% at 50% 8%, rgba(0,0,0,0.98) 30%, rgba(0,0,0,0.84) 56%, rgba(0,0,0,0.5) 72%, rgba(0,0,0,0.06) 86%, rgba(0,0,0,0) 100%), linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.84) 13%, rgba(0,0,0,0.84) 87%, rgba(0,0,0,0) 100%)",
+            maskImage:
+              "radial-gradient(124% 94% at 50% 8%, rgba(0,0,0,0.98) 30%, rgba(0,0,0,0.84) 56%, rgba(0,0,0,0.5) 72%, rgba(0,0,0,0.06) 86%, rgba(0,0,0,0) 100%), linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.84) 13%, rgba(0,0,0,0.84) 87%, rgba(0,0,0,0) 100%)",
+          }}
+        />
         {enableCursorGlow ? (
           <div aria-hidden className="pointer-events-none absolute inset-0 z-[1]" style={spotlightStyle} />
         ) : null}
@@ -698,18 +710,6 @@ export default function PortfolioPage() {
           <main className={TOKENS.sectionY}>
             <section id="home" ref={homeRef} className="scroll-mt-28">
               <div className="relative">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-0 h-[430px] md:hidden"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(80% 66% at 16% 10%, rgba(56,189,248,0.24) 0%, rgba(56,189,248,0.12) 42%, rgba(56,189,248,0) 78%), radial-gradient(74% 60% at 82% 12%, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0.04) 44%, rgba(249,115,22,0) 80%)",
-                    WebkitMaskImage:
-                      "radial-gradient(130% 88% at 50% 8%, rgba(0,0,0,0.95) 36%, rgba(0,0,0,0.72) 62%, rgba(0,0,0,0) 100%)",
-                    maskImage:
-                      "radial-gradient(130% 88% at 50% 8%, rgba(0,0,0,0.95) 36%, rgba(0,0,0,0.72) 62%, rgba(0,0,0,0) 100%)",
-                  }}
-                />
                 <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
                 <div className="pointer-events-none absolute left-24 top-8 hidden h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl md:block" />
 
