@@ -540,7 +540,7 @@ export default function PortfolioPage() {
     <div className="min-h-screen bg-black text-white">
       <div
         ref={rootRef}
-        className="relative overflow-hidden"
+        className="relative overflow-x-clip"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
       >
