@@ -268,7 +268,7 @@ function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
 
 function ProfileSummary({ mailto }) {
   return (
-    <Card interactive className="max-w-md border-white/8 bg-white/[0.02]">
+    <Card interactive className="max-w-md border-white/8 bg-white/[0.02] max-md:max-w-full">
       <div className="flex items-center gap-4">
         <div className="relative">
           <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
@@ -279,8 +279,8 @@ function ProfileSummary({ mailto }) {
           />
         </div>
         <div className="min-w-0">
-          <div className="truncate text-base font-bold text-white">{COPY.name}</div>
-          <div className="mt-1 truncate text-sm text-white/70">{COPY.titleOneLine}</div>
+          <div className="text-base font-bold text-white md:truncate">{COPY.name}</div>
+          <div className="mt-1 text-sm text-white/70 md:truncate">{COPY.titleOneLine}</div>
         </div>
       </div>
 
@@ -692,29 +692,34 @@ export default function PortfolioPage() {
 
           <main className={TOKENS.sectionY}>
             <section id="home" ref={homeRef} className="scroll-mt-28">
-              <div className="relative">
+              <div className="relative max-md:overflow-hidden">
                 <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl" />
                 <div className="pointer-events-none absolute left-24 top-8 h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl" />
 
-                <div className="grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-start">
-                  <div>
+                <div className="grid gap-10 max-md:gap-8 md:grid-cols-[1.35fr_0.65fr] md:items-start">
+                  <div className="min-w-0">
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
                       <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
                       Central TX | Remote-ready
                     </div>
 
-                    <h1 className={cx(TOKENS.h1, "mt-5 max-w-3xl")}>
+                    <h1
+                      className={cx(
+                        TOKENS.h1,
+                        "mt-5 max-w-3xl max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
+                      )}
+                    >
                       Systems builder for GTM teams,
                       <span className="text-sky-200"> shipping clean web apps</span>.
                     </h1>
 
-                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl")}>{COPY.subhead}</p>
+                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:max-w-full")}>{COPY.subhead}</p>
 
-                    <div className="mt-7 flex flex-wrap items-center gap-3">
-                      <Button onClick={() => go("projects")}>
+                    <div className="mt-7 flex flex-wrap items-center gap-3 max-md:flex-col max-md:items-stretch">
+                      <Button onClick={() => go("projects")} className="max-md:w-full">
                         View projects <Icon name="arrow" className="h-4 w-4" />
                       </Button>
-                      <Button as="a" href={mailto} variant="secondary">
+                      <Button as="a" href={mailto} variant="secondary" className="max-md:w-full">
                         <Icon name="mail" className="h-4 w-4" /> Email me
                       </Button>
                       <div className="flex items-center gap-2 text-xs text-white/60">
@@ -723,7 +728,7 @@ export default function PortfolioPage() {
                     </div>
                   </div>
 
-                  <div className="md:pt-2">
+                  <div className="min-w-0 md:pt-2">
                     <ProfileSummary mailto={mailto} />
                   </div>
                 </div>
@@ -856,8 +861,8 @@ export default function PortfolioPage() {
               />
 
               <div className="grid gap-6 md:grid-cols-2">
-                <Card interactive>
-                  <div className="flex items-center gap-4">
+                <Card interactive className="min-w-0 w-full">
+                  <div className="flex min-w-0 items-start gap-4">
                     <img
                       src={HEADSHOT_SRC}
                       alt="Headshot of John Rodriguez"
@@ -865,48 +870,49 @@ export default function PortfolioPage() {
                     />
                     <div className="min-w-0">
                       <div className="text-base font-bold text-white">{COPY.name}</div>
-                      <div className="mt-1 truncate text-sm text-white/70">{COPY.headline}</div>
+                      <div className="mt-1 text-sm text-white/70 md:truncate">{COPY.headline}</div>
                     </div>
                   </div>
 
                   <div className="mt-5 grid gap-3">
                     <a
                       href={mailto}
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                      className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
                     >
-                      <span className="flex items-center gap-2">
-                        <Icon name="mail" className="h-4 w-4" /> {COPY.email}
+                      <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                        <Icon name="mail" className="h-4 w-4 flex-none" />
+                        <span className="truncate">{COPY.email}</span>
                       </span>
-                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                      <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
                     </a>
 
                     <a
                       href={COPY.github}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                      className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex min-w-0 items-center gap-2 overflow-hidden">
                         <Icon name="github" className="h-4 w-4" /> GitHub
                       </span>
-                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                      <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
                     </a>
 
                     <a
                       href={COPY.linkedin}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                      className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex min-w-0 items-center gap-2 overflow-hidden">
                         <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
                       </span>
-                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                      <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
                     </a>
                   </div>
                 </Card>
 
-                <Card interactive>
+                <Card interactive className="min-w-0 w-full">
                   <div className="text-base font-bold text-white">Message</div>
                   <p className={cx(TOKENS.muted, "mt-2")}>This opens your email client with the details prefilled.</p>
 
