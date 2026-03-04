@@ -72,7 +72,7 @@ const PROJECTS = [
 
 const TOKENS = {
   container: "mx-auto w-full max-w-6xl px-5 sm:px-8",
-  sectionY: "py-16 sm:py-20",
+  sectionY: "py-12 sm:py-20",
   chapterBreak: "py-10 sm:py-12",
 
   eyebrow: "text-[11px] uppercase tracking-[0.22em]",
@@ -683,7 +683,7 @@ export default function PortfolioPage() {
         ) : null}
 
         <div className={cx("relative z-10", TOKENS.container)}>
-          <header className="sticky top-0 z-50 -mx-5 px-5 py-4 sm:-mx-8 sm:px-8">
+          <header className="sticky top-0 z-50 -mx-5 px-5 py-3 sm:-mx-8 sm:px-8 sm:py-4">
             <Nav
               items={sections}
               activeId={activeId}
@@ -697,11 +697,23 @@ export default function PortfolioPage() {
 
           <main className={TOKENS.sectionY}>
             <section id="home" ref={homeRef} className="scroll-mt-28">
-              <div className="relative max-md:overflow-hidden">
-                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl" />
-                <div className="pointer-events-none absolute left-24 top-8 h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl" />
+              <div className="relative">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 h-[430px] md:hidden"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(80% 66% at 16% 10%, rgba(56,189,248,0.24) 0%, rgba(56,189,248,0.12) 42%, rgba(56,189,248,0) 78%), radial-gradient(74% 60% at 82% 12%, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0.04) 44%, rgba(249,115,22,0) 80%)",
+                    WebkitMaskImage:
+                      "radial-gradient(130% 88% at 50% 8%, rgba(0,0,0,0.95) 36%, rgba(0,0,0,0.72) 62%, rgba(0,0,0,0) 100%)",
+                    maskImage:
+                      "radial-gradient(130% 88% at 50% 8%, rgba(0,0,0,0.95) 36%, rgba(0,0,0,0.72) 62%, rgba(0,0,0,0) 100%)",
+                  }}
+                />
+                <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
+                <div className="pointer-events-none absolute left-24 top-8 hidden h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl md:block" />
 
-                <div className="grid gap-10 max-md:gap-8 md:grid-cols-[1.35fr_0.65fr] md:items-start">
+                <div className="grid gap-10 max-md:gap-6 md:grid-cols-[1.35fr_0.65fr] md:items-start">
                   <div className="min-w-0">
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
                       <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
@@ -711,16 +723,16 @@ export default function PortfolioPage() {
                     <h1
                       className={cx(
                         TOKENS.h1,
-                        "mt-5 max-w-3xl max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
+                        "mt-5 max-w-3xl max-md:mt-4 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
                       )}
                     >
                       Systems builder for GTM teams,
                       <span className="text-sky-200"> shipping clean web apps</span>.
                     </h1>
 
-                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:max-w-full")}>{COPY.subhead}</p>
+                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>{COPY.subhead}</p>
 
-                    <div className="mt-7 flex flex-wrap items-center gap-3 max-md:flex-col max-md:items-stretch">
+                    <div className="mt-7 flex flex-wrap items-center gap-3 max-md:mt-5 max-md:flex-col max-md:items-stretch">
                       <Button onClick={() => go("projects")} className="max-md:w-full">
                         View projects <Icon name="arrow" className="h-4 w-4" />
                       </Button>
