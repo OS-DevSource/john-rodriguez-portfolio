@@ -147,19 +147,6 @@ const ICONS = {
       <path d="M4 4a2 2 0 110 4 2 2 0 010-4z" />
     </svg>
   ),
-  menu: (p) => (
-    <svg {...p}>
-      <path d="M4 7h16" />
-      <path d="M4 12h16" />
-      <path d="M4 17h16" />
-    </svg>
-  ),
-  x: (p) => (
-    <svg {...p}>
-      <path d="M6 6l12 12" />
-      <path d="M18 6L6 18" />
-    </svg>
-  ),
 };
 
 function Icon({ name, className }) {
@@ -316,150 +303,62 @@ function ProfileSummary({ mailto }) {
   );
 }
 
-function Nav({
-  items,
-  activeId,
-  scrolled,
-  onGo,
-  isMobileMenuOpen,
-  onToggleMobileMenu,
-  onCloseMobileMenu,
-}) {
+function Nav({ items, activeId, scrolled, onGo }) {
   return (
-    <div className="relative">
-      {isMobileMenuOpen ? (
+    <div
+      className={cx(
+        "rounded-2xl border border-white/10",
+        scrolled ? "bg-black/70 backdrop-blur" : "bg-black/40 backdrop-blur",
+        "px-4 py-3"
+      )}
+    >
+      <div className="flex items-center justify-between">
         <button
           type="button"
-          aria-label="Close menu"
-          onClick={onCloseMobileMenu}
-          className="fixed inset-0 z-40 bg-black/60 md:hidden"
-        />
-      ) : null}
-
-      <div
-        className={cx(
-          "rounded-2xl border border-white/10",
-          scrolled ? "bg-black/70 backdrop-blur" : "bg-black/40 backdrop-blur",
-          "px-4 py-3"
-        )}
-      >
-        <div className="hidden items-center justify-between md:flex">
-          <button
-            type="button"
-            onClick={() => onGo("home")}
-            className="flex items-center gap-3 text-left"
-          >
-            <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03]">
-              <span className="text-sm font-extrabold text-white">JR</span>
-            </div>
-            <div className="leading-tight">
-              <div className="text-sm font-semibold text-white">{COPY.name}</div>
-              <div className="text-xs text-white/60">Portfolio</div>
-            </div>
-          </button>
-
-          <div className="hidden items-center gap-6 md:flex">
-            {items.map((it) => {
-              const active = it.id === activeId;
-              return (
-                <button
-                  key={it.id}
-                  type="button"
-                  onClick={() => onGo(it.id)}
-                  className={cx(
-                    "relative text-sm font-semibold transition",
-                    active ? "text-white" : "text-white/70 hover:text-white"
-                  )}
-                >
-                  {it.label}
-                  <span
-                    className={cx(
-                      "absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition",
-                      active
-                        ? "bg-sky-400 shadow-[0_0_14px_rgba(56,189,248,0.55)]"
-                        : "bg-transparent"
-                    )}
-                  />
-                </button>
-              );
-            })}
+          onClick={() => onGo("home")}
+          className="flex items-center gap-3 text-left"
+        >
+          <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03]">
+            <span className="text-sm font-extrabold text-white">JR</span>
           </div>
-
-          <div className="flex items-center gap-2">
-            <Button as="a" href={COPY.github} variant="secondary" className="hidden sm:inline-flex">
-              <Icon name="github" className="h-4 w-4" /> GitHub
-            </Button>
-            <Button as="a" href={COPY.linkedin} variant="secondary" className="hidden sm:inline-flex">
-              <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
-            </Button>
+          <div className="leading-tight">
+            <div className="text-sm font-semibold text-white">{COPY.name}</div>
+            <div className="text-xs text-white/60">Portfolio</div>
           </div>
-        </div>
+        </button>
 
-        <div className="flex items-center justify-between gap-2 md:hidden">
-          <button
-            type="button"
-            onClick={() => onGo("home")}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-sm font-extrabold text-white"
-            aria-label="Go to home section"
-          >
-            JR
-          </button>
-
-          <Button type="button" onClick={() => onGo("projects")} className="h-9 px-4 text-xs">
-            Projects
-          </Button>
-
-          <button
-            type="button"
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-menu-panel"
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            onClick={onToggleMobileMenu}
-            className="grid h-9 w-9 place-items-center rounded-lg border border-white/12 bg-white/[0.02] text-white transition hover:border-white/25"
-          >
-            <Icon name={isMobileMenuOpen ? "x" : "menu"} className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
-
-      <div
-        id="mobile-menu-panel"
-        className={cx(
-          "absolute inset-x-0 top-[calc(100%+8px)] z-50 rounded-2xl border border-white/12 bg-black/90 p-4 backdrop-blur-lg transition duration-200 md:hidden",
-          isMobileMenuOpen
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-2 opacity-0"
-        )}
-      >
-        <div className="grid gap-2">
+        <div className="hidden items-center gap-6 md:flex">
           {items.map((it) => {
             const active = it.id === activeId;
             return (
               <button
                 key={it.id}
                 type="button"
-                onClick={() => {
-                  onGo(it.id);
-                  onCloseMobileMenu();
-                }}
+                onClick={() => onGo(it.id)}
                 className={cx(
-                  "w-full rounded-xl border px-3 py-2.5 text-left text-sm font-semibold transition",
-                  active
-                    ? "border-sky-400/45 bg-sky-400/10 text-white"
-                    : "border-white/12 bg-white/[0.02] text-white/85 hover:border-white/25"
+                  "relative text-sm font-semibold transition",
+                  active ? "text-white" : "text-white/70 hover:text-white"
                 )}
               >
                 {it.label}
+                <span
+                  className={cx(
+                    "absolute -bottom-2 left-0 h-[2px] w-full rounded-full transition",
+                    active
+                      ? "bg-sky-400 shadow-[0_0_14px_rgba(56,189,248,0.55)]"
+                      : "bg-transparent"
+                  )}
+                />
               </button>
             );
           })}
         </div>
 
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          <Button as="a" href={COPY.github} variant="secondary" className="h-9 justify-center px-3 text-xs">
+        <div className="flex items-center gap-2">
+          <Button as="a" href={COPY.github} variant="secondary" className="hidden sm:inline-flex">
             <Icon name="github" className="h-4 w-4" /> GitHub
           </Button>
-          <Button as="a" href={COPY.linkedin} variant="secondary" className="h-9 justify-center px-3 text-xs">
+          <Button as="a" href={COPY.linkedin} variant="secondary" className="hidden sm:inline-flex">
             <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
           </Button>
         </div>
@@ -513,7 +412,6 @@ export default function PortfolioPage() {
 
   const [scrolled, setScrolled] = useState(false);
   const [canHover, setCanHover] = useState(false);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [spotlightSize, setSpotlightSize] = useState(SPOTLIGHT_SIZE_DESKTOP);
   const [heroGlowFactor, setHeroGlowFactor] = useState(1);
   const [glow, setGlow] = useState({ x: -9999, y: -9999, active: false });
@@ -612,34 +510,9 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  useEffect(() => {
-    const onKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
-
-  useEffect(() => {
-    const desktopMq = window.matchMedia("(min-width: 768px)");
-    const onDesktop = () => {
-      if (desktopMq.matches) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    onDesktop();
-    desktopMq.addEventListener?.("change", onDesktop);
-    return () => desktopMq.removeEventListener?.("change", onDesktop);
-  }, []);
-
   const go = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    setMobileMenuOpen(false);
     el.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
   };
 
@@ -696,15 +569,7 @@ export default function PortfolioPage() {
 
         <div className={cx("relative z-10", TOKENS.container)}>
           <header className="sticky top-0 z-50 -mx-5 px-5 py-3 sm:-mx-8 sm:px-8 sm:py-4">
-            <Nav
-              items={sections}
-              activeId={activeId}
-              scrolled={scrolled}
-              onGo={go}
-              isMobileMenuOpen={isMobileMenuOpen}
-              onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
-              onCloseMobileMenu={() => setMobileMenuOpen(false)}
-            />
+            <Nav items={sections} activeId={activeId} scrolled={scrolled} onGo={go} />
           </header>
 
           <main className={TOKENS.sectionY}>
@@ -732,6 +597,10 @@ export default function PortfolioPage() {
 
                     <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>{COPY.subhead}</p>
 
+                    <div className="mt-5 md:hidden">
+                      <ProfileSummary mailto={mailto} />
+                    </div>
+
                     <div className="mt-7 flex flex-wrap items-center gap-3 max-md:mt-5 max-md:flex-col max-md:items-stretch">
                       <Button onClick={() => go("projects")} className="max-md:w-full">
                         View projects <Icon name="arrow" className="h-4 w-4" />
@@ -745,7 +614,7 @@ export default function PortfolioPage() {
                     </div>
                   </div>
 
-                  <div className="min-w-0 md:pt-2">
+                  <div className="hidden min-w-0 md:block md:pt-2">
                     <ProfileSummary mailto={mailto} />
                   </div>
                 </div>
