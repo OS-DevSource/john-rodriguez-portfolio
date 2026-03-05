@@ -27,7 +27,7 @@ const COPY = {
   name: "John Rodriguez",
   headline: "Systems builder | JS dev | Integrations",
   titleOneLine: "Systems builder | JS dev | Integrations",
-  signal: "Strategy + implementation. I ship systems teams actually adopt.",
+  signal: "Strategy + implementation. Systems that stick. Rules that scale. Reporting that matches reality.",
   subhead:
     "Turn messy GTM handoffs into a reliable flow, with clear lifecycle rules, clean ownership, and reporting teams can trust with confidence.",
   location: "Jarrell, TX (Central Time)",
@@ -615,10 +615,13 @@ export default function PortfolioPage() {
                     <h1
                       className={cx(
                         TOKENS.h1,
-                        "mt-5 max-w-3xl max-md:mt-3 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
+                        "mt-4 max-w-3xl max-md:mt-3 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
                       )}
                     >
-                      Design. Build. Automate.
+                      Design. Build.{" "}
+                      <span className="bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)]">
+                        Automate.
+                      </span>
                     </h1>
 
                     <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>{COPY.subhead}</p>
