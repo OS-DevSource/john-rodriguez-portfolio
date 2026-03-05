@@ -25,8 +25,8 @@ const CURSOR_GLOW_LERP_FACTOR = 0.14;
 
 const COPY = {
   name: "John Rodriguez",
-  headline: "Sales & Marketing Director (Central TX) | GTM Systems + Web Dev (JS) + Automation",
-  titleOneLine: "GTM systems builder + web dev (JS) + automation",
+  headline: "Systems builder | JS dev | Integrations",
+  titleOneLine: "Systems builder | JS dev | Integrations",
   signal: "Strategy + implementation. I ship systems teams actually adopt.",
   subhead:
     "I build revenue systems people actually use: lifecycle design, routing, governance, automation, and reporting. Also shipping web apps with clean UX and reliable data models.",
@@ -263,11 +263,11 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
           <Image
             src={HEADSHOT_SRC}
             alt="Headshot of John Rodriguez"
-            width={64}
-            height={64}
-            sizes="64px"
+            width={72}
+            height={72}
+            sizes="72px"
             priority
-            className="relative h-16 w-16 rounded-full border border-white/10 object-cover"
+            className="relative h-[72px] w-[72px] rounded-full border border-white/10 object-cover"
           />
         </div>
         <div className="min-w-0">
@@ -602,8 +602,7 @@ export default function PortfolioPage() {
                         "mt-5 max-w-3xl max-md:mt-3 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
                       )}
                     >
-                      Systems builder for GTM teams,
-                      <span className="text-sky-200"> shipping clean web apps</span>.
+                      Design. Build. Automate.
                     </h1>
 
                     <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>{COPY.subhead}</p>
@@ -767,10 +766,10 @@ export default function PortfolioPage() {
                     <Image
                       src={HEADSHOT_SRC}
                       alt="Headshot of John Rodriguez"
-                      width={56}
-                      height={56}
-                      sizes="56px"
-                      className="h-14 w-14 rounded-full border border-white/10 object-cover"
+                      width={64}
+                      height={64}
+                      sizes="64px"
+                      className="h-16 w-16 rounded-full border border-white/10 object-cover"
                     />
                     <div className="min-w-0">
                       <div className="text-base font-bold text-white">{COPY.name}</div>
