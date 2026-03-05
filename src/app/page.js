@@ -13,6 +13,7 @@ Notes:
 - Headshot is loaded from /public/headshot.jpg.
 */
 
+import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const HEADSHOT_SRC = "/headshot.jpg";
@@ -24,11 +25,11 @@ const CURSOR_GLOW_LERP_FACTOR = 0.14;
 
 const COPY = {
   name: "John Rodriguez",
-  headline: "Sales & Marketing Director (Central TX) | GTM Systems + Web Dev (JS) + Automation",
-  titleOneLine: "GTM systems builder + web dev (JS) + automation",
-  signal: "Strategy + implementation. I ship systems teams actually adopt.",
+  headline: "Systems builder | JS dev | Integrations",
+  titleOneLine: "Systems builder | JS dev | Integrations",
+  signal: "Strategy + implementation. Systems that stick. Rules that scale. Reporting that matches reality.",
   subhead:
-    "I build revenue systems people actually use: lifecycle design, routing, governance, automation, and reporting. Also shipping web apps with clean UX and reliable data models.",
+    "Turn messy GTM handoffs into a reliable flow with clear lifecycle rules, clean ownership, and reporting teams can trust.",
   location: "Jarrell, TX (Central Time)",
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
@@ -71,7 +72,7 @@ const PROJECTS = [
 
 const TOKENS = {
   container: "mx-auto w-full max-w-6xl px-5 sm:px-8",
-  sectionY: "py-16 sm:py-20",
+  sectionY: "py-12 sm:py-20",
   chapterBreak: "py-10 sm:py-12",
 
   eyebrow: "text-[11px] uppercase tracking-[0.22em]",
@@ -253,21 +254,41 @@ function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
   );
 }
 
-function ProfileSummary({ mailto }) {
+function AvailabilityPill() {
   return (
-    <Card interactive className="max-w-md border-white/8 bg-white/[0.02]">
+    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
+      <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
+      Central TX | Remote-ready
+    </div>
+  );
+}
+
+function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant = "mobile" }) {
+  const isDesktop = variant === "desktop";
+  return (
+    <Card
+      interactive
+      className={cx(
+        "border-white/8 bg-white/[0.02] max-md:max-w-full",
+        isDesktop ? "md:max-w-none" : "max-w-md"
+      )}
+    >
       <div className="flex items-center gap-4">
         <div className="relative">
           <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
-          <img
+          <Image
             src={HEADSHOT_SRC}
             alt="Headshot of John Rodriguez"
-            className="relative h-16 w-16 rounded-full border border-white/10 object-cover"
+            width={72}
+            height={72}
+            sizes="72px"
+            priority
+            className="relative h-[72px] w-[72px] rounded-full border border-white/10 object-cover"
           />
         </div>
         <div className="min-w-0">
-          <div className="truncate text-base font-bold text-white">{COPY.name}</div>
-          <div className="mt-1 truncate text-sm text-white/70">{COPY.titleOneLine}</div>
+          <div className="text-base font-bold text-white md:truncate">{COPY.name}</div>
+          <div className="mt-1 text-sm text-white/70">{COPY.titleOneLine}</div>
         </div>
       </div>
 
@@ -288,12 +309,28 @@ function ProfileSummary({ mailto }) {
         >
           <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
         </Button>
-        <Button as="a" href={mailto} variant="tertiary" className="h-9 px-3 text-xs">
+        <Button
+          as="a"
+          href={mailto}
+          variant={isDesktop ? "tertiary" : "secondary"}
+          className={cx(
+            "h-9 px-3 text-xs",
+            isDesktop ? null : "border-sky-400/40 hover:border-sky-300/55"
+          )}
+        >
           <Icon name="mail" className="h-4 w-4" /> Email
         </Button>
       </div>
 
-      <div className="mt-3 text-sm leading-6 text-white/70">{COPY.signal}</div>
+      {showHeroCtas ? (
+        <div className="mt-4 grid gap-3">
+          <Button type="button" onClick={onViewProjects} className="w-full">
+            View projects <Icon name="arrow" className="h-4 w-4" />
+          </Button>
+        </div>
+      ) : null}
+
+      {isDesktop ? <div className="mt-3 text-sm leading-6 text-white/70">{COPY.signal}</div> : null}
     </Card>
   );
 }
@@ -350,10 +387,10 @@ function Nav({ items, activeId, scrolled, onGo }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button as="a" href={COPY.github} variant="secondary" className="hidden sm:inline-flex">
+          <Button as="a" href={COPY.github} variant="secondary" className="hidden md:inline-flex">
             <Icon name="github" className="h-4 w-4" /> GitHub
           </Button>
-          <Button as="a" href={COPY.linkedin} variant="secondary" className="hidden sm:inline-flex">
+          <Button as="a" href={COPY.linkedin} variant="secondary" className="hidden md:inline-flex">
             <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
           </Button>
         </div>
@@ -546,36 +583,62 @@ export default function PortfolioPage() {
         onPointerLeave={handlePointerLeave}
       >
         <Backdrop />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-[72px] z-[2] block h-[620px] md:hidden"
+          style={{
+            backgroundImage:
+              "radial-gradient(96% 74% at 14% 18%, rgba(56,189,248,0.23) 0%, rgba(56,189,248,0.12) 38%, rgba(56,189,248,0) 76%), radial-gradient(82% 62% at 84% 20%, rgba(249,115,22,0.11) 0%, rgba(249,115,22,0.05) 40%, rgba(249,115,22,0) 78%)",
+            WebkitMaskImage:
+              "radial-gradient(124% 94% at 50% 8%, rgba(0,0,0,0.98) 30%, rgba(0,0,0,0.84) 56%, rgba(0,0,0,0.5) 72%, rgba(0,0,0,0.06) 86%, rgba(0,0,0,0) 100%), linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.84) 13%, rgba(0,0,0,0.84) 87%, rgba(0,0,0,0) 100%)",
+            maskImage:
+              "radial-gradient(124% 94% at 50% 8%, rgba(0,0,0,0.98) 30%, rgba(0,0,0,0.84) 56%, rgba(0,0,0,0.5) 72%, rgba(0,0,0,0.06) 86%, rgba(0,0,0,0) 100%), linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.84) 13%, rgba(0,0,0,0.84) 87%, rgba(0,0,0,0) 100%)",
+          }}
+        />
         {enableCursorGlow ? (
           <div aria-hidden className="pointer-events-none absolute inset-0 z-[1]" style={spotlightStyle} />
         ) : null}
 
         <div className={cx("relative z-10", TOKENS.container)}>
-          <header className="sticky top-0 z-50 -mx-5 px-5 py-4 sm:-mx-8 sm:px-8">
+          <header className="sticky top-0 z-50 -mx-5 px-5 py-3 sm:-mx-8 sm:px-8 sm:py-4">
             <Nav items={sections} activeId={activeId} scrolled={scrolled} onGo={go} />
           </header>
 
           <main className={TOKENS.sectionY}>
-            <section id="home" ref={homeRef} className="scroll-mt-28">
+            <section id="home" ref={homeRef} className="scroll-mt-28 max-md:-mt-2">
               <div className="relative">
-                <div className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl" />
-                <div className="pointer-events-none absolute left-24 top-8 h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl" />
+                <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
+                <div className="pointer-events-none absolute left-24 top-8 hidden h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl md:block" />
 
-                <div className="grid gap-10 md:grid-cols-[1.35fr_0.65fr] md:items-start">
-                  <div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
-                      <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
-                      Central TX | Remote-ready
-                    </div>
-
-                    <h1 className={cx(TOKENS.h1, "mt-5 max-w-3xl")}>
-                      Systems builder for GTM teams,
-                      <span className="text-sky-200"> shipping clean web apps</span>.
+                <div className="grid gap-10 max-md:gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-start">
+                  <div className="min-w-0">
+                    <h1
+                      className={cx(
+                        TOKENS.h1,
+                        "mt-3 max-w-3xl max-md:mt-2 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04] sm:text-[3.9rem]"
+                      )}
+                    >
+                      Design. Build.{" "}
+                      <span className="bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)]">
+                        Automate.
+                      </span>
                     </h1>
 
-                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl")}>{COPY.subhead}</p>
+                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>{COPY.subhead}</p>
 
-                    <div className="mt-7 flex flex-wrap items-center gap-3">
+                    <div className="mt-5 md:hidden">
+                      <ProfileSummary
+                        mailto={mailto}
+                        variant="mobile"
+                        showHeroCtas
+                        onViewProjects={() => go("projects")}
+                      />
+                      <div className="mt-4">
+                        <AvailabilityPill />
+                      </div>
+                    </div>
+
+                    <div className="mt-7 hidden flex-wrap items-center gap-3 md:flex">
                       <Button onClick={() => go("projects")}>
                         View projects <Icon name="arrow" className="h-4 w-4" />
                       </Button>
@@ -588,8 +651,11 @@ export default function PortfolioPage() {
                     </div>
                   </div>
 
-                  <div className="md:pt-2">
-                    <ProfileSummary mailto={mailto} />
+                  <div className="hidden min-w-0 md:block md:pt-2">
+                    <ProfileSummary mailto={mailto} variant="desktop" />
+                    <div className="mt-4">
+                      <AvailabilityPill />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -721,57 +787,61 @@ export default function PortfolioPage() {
               />
 
               <div className="grid gap-6 md:grid-cols-2">
-                <Card interactive>
-                  <div className="flex items-center gap-4">
-                    <img
+                <Card interactive className="min-w-0 w-full">
+                  <div className="flex min-w-0 items-start gap-4">
+                    <Image
                       src={HEADSHOT_SRC}
                       alt="Headshot of John Rodriguez"
-                      className="h-14 w-14 rounded-full border border-white/10 object-cover"
+                      width={64}
+                      height={64}
+                      sizes="64px"
+                      className="h-16 w-16 rounded-full border border-white/10 object-cover"
                     />
                     <div className="min-w-0">
                       <div className="text-base font-bold text-white">{COPY.name}</div>
-                      <div className="mt-1 truncate text-sm text-white/70">{COPY.headline}</div>
+                      <div className="mt-1 text-sm text-white/70 md:truncate">{COPY.headline}</div>
                     </div>
                   </div>
 
                   <div className="mt-5 grid gap-3">
                     <a
                       href={mailto}
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                      className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
                     >
-                      <span className="flex items-center gap-2">
-                        <Icon name="mail" className="h-4 w-4" /> {COPY.email}
+                      <span className="flex min-w-0 items-center gap-2 overflow-hidden">
+                        <Icon name="mail" className="h-4 w-4 flex-none" />
+                        <span className="truncate">{COPY.email}</span>
                       </span>
-                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                      <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
                     </a>
 
                     <a
                       href={COPY.github}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                      className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex min-w-0 items-center gap-2 overflow-hidden">
                         <Icon name="github" className="h-4 w-4" /> GitHub
                       </span>
-                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                      <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
                     </a>
 
                     <a
                       href={COPY.linkedin}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+                      className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex min-w-0 items-center gap-2 overflow-hidden">
                         <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
                       </span>
-                      <Icon name="arrow" className="h-4 w-4 text-white/60" />
+                      <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
                     </a>
                   </div>
                 </Card>
 
-                <Card interactive>
+                <Card interactive className="min-w-0 w-full">
                   <div className="text-base font-bold text-white">Message</div>
                   <p className={cx(TOKENS.muted, "mt-2")}>This opens your email client with the details prefilled.</p>
 
