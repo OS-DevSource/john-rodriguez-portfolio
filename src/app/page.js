@@ -27,8 +27,9 @@ const COPY = {
   name: "John Rodriguez",
   headline: "Systems builder | JS dev | Integrations",
   titleOneLine: "Systems builder | JS dev | Integrations",
+  signal: "Strategy + implementation. I ship systems teams actually adopt.",
   subhead:
-    "I turn messy GTM handoffs into a reliable flow, with clear lifecycle rules and reporting teams can trust.",
+    "Turn messy GTM handoffs into a reliable flow, with clear lifecycle rules, clean ownership, and reporting teams can trust with confidence.",
   location: "Jarrell, TX (Central Time)",
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
@@ -253,9 +254,25 @@ function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
   );
 }
 
-function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
+function AvailabilityPill() {
   return (
-    <Card interactive className="max-w-md border-white/8 bg-white/[0.02] max-md:max-w-full">
+    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
+      <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
+      Central TX | Remote-ready
+    </div>
+  );
+}
+
+function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant = "mobile" }) {
+  const isDesktop = variant === "desktop";
+  return (
+    <Card
+      interactive
+      className={cx(
+        "border-white/8 bg-white/[0.02] max-md:max-w-full",
+        isDesktop ? "md:max-w-none" : "max-w-md"
+      )}
+    >
       <div className="flex items-center gap-4">
         <div className="relative">
           <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
@@ -295,8 +312,11 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
         <Button
           as="a"
           href={mailto}
-          variant="secondary"
-          className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
+          variant={isDesktop ? "tertiary" : "secondary"}
+          className={cx(
+            "h-9 px-3 text-xs",
+            isDesktop ? null : "border-sky-400/40 hover:border-sky-300/55"
+          )}
         >
           <Icon name="mail" className="h-4 w-4" /> Email
         </Button>
@@ -309,6 +329,8 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
           </Button>
         </div>
       ) : null}
+
+      {isDesktop ? <div className="mt-3 text-sm leading-6 text-white/70">{COPY.signal}</div> : null}
     </Card>
   );
 }
@@ -588,13 +610,8 @@ export default function PortfolioPage() {
                 <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
                 <div className="pointer-events-none absolute left-24 top-8 hidden h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl md:block" />
 
-                <div className="grid gap-10 max-md:gap-6 md:grid-cols-[1.35fr_0.65fr] md:items-start">
+                <div className="grid gap-10 max-md:gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-start">
                   <div className="min-w-0">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
-                      <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
-                      Central TX | Remote-ready
-                    </div>
-
                     <h1
                       className={cx(
                         TOKENS.h1,
@@ -607,7 +624,15 @@ export default function PortfolioPage() {
                     <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>{COPY.subhead}</p>
 
                     <div className="mt-5 md:hidden">
-                      <ProfileSummary mailto={mailto} showHeroCtas onViewProjects={() => go("projects")} />
+                      <ProfileSummary
+                        mailto={mailto}
+                        variant="mobile"
+                        showHeroCtas
+                        onViewProjects={() => go("projects")}
+                      />
+                      <div className="mt-4">
+                        <AvailabilityPill />
+                      </div>
                     </div>
 
                     <div className="mt-7 hidden flex-wrap items-center gap-3 md:flex">
@@ -624,7 +649,10 @@ export default function PortfolioPage() {
                   </div>
 
                   <div className="hidden min-w-0 md:block md:pt-2">
-                    <ProfileSummary mailto={mailto} />
+                    <ProfileSummary mailto={mailto} variant="desktop" />
+                    <div className="mt-4">
+                      <AvailabilityPill />
+                    </div>
                   </div>
                 </div>
               </div>
