@@ -29,7 +29,7 @@ const COPY = {
   titleOneLine: "Systems builder | JS dev | Integrations",
   signal: "Strategy + implementation. Systems that stick. Rules that scale. Reporting that matches reality.",
   subhead:
-    "Turn messy GTM handoffs into a reliable flow, with clear lifecycle rules, clean ownership, and reporting teams can trust with confidence.",
+    "Turn messy GTM handoffs into a reliable flow with clear lifecycle rules, clean ownership, and reporting teams can trust.",
   location: "Jarrell, TX (Central Time)",
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
@@ -615,7 +615,7 @@ export default function PortfolioPage() {
                     <h1
                       className={cx(
                         TOKENS.h1,
-                        "mt-4 max-w-3xl max-md:mt-3 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
+                        "mt-3 max-w-3xl max-md:mt-2 max-md:max-w-full max-md:text-[clamp(2.3rem,11.2vw,3.35rem)] max-md:leading-[1.04] sm:text-[3.9rem]"
                       )}
                     >
                       Design. Build.{" "}
