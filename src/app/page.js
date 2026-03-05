@@ -387,10 +387,10 @@ function Nav({ items, activeId, scrolled, onGo }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button as="a" href={COPY.github} variant="secondary" className="hidden sm:inline-flex">
+          <Button as="a" href={COPY.github} variant="secondary" className="hidden md:inline-flex">
             <Icon name="github" className="h-4 w-4" /> GitHub
           </Button>
-          <Button as="a" href={COPY.linkedin} variant="secondary" className="hidden sm:inline-flex">
+          <Button as="a" href={COPY.linkedin} variant="secondary" className="hidden md:inline-flex">
             <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
           </Button>
         </div>
@@ -615,7 +615,7 @@ export default function PortfolioPage() {
                     <h1
                       className={cx(
                         TOKENS.h1,
-                        "mt-3 max-w-3xl max-md:mt-2 max-md:max-w-full max-md:text-[clamp(2.3rem,11.2vw,3.35rem)] max-md:leading-[1.04] sm:text-[3.9rem]"
+                        "mt-3 max-w-3xl max-md:mt-2 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04] sm:text-[3.9rem]"
                       )}
                     >
                       Design. Build.{" "}
