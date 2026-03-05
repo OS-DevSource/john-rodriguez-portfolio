@@ -27,9 +27,8 @@ const COPY = {
   name: "John Rodriguez",
   headline: "Systems builder | JS dev | Integrations",
   titleOneLine: "Systems builder | JS dev | Integrations",
-  signal: "Strategy + implementation. I ship systems teams actually adopt.",
   subhead:
-    "I build revenue systems people actually use: lifecycle design, routing, governance, automation, and reporting. Also shipping web apps with clean UX and reliable data models.",
+    "I turn messy GTM handoffs into a reliable flow, with clear lifecycle rules and reporting teams can trust.",
   location: "Jarrell, TX (Central Time)",
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
@@ -310,8 +309,6 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
           </Button>
         </div>
       ) : null}
-
-      <div className="mt-3 text-sm leading-6 text-white/70">{COPY.signal}</div>
     </Card>
   );
 }
@@ -623,10 +620,6 @@ export default function PortfolioPage() {
                       <div className="flex items-center gap-2 text-xs text-white/60">
                         <Icon name="pin" className="h-4 w-4" /> {COPY.location}
                       </div>
-                    </div>
-
-                    <div className="mt-4 flex items-center gap-2 text-xs text-white/60 md:hidden">
-                      <Icon name="pin" className="h-4 w-4" /> {COPY.location}
                     </div>
                   </div>
 
