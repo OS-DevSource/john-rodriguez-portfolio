@@ -254,7 +254,7 @@ function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
   );
 }
 
-function ProfileSummary({ mailto }) {
+function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
   return (
     <Card interactive className="max-w-md border-white/8 bg-white/[0.02] max-md:max-w-full">
       <div className="flex items-center gap-4">
@@ -297,6 +297,17 @@ function ProfileSummary({ mailto }) {
           <Icon name="mail" className="h-4 w-4" /> Email
         </Button>
       </div>
+
+      {showHeroCtas ? (
+        <div className="mt-4 grid gap-3">
+          <Button type="button" onClick={onViewProjects} className="w-full">
+            View projects <Icon name="arrow" className="h-4 w-4" />
+          </Button>
+          <Button as="a" href={mailto} variant="secondary" className="w-full">
+            <Icon name="mail" className="h-4 w-4" /> Email me
+          </Button>
+        </div>
+      ) : null}
 
       <div className="mt-3 text-sm leading-6 text-white/70">{COPY.signal}</div>
     </Card>
@@ -573,7 +584,7 @@ export default function PortfolioPage() {
           </header>
 
           <main className={TOKENS.sectionY}>
-            <section id="home" ref={homeRef} className="scroll-mt-28">
+            <section id="home" ref={homeRef} className="scroll-mt-28 max-md:-mt-2">
               <div className="relative">
                 <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
                 <div className="pointer-events-none absolute left-24 top-8 hidden h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl md:block" />
@@ -588,7 +599,7 @@ export default function PortfolioPage() {
                     <h1
                       className={cx(
                         TOKENS.h1,
-                        "mt-5 max-w-3xl max-md:mt-4 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
+                        "mt-5 max-w-3xl max-md:mt-3 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04]"
                       )}
                     >
                       Systems builder for GTM teams,
@@ -598,19 +609,23 @@ export default function PortfolioPage() {
                     <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>{COPY.subhead}</p>
 
                     <div className="mt-5 md:hidden">
-                      <ProfileSummary mailto={mailto} />
+                      <ProfileSummary mailto={mailto} showHeroCtas onViewProjects={() => go("projects")} />
                     </div>
 
-                    <div className="mt-7 flex flex-wrap items-center gap-3 max-md:mt-5 max-md:flex-col max-md:items-stretch">
-                      <Button onClick={() => go("projects")} className="max-md:w-full">
+                    <div className="mt-7 hidden flex-wrap items-center gap-3 md:flex">
+                      <Button onClick={() => go("projects")}>
                         View projects <Icon name="arrow" className="h-4 w-4" />
                       </Button>
-                      <Button as="a" href={mailto} variant="secondary" className="max-md:w-full">
+                      <Button as="a" href={mailto} variant="secondary">
                         <Icon name="mail" className="h-4 w-4" /> Email me
                       </Button>
                       <div className="flex items-center gap-2 text-xs text-white/60">
                         <Icon name="pin" className="h-4 w-4" /> {COPY.location}
                       </div>
+                    </div>
+
+                    <div className="mt-4 flex items-center gap-2 text-xs text-white/60 md:hidden">
+                      <Icon name="pin" className="h-4 w-4" /> {COPY.location}
                     </div>
                   </div>
 
