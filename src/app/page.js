@@ -272,7 +272,7 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
         </div>
         <div className="min-w-0">
           <div className="text-base font-bold text-white md:truncate">{COPY.name}</div>
-          <div className="mt-1 text-sm text-white/70 md:truncate">{COPY.titleOneLine}</div>
+          <div className="mt-1 text-sm text-white/70">{COPY.titleOneLine}</div>
         </div>
       </div>
 
@@ -293,7 +293,12 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
         >
           <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
         </Button>
-        <Button as="a" href={mailto} variant="tertiary" className="h-9 px-3 text-xs">
+        <Button
+          as="a"
+          href={mailto}
+          variant="secondary"
+          className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
+        >
           <Icon name="mail" className="h-4 w-4" /> Email
         </Button>
       </div>
@@ -302,9 +307,6 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects }) {
         <div className="mt-4 grid gap-3">
           <Button type="button" onClick={onViewProjects} className="w-full">
             View projects <Icon name="arrow" className="h-4 w-4" />
-          </Button>
-          <Button as="a" href={mailto} variant="secondary" className="w-full">
-            <Icon name="mail" className="h-4 w-4" /> Email me
           </Button>
         </div>
       ) : null}
