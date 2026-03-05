@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "browser:context": "node scripts/browser-context.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
