@@ -1,19 +1,19 @@
 import Link from "next/link";
 
 export const TOKENS = {
-  container: "mx-auto w-full max-w-6xl px-5 sm:px-8",
-  sectionY: "py-12 sm:py-20",
-  chapterBreak: "py-10 sm:py-12",
+  container: "mx-auto w-full max-w-6xl px-4 sm:px-8",
+  sectionY: "py-10 sm:py-20",
+  chapterBreak: "py-7 sm:py-12",
   eyebrow: "text-[11px] uppercase tracking-[0.22em]",
   h1: "text-4xl sm:text-6xl font-extrabold leading-[1.05] tracking-tight text-white",
   h2: "text-2xl sm:text-3xl font-bold text-white",
-  h3: "text-lg font-semibold text-white",
-  body: "text-[15px] leading-7 text-white/80",
-  muted: "text-sm leading-6 text-white/60",
+  h3: "text-base sm:text-lg font-semibold text-white",
+  body: "text-[15px] leading-[1.65] text-white/80 sm:leading-7",
+  muted: "text-sm leading-[1.55] text-white/60 sm:leading-6",
   card: "rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur",
   cardInteractive:
     "transition hover:border-white/20 hover:bg-white/[0.04] focus-within:border-white/25",
-  cardPad: "p-6",
+  cardPad: "p-5 sm:p-6",
   chip: "rounded-full border border-white/12 bg-transparent px-2.5 py-1 text-xs text-white/70",
   btnBase:
     "inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-sky-400/75 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-60",
@@ -174,7 +174,7 @@ export function SectionTitle({ eyebrow, title, subtitle, tone = "ice", className
   const toneClass = tone === "copper" ? "text-orange-300/70" : "text-sky-200/92";
 
   return (
-    <div className={cx("mb-10", className)}>
+    <div className={cx("mb-8 sm:mb-10", className)}>
       <div className={cx(TOKENS.eyebrow, toneClass)}>{eyebrow}</div>
       <h2 className={cx(TOKENS.h2, "mt-2")}>{title}</h2>
       {subtitle ? (
@@ -186,7 +186,7 @@ export function SectionTitle({ eyebrow, title, subtitle, tone = "ice", className
 
 export function AvailabilityPill({ label }) {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-xs text-white/70">
+    <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-[11px] text-white/70 sm:gap-2 sm:text-xs">
       <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
       {label}
     </div>

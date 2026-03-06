@@ -97,7 +97,7 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
         isDesktop ? "md:max-w-none" : "max-w-md"
       )}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3.5 sm:gap-4">
         <div className="relative">
           <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
           <Image
@@ -105,18 +105,18 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
             alt="Headshot of John Rodriguez"
             width={72}
             height={72}
-            sizes="72px"
+            sizes="(min-width: 640px) 72px, 64px"
             priority
-            className="relative h-[72px] w-[72px] rounded-full border border-white/10 object-cover"
+            className="relative h-16 w-16 rounded-full border border-white/10 object-cover sm:h-[72px] sm:w-[72px]"
           />
         </div>
         <div className="min-w-0">
-          <div className="text-base font-bold text-white md:truncate">{portfolioSite.name}</div>
+          <div className="text-[15px] font-bold text-white md:truncate sm:text-base">{portfolioSite.name}</div>
           <div className="mt-1 text-sm text-white/70">{heroContent.profileTitle}</div>
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-3.5 flex flex-wrap gap-2">
         <Button
           href={portfolioSite.github}
           variant="secondary"
@@ -144,15 +144,15 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
       </div>
 
       {showHeroCtas ? (
-        <div className="mt-4 grid gap-3">
+        <div className="mt-3.5 grid gap-2.5">
           <Button type="button" onClick={onViewProjects} className="w-full">
             View case studies <Icon name="arrow" className="h-4 w-4" />
           </Button>
         </div>
       ) : null}
 
-      <div className="mt-3 text-sm leading-6 text-white/68">{heroContent.profileSignal}</div>
-      <div className="mt-4 flex flex-wrap gap-2 text-xs text-white/55">
+      <div className="mt-2.5 text-sm leading-6 text-white/68">{heroContent.profileSignal}</div>
+      <div className="mt-3.5 flex flex-wrap gap-2 text-xs text-white/55">
         <span className="rounded-full border border-white/10 px-2.5 py-1">{portfolioSite.location}</span>
         <span className="rounded-full border border-white/10 px-2.5 py-1">
           {portfolioSite.timezoneLabel}
@@ -168,17 +168,21 @@ function Nav({ items, activeId, scrolled, onGo }) {
       className={cx(
         "rounded-2xl border border-white/10",
         scrolled ? "bg-black/70 backdrop-blur" : "bg-black/40 backdrop-blur",
-        "px-4 py-3"
+        "px-3.5 py-2.5 sm:px-4 sm:py-3"
       )}
     >
       <div className="flex items-center justify-between">
-        <button type="button" onClick={() => onGo("home")} className="flex items-center gap-3 text-left">
-          <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03]">
-            <span className="text-sm font-extrabold text-white">JR</span>
+        <button
+          type="button"
+          onClick={() => onGo("home")}
+          className="flex items-center gap-2.5 text-left sm:gap-3"
+        >
+          <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.03] sm:h-10 sm:w-10">
+            <span className="text-xs font-extrabold text-white sm:text-sm">JR</span>
           </div>
           <div className="leading-tight">
-            <div className="text-sm font-semibold text-white">{portfolioSite.name}</div>
-            <div className="text-xs text-white/60">Portfolio</div>
+            <div className="text-[13px] font-semibold text-white sm:text-sm">{portfolioSite.name}</div>
+            <div className="text-[11px] text-white/60 sm:text-xs">Portfolio</div>
           </div>
         </button>
 
@@ -234,39 +238,39 @@ function ProjectCard({ project }) {
             width={project.image.width}
             height={project.image.height}
             sizes="(min-width: 768px) 33vw, 100vw"
-            className="h-48 w-full object-cover"
+            className="h-40 w-full object-cover sm:h-48"
           />
-          <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-3">
-            <span className="rounded-full border border-white/10 bg-black/55 px-2.5 py-1 text-[11px] uppercase tracking-[0.22em] text-sky-100/85">
+          <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2 sm:inset-x-4 sm:top-4 sm:gap-3">
+            <span className="rounded-full border border-white/10 bg-black/55 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-sky-100/85 sm:px-2.5 sm:text-[11px] sm:tracking-[0.22em]">
               Case study
             </span>
-            <span className="rounded-full border border-white/10 bg-black/55 px-2.5 py-1 text-[11px] uppercase tracking-[0.18em] text-white/60">
+            <span className="rounded-full border border-white/10 bg-black/55 px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-white/60 sm:px-2.5 sm:text-[11px] sm:tracking-[0.18em]">
               {socialProofLabel}
             </span>
           </div>
         </div>
 
-        <div className="mt-5">
+        <div className="mt-4 sm:mt-5">
           <div className="text-base font-bold text-white">{project.title}</div>
-          <p className="mt-2 text-sm leading-6 text-sky-100/80">{project.cardSummary}</p>
+          <p className="mt-1.5 text-sm leading-6 text-sky-100/80 sm:mt-2">{project.cardSummary}</p>
         </div>
 
-        <div className="mt-4 grid gap-2.5 text-sm leading-6 text-white/72">
-          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3.5 py-3">
-            <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Problem</div>
+        <div className="mt-3.5 grid gap-2 text-sm leading-6 text-white/72 sm:mt-4 sm:gap-2.5">
+          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/70 sm:text-[11px] sm:tracking-[0.18em]">Problem</div>
             <p className="mt-1">{project.cardProblem}</p>
           </div>
-          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3.5 py-3">
-            <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Solution</div>
+          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/70 sm:text-[11px] sm:tracking-[0.18em]">Solution</div>
             <p className="mt-1">{project.cardSolution}</p>
           </div>
-          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3.5 py-3">
-            <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Status</div>
+          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/70 sm:text-[11px] sm:tracking-[0.18em]">Status</div>
             <p className="mt-1">{project.cardMeta}</p>
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-3.5 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
           {project.stack.map((item) => (
             <span key={item} className={TOKENS.chip}>
               {item}
@@ -274,7 +278,7 @@ function ProjectCard({ project }) {
           ))}
         </div>
 
-        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="mt-4 flex flex-col gap-2.5 sm:mt-5 sm:flex-row sm:flex-wrap sm:gap-3">
           <Button href={project.primaryCta.href} variant="primary" className="sm:flex-1">
             {project.primaryCta.label} <Icon name="arrow" className="h-4 w-4" />
           </Button>
@@ -292,14 +296,14 @@ function ProjectCard({ project }) {
 function ContactLinksCard({ mailto }) {
   return (
     <Card interactive className="min-w-0 w-full">
-      <div className="flex min-w-0 items-start gap-4">
+      <div className="flex min-w-0 items-start gap-3.5 sm:gap-4">
         <Image
           src={HEADSHOT_SRC}
           alt="Headshot of John Rodriguez"
           width={64}
           height={64}
-          sizes="64px"
-          className="h-16 w-16 rounded-full border border-white/10 object-cover"
+          sizes="(min-width: 640px) 64px, 56px"
+          className="h-14 w-14 rounded-full border border-white/10 object-cover sm:h-16 sm:w-16"
         />
         <div className="min-w-0">
           <div className="text-base font-bold text-white">{portfolioSite.name}</div>
@@ -308,10 +312,10 @@ function ContactLinksCard({ mailto }) {
         </div>
       </div>
 
-      <div className="mt-4 grid gap-3">
+      <div className="mt-3.5 grid gap-2.5 sm:mt-4 sm:gap-3">
         <a
           href={mailto}
-          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04] sm:px-4"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden">
             <Icon name="mail" className="h-4 w-4 flex-none" />
@@ -324,7 +328,7 @@ function ContactLinksCard({ mailto }) {
           href={portfolioSite.github}
           target="_blank"
           rel="noreferrer"
-          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04] sm:px-4"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden">
             <Icon name="github" className="h-4 w-4" /> GitHub
@@ -336,7 +340,7 @@ function ContactLinksCard({ mailto }) {
           href={portfolioSite.linkedin}
           target="_blank"
           rel="noreferrer"
-          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
+          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04] sm:px-4"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden">
             <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
@@ -525,7 +529,7 @@ export function PortfolioHome() {
         ) : null}
 
         <div className={cx("relative z-10", TOKENS.container)}>
-          <header className="sticky top-0 z-50 -mx-5 px-5 py-3 sm:-mx-8 sm:px-8 sm:py-4">
+          <header className="sticky top-0 z-50 -mx-4 px-4 py-2.5 sm:-mx-8 sm:px-8 sm:py-4">
             <Nav items={navigationItems} activeId={activeId} scrolled={scrolled} onGo={go} />
           </header>
 
@@ -535,7 +539,7 @@ export function PortfolioHome() {
                 <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
                 <div className="pointer-events-none absolute left-24 top-8 hidden h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl md:block" />
 
-                <div className="grid gap-10 max-md:gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-start">
+                <div className="grid gap-10 max-md:gap-5 md:grid-cols-[1.2fr_0.8fr] md:items-start">
                   <div className="min-w-0">
                     <div className={cx(TOKENS.eyebrow, "text-sky-200/92")}>{heroContent.eyebrow}</div>
                     <h1
@@ -550,27 +554,27 @@ export function PortfolioHome() {
                       </span>
                     </h1>
 
-                    <p className={cx(TOKENS.body, "mt-4 max-w-2xl max-md:mt-4 max-md:max-w-full")}>
+                    <p className={cx(TOKENS.body, "mt-3.5 max-w-2xl max-md:max-w-full sm:mt-4")}>
                       {heroContent.summary}
                     </p>
 
-                    <div className="mt-4 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm leading-6 text-white/70">
+                    <div className="mt-3.5 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white/70 sm:mt-4 sm:py-3.5">
                       {heroContent.callout}
                     </div>
 
-                    <div className="mt-5 md:hidden">
-                      <ProfileSummary
-                        mailto={mailto}
-                        variant="mobile"
-                        showHeroCtas
-                        onViewProjects={() => go("projects")}
-                      />
-                      <div className="mt-4">
+                    <div className="mt-4 md:hidden">
+                      <div className="space-y-3">
+                        <ProfileSummary
+                          mailto={mailto}
+                          variant="mobile"
+                          showHeroCtas
+                          onViewProjects={() => go("projects")}
+                        />
                         <AvailabilityPill label={portfolioSite.availability} />
                       </div>
                     </div>
 
-                    <div className="mt-7 hidden flex-wrap items-center gap-3 md:flex">
+                    <div className="mt-6 hidden flex-wrap items-center gap-3 md:flex">
                       <Button type="button" onClick={() => go("projects")}>
                         View case studies <Icon name="arrow" className="h-4 w-4" />
                       </Button>
@@ -583,9 +587,9 @@ export function PortfolioHome() {
                     </div>
                   </div>
 
-                  <div className="hidden min-w-0 md:block md:pt-2">
-                    <ProfileSummary mailto={mailto} variant="desktop" />
-                    <div className="mt-4">
+                  <div className="hidden min-w-0 md:block md:pt-1">
+                    <div className="space-y-3">
+                      <ProfileSummary mailto={mailto} variant="desktop" />
                       <AvailabilityPill label={portfolioSite.availability} />
                     </div>
                   </div>
@@ -601,14 +605,14 @@ export function PortfolioHome() {
                 title={aboutContent.title}
                 subtitle={aboutContent.subtitle}
                 tone="copper"
-                className="mb-12"
+                className="mb-10 sm:mb-12"
                 subtitleClassName="max-w-[42rem]"
               />
 
-              <div className="grid gap-9 md:grid-cols-2">
+              <div className="grid gap-8 sm:gap-9 md:grid-cols-2">
                 <div>
                   <h3 className={TOKENS.h3}>What you get</h3>
-                  <ul className={cx("mt-3.5 space-y-3", TOKENS.body)}>
+                  <ul className={cx("mt-3 space-y-2.5 sm:mt-3.5 sm:space-y-3", TOKENS.body)}>
                     {aboutContent.outcomes.map((item) => (
                       <li key={item} className="flex gap-3">
                         <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-sky-400" />
@@ -620,7 +624,7 @@ export function PortfolioHome() {
 
                 <div>
                   <h3 className={TOKENS.h3}>How I work</h3>
-                  <div className={cx("mt-3.5 space-y-3", TOKENS.body)}>
+                  <div className={cx("mt-3 space-y-2.5 sm:mt-3.5 sm:space-y-3", TOKENS.body)}>
                     {aboutContent.process.map((item) => (
                       <div key={item}>{item}</div>
                     ))}
@@ -639,7 +643,7 @@ export function PortfolioHome() {
                 tone="ice"
               />
 
-              <div className="grid gap-6 md:grid-cols-3">
+              <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
                 {portfolioProjects.map((project) => (
                   <ProjectCard key={project.slug} project={project} />
                 ))}
@@ -654,22 +658,22 @@ export function PortfolioHome() {
                 title="Where I add leverage."
                 subtitle="The value is not a long stack list. It is the ability to make the process, tooling, and reporting work as one system."
                 tone="copper"
-                className="mb-9"
+                className="mb-8 sm:mb-9"
               />
 
-              <div className="grid gap-6 md:grid-cols-3">
+              <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
                 {strengths.map((strength) => (
                   <Card key={strength.title} interactive className="h-full">
                     <div className="flex h-full flex-col">
-                      <div className="flex items-center gap-3">
-                        <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03] text-sky-200">
+                      <div className="flex items-center gap-2.5 sm:gap-3">
+                        <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.03] text-sky-200 sm:h-10 sm:w-10">
                           <Icon name="spark" className="h-5 w-5" />
                         </div>
                         <h3 className="text-xl font-semibold tracking-tight text-white">
                           {strength.title}
                         </h3>
                       </div>
-                      <p className="mt-3.5 text-[15px] leading-6 text-white/75">
+                      <p className="mt-3 text-[15px] leading-6 text-white/75 sm:mt-3.5">
                         {strength.description}
                       </p>
                     </div>
@@ -686,17 +690,17 @@ export function PortfolioHome() {
                 title="Send a quick note."
                 subtitle={`${portfolioSite.replySla} Share the role, scope, and timeline for a faster reply.`}
                 tone="ice"
-                className="mb-9"
+                className="mb-8 sm:mb-9"
               />
 
-              <div className="grid gap-6 md:grid-cols-2">
+              <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
                 <ContactLinksCard mailto={mailto} />
                 <Card interactive className="min-w-0 w-full">
                   <ContactForm />
                 </Card>
               </div>
 
-              <footer className="mt-14 border-t border-white/10 pt-6 text-xs text-white/50">
+              <footer className="mt-12 border-t border-white/10 pt-5 text-xs text-white/50 sm:mt-14 sm:pt-6">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     Copyright {new Date().getFullYear()} {portfolioSite.name}. Built with Next.js and

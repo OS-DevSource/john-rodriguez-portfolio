@@ -76,8 +76,8 @@ export function ContactForm() {
         Use the form or email directly.
       </p>
 
-      <form ref={formRef} className="mt-6 grid gap-4" onSubmit={handleSubmit}>
-        <div className="grid gap-4 sm:grid-cols-2">
+      <form ref={formRef} className="mt-5 grid gap-3.5 sm:mt-6 sm:gap-4" onSubmit={handleSubmit}>
+        <div className="grid gap-3.5 sm:grid-cols-2 sm:gap-4">
           <input
             required
             name="name"
@@ -112,10 +112,10 @@ export function ContactForm() {
           name="message"
           placeholder="What are you trying to build or fix?"
           rows={5}
-          className="min-h-[152px] w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
+          className="min-h-[140px] w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70 sm:min-h-[152px]"
         />
 
-        <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="mt-0.5 flex flex-col gap-2.5 sm:mt-1 sm:flex-row sm:items-center sm:gap-3">
           <Button type="submit" disabled={isLoading} className="w-full sm:min-w-[144px] sm:w-auto">
             {isLoading ? "Sending..." : "Send note"} <Icon name="arrow" className="h-4 w-4" />
           </Button>
@@ -128,7 +128,7 @@ export function ContactForm() {
           </Button>
         </div>
 
-        <div aria-live="polite" className="min-h-6">
+        <div aria-live="polite" className="min-h-5 sm:min-h-6">
           {feedbackMessage ? (
             <p
               className={cx(
