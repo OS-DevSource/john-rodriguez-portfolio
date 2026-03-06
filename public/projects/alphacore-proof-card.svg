@@ -1,42 +1,38 @@
 <svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="900" rx="48" fill="#020617"/>
   <rect x="24" y="24" width="1152" height="852" rx="36" fill="url(#panel)" stroke="rgba(255,255,255,0.12)"/>
-  <circle cx="220" cy="152" r="170" fill="url(#blueGlow)" opacity="0.76"/>
-  <circle cx="964" cy="168" r="150" fill="url(#orangeGlow)" opacity="0.42"/>
-  <rect x="92" y="104" width="250" height="36" rx="18" fill="#0F172A" stroke="rgba(125,211,252,0.35)"/>
-  <text x="120" y="127" fill="#BAE6FD" font-family="Arial, sans-serif" font-size="18" letter-spacing="3.5">ALPHACORE</text>
-  <text x="92" y="204" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="54" font-weight="700">Ops cockpit</text>
-  <text x="92" y="248" fill="rgba(248,250,252,0.72)" font-family="Arial, sans-serif" font-size="24">Workflow queues, reporting, and automation in one operating view.</text>
-  <rect x="92" y="312" width="340" height="438" rx="28" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
-  <text x="128" y="368" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="26" font-weight="700">Workflow queue</text>
-  <rect x="128" y="404" width="268" height="86" rx="18" fill="rgba(56,189,248,0.12)" stroke="rgba(125,211,252,0.2)"/>
-  <rect x="128" y="514" width="268" height="86" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
-  <rect x="128" y="624" width="268" height="86" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
-  <rect x="464" y="312" width="644" height="210" rx="28" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
-  <text x="500" y="368" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="26" font-weight="700">Operational reporting</text>
-  <rect x="500" y="408" width="132" height="78" rx="18" fill="rgba(56,189,248,0.12)" stroke="rgba(125,211,252,0.2)"/>
-  <rect x="652" y="408" width="132" height="78" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
-  <rect x="804" y="408" width="132" height="78" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
-  <rect x="956" y="408" width="116" height="78" rx="18" fill="rgba(249,115,22,0.12)" stroke="rgba(251,146,60,0.18)"/>
-  <rect x="464" y="550" width="644" height="200" rx="28" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
-  <text x="500" y="606" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="26" font-weight="700">Automation checkpoints</text>
-  <path d="M520 666H620" stroke="#38BDF8" stroke-width="12" stroke-linecap="round"/>
-  <circle cx="652" cy="666" r="18" fill="#38BDF8"/>
-  <path d="M688 666H790" stroke="#38BDF8" stroke-width="12" stroke-linecap="round"/>
-  <circle cx="824" cy="666" r="18" fill="#FB923C"/>
-  <path d="M860 666H962" stroke="#FB923C" stroke-width="12" stroke-linecap="round"/>
-  <circle cx="996" cy="666" r="18" fill="#F8FAFC" fill-opacity="0.75"/>
-  <text x="92" y="806" fill="rgba(248,250,252,0.56)" font-family="Arial, sans-serif" font-size="18">Proof Pass v1 placeholder</text>
+  <circle cx="216" cy="160" r="182" fill="url(#blueGlow)" opacity="0.76"/>
+  <circle cx="968" cy="168" r="154" fill="url(#orangeGlow)" opacity="0.42"/>
+  <rect x="92" y="108" width="300" height="52" rx="26" fill="#0F172A" stroke="rgba(125,211,252,0.35)"/>
+  <text x="128" y="141" fill="#BAE6FD" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="3">ALPHACORE</text>
+  <rect x="92" y="232" width="320" height="468" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <rect x="128" y="286" width="192" height="24" rx="12" fill="rgba(248,250,252,0.08)"/>
+  <rect x="128" y="350" width="248" height="98" rx="20" fill="rgba(56,189,248,0.12)" stroke="rgba(125,211,252,0.2)"/>
+  <rect x="128" y="474" width="248" height="98" rx="20" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="128" y="598" width="248" height="70" rx="20" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="452" y="232" width="656" height="212" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <rect x="500" y="286" width="220" height="24" rx="12" fill="rgba(248,250,252,0.08)"/>
+  <rect x="500" y="344" width="146" height="108" rx="22" fill="rgba(56,189,248,0.12)" stroke="rgba(125,211,252,0.2)"/>
+  <rect x="674" y="344" width="146" height="108" rx="22" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="848" y="344" width="212" height="108" rx="22" fill="rgba(249,115,22,0.12)" stroke="rgba(251,146,60,0.18)"/>
+  <rect x="452" y="484" width="656" height="216" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <rect x="500" y="540" width="252" height="24" rx="12" fill="rgba(248,250,252,0.08)"/>
+  <path d="M524 626H652" stroke="#38BDF8" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="688" cy="626" r="20" fill="#38BDF8"/>
+  <path d="M728 626H858" stroke="#38BDF8" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="894" cy="626" r="20" fill="#FB923C"/>
+  <path d="M934 626H1038" stroke="#FB923C" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="1068" cy="626" r="18" fill="#F8FAFC" fill-opacity="0.78"/>
   <defs>
     <linearGradient id="panel" x1="600" y1="24" x2="600" y2="876" gradientUnits="userSpaceOnUse">
       <stop stop-color="#0B1120"/>
       <stop offset="1" stop-color="#020617"/>
     </linearGradient>
-    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(220 152) rotate(90) scale(170)">
+    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(216 160) rotate(90) scale(182)">
       <stop stop-color="#0EA5E9"/>
       <stop offset="1" stop-color="#0EA5E9" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="orangeGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(964 168) rotate(90) scale(150)">
+    <radialGradient id="orangeGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(968 168) rotate(90) scale(154)">
       <stop stop-color="#FB923C"/>
       <stop offset="1" stop-color="#FB923C" stop-opacity="0"/>
     </radialGradient>

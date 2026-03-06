@@ -1,37 +1,34 @@
 <svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="900" rx="48" fill="#020617"/>
   <rect x="24" y="24" width="1152" height="852" rx="36" fill="url(#panel)" stroke="rgba(255,255,255,0.12)"/>
-  <circle cx="200" cy="160" r="180" fill="url(#blueGlow)" opacity="0.85"/>
-  <circle cx="960" cy="180" r="160" fill="url(#orangeGlow)" opacity="0.5"/>
-  <rect x="92" y="104" width="286" height="36" rx="18" fill="#0F172A" stroke="rgba(125,211,252,0.35)"/>
-  <text x="120" y="127" fill="#BAE6FD" font-family="Arial, sans-serif" font-size="18" letter-spacing="3.5">SCALEVIEW</text>
-  <text x="92" y="204" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="54" font-weight="700">Prompt sweep reporting</text>
-  <text x="92" y="248" fill="rgba(248,250,252,0.72)" font-family="Arial, sans-serif" font-size="24">Repeatable AI visibility checks with evidence capture.</text>
-  <rect x="92" y="314" width="476" height="420" rx="28" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
-  <rect x="128" y="358" width="404" height="20" rx="10" fill="rgba(186,230,253,0.14)"/>
-  <rect x="128" y="404" width="328" height="18" rx="9" fill="rgba(248,250,252,0.1)"/>
-  <rect x="128" y="450" width="356" height="18" rx="9" fill="rgba(248,250,252,0.1)"/>
-  <rect x="128" y="518" width="164" height="132" rx="20" fill="rgba(56,189,248,0.12)" stroke="rgba(125,211,252,0.2)"/>
-  <rect x="312" y="518" width="220" height="132" rx="20" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
-  <text x="128" y="700" fill="rgba(248,250,252,0.56)" font-family="Arial, sans-serif" font-size="18">Proof Pass v1 placeholder</text>
-  <rect x="620" y="314" width="488" height="420" rx="28" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
-  <text x="656" y="370" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="26" font-weight="700">Visibility over time</text>
-  <path d="M684 612C736 548 792 522 838 494C882 466 926 448 972 390C1000 354 1022 324 1050 292" stroke="#38BDF8" stroke-width="14" stroke-linecap="round"/>
-  <path d="M684 640C742 626 802 618 852 602C912 582 960 550 1038 480" stroke="#FB923C" stroke-width="10" stroke-linecap="round" opacity="0.8"/>
-  <circle cx="838" cy="494" r="16" fill="#38BDF8"/>
-  <circle cx="972" cy="390" r="16" fill="#FB923C"/>
-  <rect x="92" y="780" width="1016" height="1" fill="rgba(255,255,255,0.08)"/>
-  <text x="92" y="826" fill="rgba(248,250,252,0.72)" font-family="Arial, sans-serif" font-size="22">AI visibility measurement for brand teams</text>
+  <circle cx="212" cy="168" r="188" fill="url(#blueGlow)" opacity="0.84"/>
+  <circle cx="962" cy="170" r="166" fill="url(#orangeGlow)" opacity="0.46"/>
+  <rect x="92" y="108" width="308" height="52" rx="26" fill="#0F172A" stroke="rgba(125,211,252,0.35)"/>
+  <text x="128" y="141" fill="#BAE6FD" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="3">SCALEVIEW</text>
+  <rect x="92" y="232" width="446" height="456" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <rect x="128" y="286" width="300" height="24" rx="12" fill="rgba(186,230,253,0.14)"/>
+  <rect x="128" y="334" width="248" height="20" rx="10" fill="rgba(248,250,252,0.1)"/>
+  <rect x="128" y="378" width="278" height="20" rx="10" fill="rgba(248,250,252,0.1)"/>
+  <rect x="128" y="450" width="140" height="154" rx="22" fill="rgba(56,189,248,0.12)" stroke="rgba(125,211,252,0.2)"/>
+  <rect x="292" y="450" width="210" height="154" rx="22" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="580" y="232" width="528" height="456" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <rect x="626" y="286" width="188" height="24" rx="12" fill="rgba(248,250,252,0.08)"/>
+  <path d="M658 570C718 514 766 488 814 462C862 434 908 402 956 346C986 314 1008 286 1038 244" stroke="#38BDF8" stroke-width="18" stroke-linecap="round"/>
+  <path d="M658 602C716 592 770 582 820 566C884 544 940 506 1012 432" stroke="#FB923C" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="814" cy="462" r="18" fill="#38BDF8"/>
+  <circle cx="956" cy="346" r="18" fill="#FB923C"/>
+  <rect x="640" y="632" width="156" height="18" rx="9" fill="rgba(255,255,255,0.08)"/>
+  <rect x="820" y="632" width="118" height="18" rx="9" fill="rgba(255,255,255,0.08)"/>
   <defs>
     <linearGradient id="panel" x1="600" y1="24" x2="600" y2="876" gradientUnits="userSpaceOnUse">
       <stop stop-color="#0B1120"/>
       <stop offset="1" stop-color="#020617"/>
     </linearGradient>
-    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 160) rotate(90) scale(180)">
+    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(212 168) rotate(90) scale(188)">
       <stop stop-color="#0EA5E9"/>
       <stop offset="1" stop-color="#0EA5E9" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="orangeGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 180) rotate(90) scale(160)">
+    <radialGradient id="orangeGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(962 170) rotate(90) scale(166)">
       <stop stop-color="#FB923C"/>
       <stop offset="1" stop-color="#FB923C" stop-opacity="0"/>
     </radialGradient>
