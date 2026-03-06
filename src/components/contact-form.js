@@ -73,17 +73,17 @@ export function ContactForm() {
     <>
       <div className="text-base font-bold text-white">Message</div>
       <p className={cx(TOKENS.muted, "mt-2")}>
-        Send a note directly from the site or use email if you prefer.
+        Use the form or email directly.
       </p>
 
-      <form ref={formRef} className="mt-5 grid gap-3" onSubmit={handleSubmit}>
-        <div className="grid gap-3 sm:grid-cols-2">
+      <form ref={formRef} className="mt-6 grid gap-4" onSubmit={handleSubmit}>
+        <div className="grid gap-4 sm:grid-cols-2">
           <input
             required
             name="name"
             autoComplete="name"
             placeholder="Your name"
-            className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-400/70"
+            className="h-12 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
           />
           <input
             required
@@ -91,7 +91,7 @@ export function ContactForm() {
             name="email"
             autoComplete="email"
             placeholder="Your email"
-            className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-400/70"
+            className="h-12 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
           />
         </div>
 
@@ -99,7 +99,7 @@ export function ContactForm() {
           name="company"
           autoComplete="organization"
           placeholder="Company (optional)"
-          className="h-11 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none focus:border-sky-400/70"
+          className="h-12 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
         />
 
         <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0">
@@ -112,15 +112,19 @@ export function ContactForm() {
           name="message"
           placeholder="What are you trying to build or fix?"
           rows={5}
-          className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none focus:border-sky-400/70"
+          className="min-h-[152px] w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
         />
 
-        <div className="mt-1 flex flex-wrap items-center gap-3">
-          <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
+        <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Button type="submit" disabled={isLoading} className="w-full sm:min-w-[144px] sm:w-auto">
             {isLoading ? "Sending..." : "Send note"} <Icon name="arrow" className="h-4 w-4" />
           </Button>
-          <Button href={defaultMailto} variant="tertiary" className="w-full sm:w-auto">
-            Use email instead
+          <Button
+            href={defaultMailto}
+            variant="secondary"
+            className="w-full sm:min-w-[144px] sm:w-auto"
+          >
+            Email directly
           </Button>
         </div>
 

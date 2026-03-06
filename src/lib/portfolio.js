@@ -12,23 +12,25 @@ export const portfolioSite = {
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
   linkedin: "https://www.linkedin.com/in/john-rodriguez-626136387/",
-  replySla: "Typically replies within 24 hours on weekdays.",
+  replySla: "Replies within 24 hours on weekdays.",
   availability: "Available for product-minded ops and systems work.",
 };
 
 export const heroContent = {
   eyebrow: "GTM SYSTEMS | WEB APPS | AUTOMATION",
-  headline: "Operator-builder for GTM systems, web apps, and automation.",
+  headline: "Operator-builder for GTM systems and web apps.",
   summary:
-    "I turn messy handoffs into reliable execution with lifecycle design, workflow tooling, integrations, and reporting teams can actually trust.",
-  signal:
-    "Strategy plus implementation. Lifecycle rules, automation logic, and reporting systems that stay aligned when the volume rises.",
+    "I turn messy handoffs into reliable execution with lifecycle design, workflow tooling, integrations, and reporting teams can trust.",
+  callout:
+    "I work where operating logic and product execution meet: lifecycle rules, intake design, integrations, dashboards, and usable UI.",
+  profileTitle: "Lifecycle design, automation, and reporting.",
+  profileSignal: "Systems that stay clear as handoffs and volume grow.",
 };
 
 export const aboutContent = {
   title: "I build the operating system behind predictable execution.",
   subtitle:
-    "When follow-up gaps happen, I blame the system, then I fix it with lifecycle design, routing logic, workflow tooling, automation, and reporting.",
+    "When follow-up gaps appear, I blame the system, then fix it with lifecycle design, routing logic, workflow tooling, automation, and reporting.",
   outcomes: [
     "Clean workflows from intake to conversion tracking with explicit ownership.",
     "Automation that removes repetitive work without adding brittle glue.",
@@ -36,8 +38,8 @@ export const aboutContent = {
   ],
   process: [
     "Start with the bottleneck, then make the data model tell the truth.",
-    "Make states explicit, validate the edges, and reduce manual interpretation.",
-    "Ship in small steps, document decisions, and harden what people actually use.",
+    "Make states explicit, test the edges, and reduce manual interpretation.",
+    "Ship in small steps, document decisions, and harden what people use.",
   ],
 };
 
@@ -48,14 +50,14 @@ export const strengths = [
       "I turn handoff-heavy processes into explicit states, decision points, and ownership rules so execution does not depend on tribal memory.",
   },
   {
-    title: "Automation and integration glue",
+    title: "Automation and orchestration",
     description:
-      "I connect the systems around the work, from forms and APIs to notifications and routing logic, so follow-through is built into the flow.",
+      "I connect the systems around the work, from forms and APIs to routing and notifications, so follow-through is built into the flow.",
   },
   {
     title: "Reporting that matches reality",
     description:
-      "I design reporting around the actual lifecycle, not just the tool defaults, so leaders can trust what they see and operators can act on it.",
+      "I design reporting around the actual lifecycle, not tool defaults, so leaders can trust the signal and operators can act on it.",
   },
 ];
 
@@ -64,6 +66,10 @@ export const portfolioProjects = [
     slug: "scaleview",
     title: "ScaleView",
     tagline: "AI and LLM brand visibility measurement built for repeatable signal, not novelty screenshots.",
+    cardSummary: "AI visibility audits for brand teams.",
+    cardProblem: "AI mentions are visible, but measurement is inconsistent.",
+    cardSolution: "Standardized sweeps with evidence capture and reporting.",
+    cardMeta: "Prototype for repeatable visibility reviews.",
     summary:
       "ScaleView helps teams audit how often their brand appears in AI-generated answers by running consistent prompt sweeps, capturing evidence, and packaging the results for review.",
     problem:
@@ -90,6 +96,10 @@ export const portfolioProjects = [
     slug: "alphacore",
     title: "AlphaCore",
     tagline: "An ops cockpit for workflow clarity, reporting discipline, and automation-driven execution.",
+    cardSummary: "Ops cockpit for workflows, reporting, and automation.",
+    cardProblem: "Execution stalls across disconnected tools.",
+    cardSolution: "Centralized workflow states, reporting, and checkpoints.",
+    cardMeta: "Internal system for visibility and handoff control.",
     summary:
       "AlphaCore is a central operating view for workflow management, reporting, and automation support, designed to keep work moving without losing accountability.",
     problem:
@@ -116,6 +126,10 @@ export const portfolioProjects = [
     slug: "trinity-generator-quote-tool",
     title: "Trinity Generator Quote Tool",
     tagline: "A guided sizing and quoting workflow that reduces back-and-forth before the quote is even sent.",
+    cardSummary: "Guided sizing and quote flow for cleaner intake.",
+    cardProblem: "Quotes slow down when requirements arrive incomplete.",
+    cardSolution: "Structured intake and decision logic before quoting.",
+    cardMeta: "Workflow tool for consistent quote preparation.",
     summary:
       "The Trinity Generator Quote Tool turns a complex quoting process into a guided flow that collects the right inputs, supports sizing decisions, and produces a more consistent quote handoff.",
     problem:

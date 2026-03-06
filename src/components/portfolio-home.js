@@ -112,7 +112,7 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
         </div>
         <div className="min-w-0">
           <div className="text-base font-bold text-white md:truncate">{portfolioSite.name}</div>
-          <div className="mt-1 text-sm text-white/70">{heroContent.headline}</div>
+          <div className="mt-1 text-sm text-white/70">{heroContent.profileTitle}</div>
         </div>
       </div>
 
@@ -151,7 +151,7 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
         </div>
       ) : null}
 
-      <div className="mt-3 text-sm leading-6 text-white/70">{heroContent.signal}</div>
+      <div className="mt-3 text-sm leading-6 text-white/68">{heroContent.profileSignal}</div>
       <div className="mt-4 flex flex-wrap gap-2 text-xs text-white/55">
         <span className="rounded-full border border-white/10 px-2.5 py-1">{portfolioSite.location}</span>
         <span className="rounded-full border border-white/10 px-2.5 py-1">
@@ -234,7 +234,7 @@ function ProjectCard({ project }) {
             width={project.image.width}
             height={project.image.height}
             sizes="(min-width: 768px) 33vw, 100vw"
-            className="h-52 w-full object-cover"
+            className="h-48 w-full object-cover"
           />
           <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-3">
             <span className="rounded-full border border-white/10 bg-black/55 px-2.5 py-1 text-[11px] uppercase tracking-[0.22em] text-sky-100/85">
@@ -248,30 +248,25 @@ function ProjectCard({ project }) {
 
         <div className="mt-5">
           <div className="text-base font-bold text-white">{project.title}</div>
-          <div className="mt-2 text-sm leading-6 text-sky-100/80">{project.tagline}</div>
-          <p className="mt-3 text-sm leading-6 text-white/72">{project.summary}</p>
+          <p className="mt-2 text-sm leading-6 text-sky-100/80">{project.cardSummary}</p>
         </div>
 
-        <div className="mt-5 grid gap-3 text-sm leading-6 text-white/72">
-          <div>
+        <div className="mt-4 grid gap-2.5 text-sm leading-6 text-white/72">
+          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3.5 py-3">
             <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Problem</div>
-            <p className="mt-1">{project.problem}</p>
+            <p className="mt-1">{project.cardProblem}</p>
           </div>
-          <div>
+          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3.5 py-3">
             <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Solution</div>
-            <p className="mt-1">{project.solution}</p>
+            <p className="mt-1">{project.cardSolution}</p>
           </div>
-          <div>
-            <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Role</div>
-            <p className="mt-1">{project.role}</p>
-          </div>
-          <div>
-            <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Current status</div>
-            <p className="mt-1">{project.status}</p>
+          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3.5 py-3">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-orange-200/70">Status</div>
+            <p className="mt-1">{project.cardMeta}</p>
           </div>
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {project.stack.map((item) => (
             <span key={item} className={TOKENS.chip}>
               {item}
@@ -279,7 +274,7 @@ function ProjectCard({ project }) {
           ))}
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Button href={project.primaryCta.href} variant="primary" className="sm:flex-1">
             {project.primaryCta.label} <Icon name="arrow" className="h-4 w-4" />
           </Button>
@@ -308,12 +303,12 @@ function ContactLinksCard({ mailto }) {
         />
         <div className="min-w-0">
           <div className="text-base font-bold text-white">{portfolioSite.name}</div>
-          <div className="mt-1 text-sm text-white/70 md:truncate">{heroContent.headline}</div>
-          <p className="mt-3 text-sm leading-6 text-white/68">{portfolioSite.replySla}</p>
+          <div className="mt-1 text-sm text-white/70">{heroContent.profileTitle}</div>
+          <p className="mt-2 text-sm leading-6 text-white/64">{portfolioSite.replySla}</p>
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3">
+      <div className="mt-4 grid gap-3">
         <a
           href={mailto}
           className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04]"
@@ -551,17 +546,16 @@ export function PortfolioHome() {
                     >
                       Operator-builder for{" "}
                       <span className="bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)]">
-                        GTM systems, web apps, and automation.
+                        GTM systems and web apps.
                       </span>
                     </h1>
 
-                    <p className={cx(TOKENS.body, "mt-5 max-w-2xl max-md:mt-4 max-md:max-w-full")}>
+                    <p className={cx(TOKENS.body, "mt-4 max-w-2xl max-md:mt-4 max-md:max-w-full")}>
                       {heroContent.summary}
                     </p>
 
-                    <div className="mt-4 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm leading-7 text-white/70">
-                      I work where operating logic and product execution overlap: lifecycle rules,
-                      intake design, integrations, dashboards, and the UI that makes the system usable.
+                    <div className="mt-4 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm leading-6 text-white/70">
+                      {heroContent.callout}
                     </div>
 
                     <div className="mt-5 md:hidden">
@@ -607,12 +601,14 @@ export function PortfolioHome() {
                 title={aboutContent.title}
                 subtitle={aboutContent.subtitle}
                 tone="copper"
+                className="mb-12"
+                subtitleClassName="max-w-[42rem]"
               />
 
-              <div className="grid gap-10 md:grid-cols-2">
+              <div className="grid gap-9 md:grid-cols-2">
                 <div>
                   <h3 className={TOKENS.h3}>What you get</h3>
-                  <ul className={cx("mt-4 space-y-3", TOKENS.body)}>
+                  <ul className={cx("mt-3.5 space-y-3", TOKENS.body)}>
                     {aboutContent.outcomes.map((item) => (
                       <li key={item} className="flex gap-3">
                         <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-sky-400" />
@@ -624,7 +620,7 @@ export function PortfolioHome() {
 
                 <div>
                   <h3 className={TOKENS.h3}>How I work</h3>
-                  <div className={cx("mt-4 space-y-3", TOKENS.body)}>
+                  <div className={cx("mt-3.5 space-y-3", TOKENS.body)}>
                     {aboutContent.process.map((item) => (
                       <div key={item}>{item}</div>
                     ))}
@@ -639,7 +635,7 @@ export function PortfolioHome() {
               <SectionTitle
                 eyebrow="PROJECTS"
                 title="Selected work with clearer proof."
-                subtitle="Each project shows the problem, the system response, the role I played, and the current state of the work without invented metrics."
+                subtitle="Each card shows the problem, the system response, and the current state of the work without invented metrics."
                 tone="ice"
               />
 
@@ -658,6 +654,7 @@ export function PortfolioHome() {
                 title="Where I add leverage."
                 subtitle="The value is not a long stack list. It is the ability to make the process, tooling, and reporting work as one system."
                 tone="copper"
+                className="mb-9"
               />
 
               <div className="grid gap-6 md:grid-cols-3">
@@ -668,9 +665,13 @@ export function PortfolioHome() {
                         <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03] text-sky-200">
                           <Icon name="spark" className="h-5 w-5" />
                         </div>
-                        <h3 className={TOKENS.h3}>{strength.title}</h3>
+                        <h3 className="text-xl font-semibold tracking-tight text-white">
+                          {strength.title}
+                        </h3>
                       </div>
-                      <p className={cx(TOKENS.body, "mt-4")}>{strength.description}</p>
+                      <p className="mt-3.5 text-[15px] leading-6 text-white/75">
+                        {strength.description}
+                      </p>
                     </div>
                   </Card>
                 ))}
@@ -683,8 +684,9 @@ export function PortfolioHome() {
               <SectionTitle
                 eyebrow="CONTACT"
                 title="Send a quick note."
-                subtitle={`${portfolioSite.replySla} Include the role, scope, and timeline and I will respond with next steps.`}
+                subtitle={`${portfolioSite.replySla} Share the role, scope, and timeline for a faster reply.`}
                 tone="ice"
+                className="mb-9"
               />
 
               <div className="grid gap-6 md:grid-cols-2">

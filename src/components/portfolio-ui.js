@@ -170,14 +170,16 @@ export function ChapterBreak() {
   );
 }
 
-export function SectionTitle({ eyebrow, title, subtitle, tone = "ice" }) {
+export function SectionTitle({ eyebrow, title, subtitle, tone = "ice", className, subtitleClassName }) {
   const toneClass = tone === "copper" ? "text-orange-300/70" : "text-sky-200/92";
 
   return (
-    <div className="mb-10">
+    <div className={cx("mb-10", className)}>
       <div className={cx(TOKENS.eyebrow, toneClass)}>{eyebrow}</div>
       <h2 className={cx(TOKENS.h2, "mt-2")}>{title}</h2>
-      {subtitle ? <p className={cx(TOKENS.body, "mt-3 max-w-2xl")}>{subtitle}</p> : null}
+      {subtitle ? (
+        <p className={cx(TOKENS.body, "mt-3 max-w-2xl", subtitleClassName)}>{subtitle}</p>
+      ) : null}
     </div>
   );
 }
