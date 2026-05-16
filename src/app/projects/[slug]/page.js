@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
   }
 
   const title = `${project.title} Case Study`;
-  const description = project.summary;
+  const description = project.seoDescription || project.summary;
   const canonicalUrl = getSiteUrl(project.primaryCta.href);
 
   return {

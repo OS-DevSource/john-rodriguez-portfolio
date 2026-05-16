@@ -1,23 +1,25 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 
 import { getSiteUrl, portfolioSite } from "@/lib/portfolio";
 
 import "./globals.css";
 
-const geistSans = Geist({
+const geistSans = localFont({
+  src: "../../node_modules/next/dist/next-devtools/server/font/geist-latin.woff2",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  weight: "100 900",
 });
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: "../../node_modules/next/dist/next-devtools/server/font/geist-mono-latin.woff2",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "100 900",
 });
 
 export const metadata = {
   metadataBase: new URL(portfolioSite.url),
   title: {
-    default: portfolioSite.name,
+    default: portfolioSite.title,
     template: `%s | ${portfolioSite.name}`,
   },
   description: portfolioSite.description,
@@ -28,7 +30,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     url: getSiteUrl("/"),
-    title: portfolioSite.name,
+    title: portfolioSite.title,
     description: portfolioSite.description,
     siteName: portfolioSite.shortName,
     images: [
@@ -42,7 +44,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: portfolioSite.name,
+    title: portfolioSite.title,
     description: portfolioSite.description,
     images: [getSiteUrl("/twitter-image")],
   },

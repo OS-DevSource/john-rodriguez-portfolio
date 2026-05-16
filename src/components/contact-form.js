@@ -19,6 +19,12 @@ const defaultMailto = buildMailtoLink({
     "Hey John,\n\nI saw your portfolio and would like to connect about...\n\n- Context\n- Timeline\n- Best way to reach me\n\nThanks,\n",
 });
 
+const fieldClassName =
+  "h-12 w-full rounded-xl border border-white/15 bg-black/40 px-4 text-sm text-white placeholder:text-white/45 outline-none transition focus:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-70";
+
+const labelClassName = "text-sm font-semibold text-white";
+const helperClassName = "text-xs leading-5 text-white/70";
+
 export function ContactForm() {
   const formRef = useRef(null);
   const [status, setStatus] = useState(FORM_STATUS.idle);
@@ -71,53 +77,101 @@ export function ContactForm() {
 
   return (
     <>
-      <div className="text-base font-bold text-white">Message</div>
+      <h3 className="text-base font-bold text-white">Message</h3>
       <p className={cx(TOKENS.muted, "mt-2")}>
-        Use the form or email directly.
+        For roles, client work, or workflow advisory.
       </p>
 
-      <form ref={formRef} className="mt-5 grid gap-3.5 sm:mt-6 sm:gap-4" onSubmit={handleSubmit}>
+      <form
+        ref={formRef}
+        className="mt-5 grid gap-3.5 sm:mt-6 sm:gap-4"
+        onSubmit={handleSubmit}
+        aria-busy={isLoading}
+      >
         <div className="grid gap-3.5 sm:grid-cols-2 sm:gap-4">
-          <input
-            required
-            name="name"
-            autoComplete="name"
-            placeholder="Your name"
-            className="h-12 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
-          />
-          <input
-            required
-            type="email"
-            name="email"
-            autoComplete="email"
-            placeholder="Your email"
-            className="h-12 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
-          />
+          <div className="grid gap-1.5">
+            <label htmlFor="contact-name" className={labelClassName}>
+              Name (required)
+            </label>
+            <input
+              id="contact-name"
+              required
+              name="name"
+              autoComplete="name"
+              placeholder="Your name"
+              aria-describedby="contact-name-help contact-form-status"
+              className={fieldClassName}
+            />
+            <p id="contact-name-help" className={helperClassName}>
+              Preferred reply name.
+            </p>
+          </div>
+
+          <div className="grid gap-1.5">
+            <label htmlFor="contact-email" className={labelClassName}>
+              Email (required)
+            </label>
+            <input
+              id="contact-email"
+              required
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              aria-describedby="contact-email-help contact-form-status"
+              className={fieldClassName}
+            />
+            <p id="contact-email-help" className={helperClassName}>
+              Used only for follow-up.
+            </p>
+          </div>
         </div>
 
-        <input
-          name="company"
-          autoComplete="organization"
-          placeholder="Company (optional)"
-          className="h-12 w-full rounded-xl border border-white/10 bg-black/40 px-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70"
-        />
-
-        <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0">
-          <label htmlFor="website">Leave this blank</label>
-          <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+        <div className="grid gap-1.5">
+          <label htmlFor="contact-company" className={labelClassName}>
+            Company
+          </label>
+          <input
+            id="contact-company"
+            name="company"
+            autoComplete="organization"
+            placeholder="Company or team, if relevant"
+            aria-describedby="contact-company-help contact-form-status"
+            className={fieldClassName}
+          />
+          <p id="contact-company-help" className={helperClassName}>
+            Optional context for team or project scope.
+          </p>
         </div>
 
-        <textarea
-          required
-          name="message"
-          placeholder="What are you trying to build or fix?"
-          rows={5}
-          className="min-h-[140px] w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm leading-6 text-white placeholder:text-white/40 outline-none transition focus:border-sky-400/70 sm:min-h-[152px]"
-        />
+        <div aria-hidden="true" className="hidden">
+          <input id="contact-website" name="website" tabIndex={-1} autoComplete="off" />
+        </div>
+
+        <div className="grid gap-1.5">
+          <label htmlFor="contact-message" className={labelClassName}>
+            Message (required)
+          </label>
+          <textarea
+            id="contact-message"
+            required
+            name="message"
+            placeholder="What are you trying to build or fix?"
+            rows={5}
+            aria-describedby="contact-message-help contact-form-status"
+            className={cx(
+              fieldClassName,
+              "min-h-[140px] py-3 leading-6 sm:min-h-[152px]"
+            )}
+          />
+          <p id="contact-message-help" className={helperClassName}>
+            Include the role, workflow, timeline, and system problem.
+          </p>
+        </div>
 
         <div className="mt-0.5 flex flex-col gap-2.5 sm:mt-1 sm:flex-row sm:items-center sm:gap-3">
           <Button type="submit" disabled={isLoading} className="w-full sm:min-w-[144px] sm:w-auto">
-            {isLoading ? "Sending..." : "Send note"} <Icon name="arrow" className="h-4 w-4" />
+            {isLoading ? "Sending note" : "Send note"} <Icon name="arrow" className="h-4 w-4" />
           </Button>
           <Button
             href={defaultMailto}
@@ -128,9 +182,14 @@ export function ContactForm() {
           </Button>
         </div>
 
-        <div aria-live="polite" className="min-h-5 sm:min-h-6">
+        <div
+          id="contact-form-status"
+          aria-live={status === FORM_STATUS.error ? "assertive" : "polite"}
+          className="min-h-5 sm:min-h-6"
+        >
           {feedbackMessage ? (
             <p
+              role={status === FORM_STATUS.error ? "alert" : "status"}
               className={cx(
                 "text-sm leading-6",
                 status === FORM_STATUS.success ? "text-sky-200/92" : "text-orange-200"
