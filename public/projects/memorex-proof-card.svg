@@ -1,0 +1,38 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#020617"/>
+  <rect x="24" y="24" width="1152" height="852" rx="36" fill="url(#panel)" stroke="rgba(255,255,255,0.12)"/>
+  <circle cx="224" cy="156" r="190" fill="url(#blueGlow)" opacity="0.78"/>
+  <circle cx="936" cy="182" r="168" fill="url(#orangeGlow)" opacity="0.36"/>
+  <rect x="92" y="104" width="286" height="52" rx="26" fill="#0F172A" stroke="rgba(125,211,252,0.35)"/>
+  <text x="128" y="138" fill="#BAE6FD" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="2.8">MEMOREX</text>
+  <rect x="92" y="216" width="406" height="520" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <text x="132" y="276" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="30" font-weight="700">Event stream</text>
+  <rect x="132" y="326" width="302" height="46" rx="18" fill="rgba(56,189,248,0.14)" stroke="rgba(125,211,252,0.22)"/>
+  <rect x="132" y="398" width="270" height="46" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="132" y="470" width="322" height="46" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="132" y="542" width="250" height="46" rx="18" fill="rgba(249,115,22,0.12)" stroke="rgba(251,146,60,0.18)"/>
+  <rect x="132" y="614" width="292" height="46" rx="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="540" y="216" width="568" height="248" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <text x="584" y="276" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="30" font-weight="700">Trace view</text>
+  <rect x="584" y="326" width="446" height="24" rx="12" fill="rgba(248,250,252,0.1)"/>
+  <rect x="584" y="378" width="386" height="20" rx="10" fill="rgba(248,250,252,0.08)"/>
+  <rect x="584" y="418" width="302" height="20" rx="10" fill="rgba(248,250,252,0.08)"/>
+  <rect x="540" y="496" width="568" height="240" rx="30" fill="#08101F" stroke="rgba(255,255,255,0.09)"/>
+  <text x="584" y="556" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="30" font-weight="700">Handoff brief</text>
+  <rect x="584" y="606" width="440" height="24" rx="12" fill="rgba(56,189,248,0.14)"/>
+  <rect x="584" y="658" width="350" height="20" rx="10" fill="rgba(248,250,252,0.08)"/>
+  <defs>
+    <linearGradient id="panel" x1="600" y1="24" x2="600" y2="876" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1120"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(224 156) rotate(90) scale(190)">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#0EA5E9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orangeGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(936 182) rotate(90) scale(168)">
+      <stop stop-color="#FB923C"/>
+      <stop offset="1" stop-color="#FB923C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

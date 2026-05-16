@@ -1,15 +1,61 @@
 import Image from "next/image";
 
-import { buildMailtoLink, portfolioSite, socialProofLabel } from "@/lib/portfolio";
+import { buildMailtoLink, portfolioSite } from "@/lib/portfolio";
 
 import { Backdrop, Button, Card, Icon, TOKENS, cx } from "./portfolio-ui";
 
 function DetailCard({ label, children }) {
   return (
     <Card interactive className="h-full">
-      <div className="text-[11px] uppercase tracking-[0.2em] text-orange-200/70">{label}</div>
+      <h3 className="text-[11px] uppercase tracking-[0.2em] text-orange-200/75">{label}</h3>
       <div className="mt-3 text-sm leading-7 text-white/78">{children}</div>
     </Card>
+  );
+}
+
+function FactCard({ label, children }) {
+  return (
+    <div className="rounded-2xl border border-white/12 bg-white/[0.025] p-4">
+      <h3 className="text-[11px] uppercase tracking-[0.18em] text-sky-200/90">{label}</h3>
+      <div className="mt-2 text-sm leading-6 text-white/78">{children}</div>
+    </div>
+  );
+}
+
+function ListSection({ title, eyebrow, items, variant = "cards" }) {
+  if (!items?.length) {
+    return null;
+  }
+
+  return (
+    <section className="mt-12">
+      <div className="mb-5">
+        <div className="text-[11px] uppercase tracking-[0.22em] text-sky-200/90">{eyebrow}</div>
+        <h2 className={cx(TOKENS.h2, "mt-2")}>{title}</h2>
+      </div>
+
+      {variant === "cards" ? (
+        <div className="grid gap-5 md:grid-cols-3">
+          {items.map((item) => (
+            <Card key={item.title} interactive className="h-full">
+              <h3 className="text-base font-semibold text-white">{item.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-white/76">{item.description}</p>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {items.map((item) => (
+            <div
+              key={item}
+              className="rounded-2xl border border-white/12 bg-white/[0.025] p-4 text-sm leading-6 text-white/78"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -23,6 +69,9 @@ export function ProjectCaseStudyPage({ project }) {
     <div className="min-h-screen bg-black text-white">
       <div className="relative overflow-x-clip">
         <Backdrop />
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
 
         <div className={cx("relative z-10", TOKENS.container, "py-6 sm:py-8")}>
           <header className="rounded-2xl border border-white/10 bg-black/55 px-4 py-3 backdrop-blur">
@@ -33,7 +82,7 @@ export function ProjectCaseStudyPage({ project }) {
                 </div>
                 <div className="leading-tight">
                   <div className="text-sm font-semibold text-white">{portfolioSite.name}</div>
-                  <div className="text-xs text-white/60">Case study</div>
+                  <div className="text-xs text-white/70">Case study</div>
                 </div>
               </div>
 
@@ -48,7 +97,7 @@ export function ProjectCaseStudyPage({ project }) {
             </div>
           </header>
 
-          <main className="py-12 sm:py-16">
+          <main id="main-content" className="py-12 sm:py-16" tabIndex={-1}>
             <section className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-start">
               <div>
                 <div className="text-[11px] uppercase tracking-[0.24em] text-sky-200/92">Case study</div>
@@ -64,8 +113,8 @@ export function ProjectCaseStudyPage({ project }) {
                       {item}
                     </span>
                   ))}
-                  <span className="rounded-full border border-white/10 px-2.5 py-1 text-xs text-white/55">
-                    {socialProofLabel}
+                  <span className="rounded-full border border-white/15 px-2.5 py-1 text-xs text-white/75">
+                    {project.statusLabel}
                   </span>
                 </div>
               </div>
@@ -82,7 +131,7 @@ export function ProjectCaseStudyPage({ project }) {
                     className="h-auto w-full object-cover"
                   />
                 </div>
-                <div className="mt-5 grid gap-3 text-sm leading-6 text-white/68">
+                <div className="mt-5 grid gap-3 text-sm leading-6 text-white/74">
                   <div>
                     <div className="text-[11px] uppercase tracking-[0.18em] text-sky-200/90">Role</div>
                     <p className="mt-1">{project.role}</p>
@@ -97,22 +146,74 @@ export function ProjectCaseStudyPage({ project }) {
               </Card>
             </section>
 
-            <section className="mt-12 grid gap-6 md:grid-cols-2">
-              <DetailCard label="Problem">{project.problem}</DetailCard>
-              <DetailCard label="Solution">{project.solution}</DetailCard>
+            <section className="mt-12">
+              <div className="mb-5">
+                <div className="text-[11px] uppercase tracking-[0.22em] text-sky-200/90">
+                  Operating context
+                </div>
+                <h2 className={cx(TOKENS.h2, "mt-2")}>What needed to change.</h2>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <DetailCard label="Problem">{project.problem}</DetailCard>
+                <DetailCard label="System response">{project.solution}</DetailCard>
+              </div>
             </section>
+
+            <section className="mt-12">
+              <div className="mb-5">
+                <div className="text-[11px] uppercase tracking-[0.22em] text-sky-200/90">Scope</div>
+                <h2 className={cx(TOKENS.h2, "mt-2")}>Role, stack, and validation.</h2>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <FactCard label="Role">{project.role}</FactCard>
+                <FactCard label="Status">{project.status}</FactCard>
+                <FactCard label="Stack">
+                  <div className="flex flex-wrap gap-2">
+                    {project.stack.map((item) => (
+                      <span key={item} className={TOKENS.chip}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </FactCard>
+                <FactCard label="Proof / validation">
+                  <ul className="space-y-2">
+                    {(project.validation || [project.outcome]).filter(Boolean).slice(0, 3).map((item) => (
+                      <li key={item} className="flex gap-2.5">
+                        <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-sky-400" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </FactCard>
+              </div>
+            </section>
+
+            <ListSection
+              eyebrow="Decision-making"
+              title="Key decisions"
+              items={project.keyDecisions}
+            />
+
+            <ListSection
+              eyebrow="Next improvements"
+              title="Planned refinements"
+              items={project.nextSteps}
+              variant="list"
+            />
 
             <section className="mt-12">
               <Card interactive>
                 <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                   <div className="max-w-2xl">
                     <div className="text-[11px] uppercase tracking-[0.2em] text-sky-200/92">
-                      Next conversation
+                      Work together
                     </div>
-                    <h2 className={cx(TOKENS.h2, "mt-2")}>Need this kind of systems thinking on your team?</h2>
+                    <h2 className={cx(TOKENS.h2, "mt-2")}>Need practical systems work?</h2>
                     <p className={cx(TOKENS.body, "mt-3")}>
-                      If you need someone who can clarify the workflow, build the interface, and make the
-                      reporting line up with reality, send a note.
+                      I can help clarify the workflow, build the interface, and connect reporting to how the work actually runs.
                     </p>
                   </div>
 

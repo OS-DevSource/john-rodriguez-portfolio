@@ -10,7 +10,6 @@ import {
   navigationItems,
   portfolioProjects,
   portfolioSite,
-  socialProofLabel,
   strengths,
 } from "@/lib/portfolio";
 
@@ -59,28 +58,44 @@ function useActiveSection(sectionIds) {
   const [activeId, setActiveId] = useState(sectionIds[0] || "home");
 
   useEffect(() => {
-    const elements = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
 
     if (!elements.length) {
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((left, right) => (right.intersectionRatio || 0) - (left.intersectionRatio || 0));
+    let animationFrameId = 0;
 
-        if (visibleEntries[0]?.target?.id) {
-          setActiveId(visibleEntries[0].target.id);
+    const updateActiveSection = () => {
+      const headerOffset = 260;
+      const activeLine = window.scrollY + headerOffset;
+      let nextActiveId = elements[0].id;
+
+      elements.forEach((element) => {
+        if (element.offsetTop <= activeLine) {
+          nextActiveId = element.id;
         }
-      },
-      { root: null, threshold: [0.2, 0.35, 0.5, 0.65] }
-    );
+      });
 
-    elements.forEach((element) => observer.observe(element));
+      setActiveId(nextActiveId);
+    };
 
-    return () => observer.disconnect();
+    const scheduleUpdate = () => {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
   }, [sectionIds]);
 
   return activeId;
@@ -98,16 +113,16 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
       )}
     >
       <div className="flex items-center gap-3.5 sm:gap-4">
-        <div className="relative">
+        <div className="relative flex-none rounded-full">
           <div className="absolute -inset-1 rounded-full bg-sky-400/12 blur" />
           <Image
             src={HEADSHOT_SRC}
-            alt="Headshot of John Rodriguez"
+            alt="John Rodriguez headshot"
             width={72}
             height={72}
             sizes="(min-width: 640px) 72px, 64px"
-            priority
-            className="relative h-16 w-16 rounded-full border border-white/10 object-cover sm:h-[72px] sm:w-[72px]"
+            priority={isDesktop}
+            className="relative aspect-square h-16 w-16 rounded-full border border-white/10 object-cover sm:h-[72px] sm:w-[72px]"
           />
         </div>
         <div className="min-w-0">
@@ -151,10 +166,10 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
         </div>
       ) : null}
 
-      <div className="mt-2.5 text-sm leading-6 text-white/68">{heroContent.profileSignal}</div>
-      <div className="mt-3.5 flex flex-wrap gap-2 text-xs text-white/55">
-        <span className="rounded-full border border-white/10 px-2.5 py-1">{portfolioSite.location}</span>
-        <span className="rounded-full border border-white/10 px-2.5 py-1">
+      <div className="mt-2.5 text-sm leading-6 text-white/75">{heroContent.profileSignal}</div>
+      <div className="mt-3.5 flex flex-wrap gap-2 text-xs text-white/70">
+        <span className="rounded-full border border-white/15 px-2.5 py-1">{portfolioSite.location}</span>
+        <span className="rounded-full border border-white/15 px-2.5 py-1">
           {portfolioSite.timezoneLabel}
         </span>
       </div>
@@ -175,14 +190,15 @@ function Nav({ items, activeId, scrolled, onGo }) {
         <button
           type="button"
           onClick={() => onGo("home")}
-          className="flex items-center gap-2.5 text-left sm:gap-3"
+          className="flex items-center gap-2.5 rounded-xl text-left outline-none transition focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:gap-3"
+          aria-label="Go to homepage hero"
         >
           <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.03] sm:h-10 sm:w-10">
             <span className="text-xs font-extrabold text-white sm:text-sm">JR</span>
           </div>
           <div className="leading-tight">
             <div className="text-[13px] font-semibold text-white sm:text-sm">{portfolioSite.name}</div>
-            <div className="text-[11px] text-white/60 sm:text-xs">Portfolio</div>
+            <div className="text-[11px] text-white/70 sm:text-xs">Portfolio</div>
           </div>
         </button>
 
@@ -196,9 +212,10 @@ function Nav({ items, activeId, scrolled, onGo }) {
                 type="button"
                 onClick={() => onGo(item.id)}
                 className={cx(
-                  "relative text-sm font-semibold transition",
+                  "relative rounded-md text-sm font-semibold outline-none transition focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-4 focus-visible:ring-offset-black",
                   isActive ? "text-white" : "text-white/70 hover:text-white"
                 )}
+                aria-current={isActive ? "true" : undefined}
               >
                 {item.label}
                 <span
@@ -228,6 +245,8 @@ function Nav({ items, activeId, scrolled, onGo }) {
 }
 
 function ProjectCard({ project }) {
+  const cardStack = project.cardStack || project.stack;
+
   return (
     <Card interactive className="h-full">
       <div className="flex h-full flex-col">
@@ -240,46 +259,48 @@ function ProjectCard({ project }) {
             sizes="(min-width: 768px) 33vw, 100vw"
             className="h-40 w-full object-cover sm:h-48"
           />
-          <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2 sm:inset-x-4 sm:top-4 sm:gap-3">
-            <span className="rounded-full border border-white/10 bg-black/55 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-sky-100/85 sm:px-2.5 sm:text-[11px] sm:tracking-[0.22em]">
-              Case study
-            </span>
-            <span className="rounded-full border border-white/10 bg-black/55 px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-white/60 sm:px-2.5 sm:text-[11px] sm:tracking-[0.18em]">
-              {socialProofLabel}
-            </span>
-          </div>
         </div>
 
         <div className="mt-4 sm:mt-5">
-          <div className="text-base font-bold text-white">{project.title}</div>
-          <p className="mt-1.5 text-sm leading-6 text-sky-100/80 sm:mt-2">{project.cardSummary}</p>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-sky-200/80 sm:text-[11px]">
+            Case study | {project.statusLabel}
+          </div>
+          <h3 className="mt-1 text-base font-bold text-white">{project.title}</h3>
+          <p className="mt-1.5 min-h-6 text-sm leading-6 text-sky-100/80 sm:mt-2">
+            {project.cardSummary}
+          </p>
         </div>
 
         <div className="mt-3.5 grid gap-2 text-sm leading-6 text-white/72 sm:mt-4 sm:gap-2.5">
-          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
+          <div className="min-h-[126px] rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
             <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/70 sm:text-[11px] sm:tracking-[0.18em]">Problem</div>
             <p className="mt-1">{project.cardProblem}</p>
           </div>
-          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
-            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/70 sm:text-[11px] sm:tracking-[0.18em]">Solution</div>
+          <div className="min-h-[126px] rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/75 sm:text-[11px] sm:tracking-[0.18em]">System response</div>
             <p className="mt-1">{project.cardSolution}</p>
           </div>
-          <div className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
-            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/70 sm:text-[11px] sm:tracking-[0.18em]">Status</div>
+          <div className="min-h-[126px] rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/75 sm:text-[11px] sm:tracking-[0.18em]">Proof / status</div>
             <p className="mt-1">{project.cardMeta}</p>
           </div>
         </div>
 
-        <div className="mt-3.5 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
-          {project.stack.map((item) => (
+        <div className="mt-3.5 flex min-h-[58px] flex-wrap content-start gap-1.5 sm:mt-4 sm:gap-2">
+          {cardStack.map((item) => (
             <span key={item} className={TOKENS.chip}>
               {item}
             </span>
           ))}
         </div>
 
-        <div className="mt-4 flex flex-col gap-2.5 sm:mt-5 sm:flex-row sm:flex-wrap sm:gap-3">
-          <Button href={project.primaryCta.href} variant="primary" className="sm:flex-1">
+        <div className="mt-auto flex flex-col gap-2.5 pt-4 sm:flex-row sm:flex-wrap sm:gap-3 sm:pt-5">
+          <Button
+            href={project.primaryCta.href}
+            variant="primary"
+            className="sm:flex-1"
+            aria-label={`Read the ${project.title} case study`}
+          >
             {project.primaryCta.label} <Icon name="arrow" className="h-4 w-4" />
           </Button>
           {project.secondaryCta ? (
@@ -294,12 +315,18 @@ function ProjectCard({ project }) {
 }
 
 function ContactLinksCard({ mailto }) {
+  const contactPrompts = [
+    "Role or workflow you need help with",
+    "Current tools, systems, or handoff pain",
+    "Timeline, constraints, and what success looks like",
+  ];
+
   return (
     <Card interactive className="min-w-0 w-full">
       <div className="flex min-w-0 items-start gap-3.5 sm:gap-4">
         <Image
           src={HEADSHOT_SRC}
-          alt="Headshot of John Rodriguez"
+          alt="John Rodriguez headshot"
           width={64}
           height={64}
           sizes="(min-width: 640px) 64px, 56px"
@@ -308,14 +335,13 @@ function ContactLinksCard({ mailto }) {
         <div className="min-w-0">
           <div className="text-base font-bold text-white">{portfolioSite.name}</div>
           <div className="mt-1 text-sm text-white/70">{heroContent.profileTitle}</div>
-          <p className="mt-2 text-sm leading-6 text-white/64">{portfolioSite.replySla}</p>
         </div>
       </div>
 
       <div className="mt-3.5 grid gap-2.5 sm:mt-4 sm:gap-3">
         <a
           href={mailto}
-          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04] sm:px-4"
+          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/85 outline-none transition hover:border-white/20 hover:bg-white/[0.04] focus-visible:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-4"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden">
             <Icon name="mail" className="h-4 w-4 flex-none" />
@@ -328,7 +354,7 @@ function ContactLinksCard({ mailto }) {
           href={portfolioSite.github}
           target="_blank"
           rel="noreferrer"
-          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04] sm:px-4"
+          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/85 outline-none transition hover:border-white/20 hover:bg-white/[0.04] focus-visible:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-4"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden">
             <Icon name="github" className="h-4 w-4" /> GitHub
@@ -340,13 +366,30 @@ function ContactLinksCard({ mailto }) {
           href={portfolioSite.linkedin}
           target="_blank"
           rel="noreferrer"
-          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/[0.04] sm:px-4"
+          className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/85 outline-none transition hover:border-white/20 hover:bg-white/[0.04] focus-visible:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-4"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden">
             <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
           </span>
           <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
         </a>
+      </div>
+
+      <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4 sm:mt-6 sm:p-5">
+        <h3 className="text-sm font-semibold text-white">What to include</h3>
+        <ul className="mt-3 space-y-2.5 text-sm leading-6 text-white/74">
+          {contactPrompts.map((item) => (
+            <li key={item} className="flex gap-2.5">
+              <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-sky-400" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 text-sm leading-6 text-white/74 sm:p-5">
+        Good fits include GTM systems, RevOps workflows, internal tools,
+        AI-assisted operations, lead flow, reporting, and handoff design.
       </div>
     </Card>
   );
@@ -528,12 +571,16 @@ export function PortfolioHome() {
           <div aria-hidden className="pointer-events-none absolute inset-0 z-[1]" style={spotlightStyle} />
         ) : null}
 
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+
         <div className={cx("relative z-10", TOKENS.container)}>
           <header className="sticky top-0 z-50 -mx-4 px-4 py-2.5 sm:-mx-8 sm:px-8 sm:py-4">
             <Nav items={navigationItems} activeId={activeId} scrolled={scrolled} onGo={go} />
           </header>
 
-          <main className={TOKENS.sectionY}>
+          <main id="main-content" className={TOKENS.sectionY} tabIndex={-1}>
             <section id="home" ref={homeRef} className="scroll-mt-28 max-md:-mt-2">
               <div className="relative">
                 <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
@@ -548,9 +595,9 @@ export function PortfolioHome() {
                         "mt-3 max-w-3xl max-md:mt-2 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04] sm:text-[3.9rem]"
                       )}
                     >
-                      Operator-builder for{" "}
+                        {heroContent.headlineLead}{" "}
                       <span className="bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)]">
-                        GTM systems and web apps.
+                        {heroContent.headlineAccent}
                       </span>
                     </h1>
 
@@ -581,7 +628,7 @@ export function PortfolioHome() {
                       <Button href={mailto} variant="secondary">
                         <Icon name="mail" className="h-4 w-4" /> Email me
                       </Button>
-                      <div className="flex items-center gap-2 text-xs text-white/60">
+                      <div className="flex items-center gap-2 text-xs text-white/70">
                         <Icon name="pin" className="h-4 w-4" /> {portfolioSite.location}
                       </div>
                     </div>
@@ -638,8 +685,8 @@ export function PortfolioHome() {
             <section id="projects" className="scroll-mt-28">
               <SectionTitle
                 eyebrow="PROJECTS"
-                title="Selected work with clearer proof."
-                subtitle="Each card shows the problem, the system response, and the current state of the work without invented metrics."
+                title="Selected systems work."
+                subtitle="AI workflow memory, field lead operations, and structured quoting tools built around real operating problems."
                 tone="ice"
               />
 
@@ -655,8 +702,8 @@ export function PortfolioHome() {
             <section id="strengths" className="scroll-mt-28">
               <SectionTitle
                 eyebrow="STRENGTHS"
-                title="Where I add leverage."
-                subtitle="The value is not a long stack list. It is the ability to make the process, tooling, and reporting work as one system."
+                title="Operating strengths."
+                subtitle="Where revenue workflow knowledge, automation, reporting, and practical product execution come together."
                 tone="copper"
                 className="mb-8 sm:mb-9"
               />
@@ -687,7 +734,7 @@ export function PortfolioHome() {
             <section id="contact" className="scroll-mt-28">
               <SectionTitle
                 eyebrow="CONTACT"
-                title="Send a quick note."
+                title="Start a conversation."
                 subtitle={`${portfolioSite.replySla} Share the role, scope, and timeline for a faster reply.`}
                 tone="ice"
                 className="mb-8 sm:mb-9"
@@ -700,13 +747,17 @@ export function PortfolioHome() {
                 </Card>
               </div>
 
-              <footer className="mt-12 border-t border-white/10 pt-5 text-xs text-white/50 sm:mt-14 sm:pt-6">
+              <footer className="mt-12 border-t border-white/10 pt-5 text-xs text-white/65 sm:mt-14 sm:pt-6">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     Copyright {new Date().getFullYear()} {portfolioSite.name}. Built with Next.js and
                     Tailwind.
                   </div>
-                  <button type="button" onClick={() => go("home")} className="text-left transition hover:text-white">
+                  <button
+                    type="button"
+                    onClick={() => go("home")}
+                    className="rounded-md text-left outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  >
                     Back to top
                   </button>
                 </div>
