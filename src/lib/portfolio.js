@@ -49,6 +49,20 @@ export const aboutContent = {
   ],
 };
 
+export const certificationContent = {
+  title: "Certified by micro1",
+  issuer: "micro1",
+  issued: "August 2026",
+  description:
+    "Recognized for outstanding performance during micro1's AI Interview, validating communication, accuracy, and task completion for AI project work.",
+  image: {
+    src: "/certifications/micro1-certification.jpg",
+    alt: "Certified by micro1 certificate awarded to John Rodriguez for outstanding performance during micro1's AI Interview.",
+    width: 2040,
+    height: 1440,
+  },
+};
+
 export const strengths = [
   {
     title: "GTM workflow architecture",
@@ -68,6 +82,74 @@ export const strengths = [
 ];
 
 export const portfolioProjects = [
+  {
+    slug: "mk-workbench",
+    title: "MK Workbench",
+    proofType: "Applied AI / operations",
+    tagline:
+      "A deployed, pilot-ready job-to-invoice system for field service operations.",
+    cardSummary: "A job becomes billable through a workflow, not memory.",
+    cardProblem:
+      "Photos, notes, line items, customer details, and invoices can get scattered across tools and manual handoffs.",
+    cardSolution:
+      "A review-gated intake-to-archive pipeline with human-approved AI extraction, explicit workflow state, regenerated PDFs, and audit history.",
+    cardMeta:
+      "Deployed and pilot-ready with server-enforced roles, CI, Vitest, Playwright, and production safety controls.",
+    seoDescription:
+      "MK Workbench is a deployed, pilot-ready job-to-invoice platform connecting intake, document review, job records, invoice generation, finalization, and archive.",
+    summary:
+      "MK Workbench preserves source material, extracts what it can, and routes every job through operational review, invoice review, finalization, and archive.",
+    problem:
+      "Field service jobs produce fragmented operational data: photos, texts, notes, addresses, line items, invoice terms, and PDFs. Reconstructing that story by hand makes billing slower and less trustworthy.",
+    solution:
+      "Built a Convex-backed workflow state machine for intake, review, invoice, finalization, and archive. OpenAI image extraction stays evidence-bound and review-only, and every important action writes to an audit log.",
+    outcome:
+      "A private, deployed and pilot-ready platform with explicit workflow state, role enforcement, automated coverage, and production safety controls.",
+    role:
+      "Product design, full-stack implementation, AI extraction guardrails, authentication and permissions, document generation, testing, and production safety.",
+    stack: ["React", "Vite", "Convex", "OpenAI", "Vitest", "Playwright"],
+    cardStack: ["React", "TypeScript", "Convex", "OpenAI", "Playwright"],
+    status:
+      "Private, deployed and pilot-ready job-to-invoice workflow platform.",
+    statusLabel: "Deployed / pilot-ready",
+    validation: [
+      "Uses Convex-backed data, storage, authentication, and server-enforced roles.",
+      "Keeps OpenAI image extraction and OCR behind an explicit human review gate.",
+      "Uses GitHub Actions, Vitest, Playwright smoke coverage, and production safety controls.",
+    ],
+    keyDecisions: [
+      {
+        title: "Put review before automation",
+        description:
+          "AI can propose structured fields, but low-confidence or ambiguous evidence cannot create trusted job or invoice state without a person.",
+      },
+      {
+        title: "Make workflow state explicit",
+        description:
+          "Jobs move through named review gates so the next action and record history stay visible.",
+      },
+      {
+        title: "Enforce access on the server",
+        description:
+          "Convex Auth, server-side permissions, allowlisted signup, and production-only controls protect the workflow at the data boundary.",
+      },
+    ],
+    nextSteps: [
+      "Package more trade-specific intake and confidence views without weakening the human review gate.",
+      "Extend controlled mobile worker submission and customer search flows.",
+      "Generalize the source-to-invoice pattern after the private operating loop remains dependable.",
+    ],
+    image: {
+      src: "/projects/mk-workbench-product.png",
+      alt: "MK Workbench review screen with sanitized demo data, workflow progress, job details, and approval controls.",
+      width: 1200,
+      height: 900,
+    },
+    primaryCta: {
+      label: "Read case study",
+      href: "/projects/mk-workbench",
+    },
+  },
   {
     slug: "memorex",
     title: "Memorex",
@@ -126,8 +208,8 @@ export const portfolioProjects = [
       "Add more validation around retrieval quality and stale context handling.",
     ],
     image: {
-      src: "/projects/memorex-proof-card.svg",
-      alt: "Memorex project memory interface with event streams, trace views, and handoff briefs.",
+      src: "/projects/memorex-product.png",
+      alt: "Memorex seeded pipeline proof console showing task activity, processor traces, and memory signals.",
       width: 1200,
       height: 900,
     },
@@ -202,91 +284,14 @@ export const portfolioProjects = [
       "Refine reporting surfaces once field workflow data is stable.",
     ],
     image: {
-      src: "/projects/insight-proof-card.svg",
-      alt: "Insight mobile field sales interface with map markers, lead status, appointments, and activity history.",
-      width: 1200,
-      height: 900,
+      src: "/projects/insight-product.png",
+      alt: "Insight lead queue showing sanitized sample leads, pipeline counts, search, and field actions.",
+      width: 2400,
+      height: 1800,
     },
     primaryCta: {
       label: "Read case study",
       href: "/projects/insight",
-    },
-  },
-  {
-    slug: "trinity-generator-quote-tool",
-    title: "Trinity Quote Tool",
-    proofType: "Quote workflow",
-    tagline:
-      "Structured quote workflow for intake, pricing controls, signatures, uploads, and PDF proposal generation.",
-    cardSummary: "Quote workflow for cleaner sales proposals.",
-    cardProblem:
-      "Quote work slows when customer inputs, pricing rules, uploads, and approvals split apart.",
-    cardSolution:
-      "Structured intake, pricing controls, uploads, signatures, access rules, and PDF output.",
-    cardMeta:
-      "Production-style workflow for intake, quoting, signature capture, and PDF proposals.",
-    seoDescription:
-      "Trinity Quote Tool is a production-style quote workflow covering intake, pricing controls, signatures, uploads, role-aware access, and PDF proposal generation.",
-    summary:
-      "The Trinity Quote Tool turns pricing, customer inputs, files, signatures, and final PDF output into a more repeatable proposal process.",
-    problem:
-      "Quoting gets slower and less consistent when customer inputs, files, signatures, pricing logic, and final proposal generation are handled through scattered manual steps.",
-    solution:
-      "Built a mobile-first quote workflow with structured intake, uploads, signatures, pricing controls, role-aware access, Supabase-backed storage, and server-side PDF generation.",
-    outcome:
-      "Production-style quote workflow focused on consistent intake, quoting, signature capture, and PDF proposal generation.",
-    role:
-      "Workflow design, UX refinement, quote logic, auth/storage problem solving, PDF generation, and deployment troubleshooting.",
-    stack: [
-      "Next.js App Router",
-      "TypeScript",
-      "Tailwind CSS",
-      "Supabase",
-      "Postgres",
-      "Storage",
-      "RLS",
-      "PDFKit",
-    ],
-    cardStack: ["Next.js", "TypeScript", "Tailwind", "Supabase", "PDFKit"],
-    status:
-      "Production-style quote workflow focused on consistent intake, quoting, signature capture, and PDF proposal generation.",
-    statusLabel: "Production-style build",
-    validation: [
-      "Resolved production-style issues across auth, storage, PDF generation, pricing logic, deployment constraints, and UI refinement.",
-      "Kept the workflow centered on repeatable proposal generation instead of ad hoc document assembly.",
-      "Used role-aware access and server-side PDF generation as core workflow boundaries.",
-    ],
-    keyDecisions: [
-      {
-        title: "Structure before output",
-        description:
-          "The quote path captures pricing inputs and customer requirements before generating the proposal.",
-      },
-      {
-        title: "Treat files as workflow data",
-        description:
-          "Uploads, signatures, storage, and proposal output are part of the same quote process.",
-      },
-      {
-        title: "Solve production-style constraints",
-        description:
-          "Auth, RLS, storage, PDF generation, and deployment behavior shaped the implementation details.",
-      },
-    ],
-    nextSteps: [
-      "Keep tightening pricing rule visibility for non-technical operators.",
-      "Add more guardrails around incomplete quote inputs and proposal review states.",
-      "Document deployment constraints and PDF generation failure modes for handoff.",
-    ],
-    image: {
-      src: "/projects/trinity-proof-card.svg",
-      alt: "Trinity Quote Tool interface with structured intake, pricing controls, signature capture, and PDF proposal output.",
-      width: 1200,
-      height: 900,
-    },
-    primaryCta: {
-      label: "Read case study",
-      href: "/projects/trinity-generator-quote-tool",
     },
   },
 ];
