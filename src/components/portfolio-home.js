@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   aboutContent,
   buildMailtoLink,
+  certificationContent,
   heroContent,
   navigationItems,
   portfolioProjects,
@@ -685,6 +686,40 @@ export function PortfolioHome() {
                   </div>
                 </div>
               </div>
+
+              <div className="mt-8 overflow-hidden rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.035] sm:mt-10">
+                <div className="grid items-center gap-0 md:grid-cols-[1.15fr_0.85fr]">
+                  <div className="relative overflow-hidden border-b border-white/10 bg-black md:border-b-0 md:border-r">
+                    <Image
+                      src={certificationContent.image.src}
+                      alt={certificationContent.image.alt}
+                      width={certificationContent.image.width}
+                      height={certificationContent.image.height}
+                      sizes="(min-width: 768px) 54vw, 100vw"
+                      className="h-auto w-full object-cover"
+                    />
+                  </div>
+                  <div className="p-5 sm:p-7 md:p-8">
+                    <div className="text-[11px] uppercase tracking-[0.22em] text-emerald-300/85">
+                      Professional certification
+                    </div>
+                    <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">
+                      {certificationContent.title}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-7 text-white/78">
+                      {certificationContent.description}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-2 text-xs text-white/70">
+                      <span className="rounded-full border border-white/15 px-2.5 py-1">
+                        Issued by {certificationContent.issuer}
+                      </span>
+                      <span className="rounded-full border border-white/15 px-2.5 py-1">
+                        {certificationContent.issued}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </section>
 
             <ChapterBreak />
@@ -693,7 +728,7 @@ export function PortfolioHome() {
               <SectionTitle
                 eyebrow="PROJECTS"
                 title="Selected systems work."
-                subtitle="AI workflow memory, field lead operations, and structured quoting tools built around real operating problems."
+                subtitle="Job-to-invoice operations, AI workflow memory, and field lead tools built around real operating problems."
                 tone="ice"
               />
 
