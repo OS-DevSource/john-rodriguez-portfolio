@@ -147,6 +147,13 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
           <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
         </Button>
         <Button
+          href={portfolioSite.resume}
+          variant="secondary"
+          className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
+        >
+          Resume
+        </Button>
+        <Button
           href={mailto}
           variant={isDesktop ? "tertiary" : "secondary"}
           className={cx(

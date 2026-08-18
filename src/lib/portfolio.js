@@ -12,6 +12,7 @@ export const portfolioSite = {
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
   linkedin: "https://www.linkedin.com/in/john-rodriguez-626136387/",
+  resume: "/resume/john-rodriguez-resume.pdf",
   replySla: "Replies within 24 hours on weekdays.",
   availability:
     "Open to product-minded ops, RevOps, automation, and internal tools work.",
