@@ -12,7 +12,7 @@ pnpm browser:context compare
 ```
 
 - `local`: Use `http://localhost:3000` when debugging in-progress work or unshipped changes.
-- `production`: Use `https://john-rodriguez-portfolio.vercel.app` when validating what is live.
+- `production`: Use `https://johnrodriguez.vercel.app` when validating what is live.
 - `compare`: Use both targets when Playwright and the live site seem to disagree.
 
 For local checks, the preflight prints:

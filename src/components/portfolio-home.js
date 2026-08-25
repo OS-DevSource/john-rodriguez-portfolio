@@ -138,7 +138,7 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
           variant="secondary"
           className="h-9 border-sky-400/40 px-3 text-xs hover:border-sky-300/55"
         >
-          <Icon name="github" className="h-4 w-4" /> GitHub
+          <Icon name="github" className="h-4 w-4" /> {portfolioSite.githubLabel}
         </Button>
         <Button
           href={portfolioSite.linkedin}
@@ -206,7 +206,7 @@ function Nav({ items, activeId, scrolled, onGo }) {
           </div>
           <div className="leading-tight">
             <div className="text-[13px] font-semibold text-white sm:text-sm">{portfolioSite.name}</div>
-            <div className="text-[11px] text-white/70 sm:text-xs">Portfolio</div>
+            <div className="text-[11px] text-white/70 sm:text-xs">Systems builder</div>
           </div>
         </button>
 
@@ -365,7 +365,7 @@ function ContactLinksCard({ mailto }) {
           className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-3 text-sm text-white/85 outline-none transition hover:border-white/20 hover:bg-white/[0.04] focus-visible:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-4"
         >
           <span className="flex min-w-0 items-center gap-2 overflow-hidden">
-            <Icon name="github" className="h-4 w-4" /> GitHub
+            <Icon name="github" className="h-4 w-4" /> {portfolioSite.githubLabel}
           </span>
           <Icon name="arrow" className="h-4 w-4 flex-none text-white/60" />
         </a>
@@ -728,7 +728,7 @@ export function PortfolioHome() {
               <SectionTitle
                 eyebrow="PROJECTS"
                 title="Selected systems work."
-                subtitle="Job-to-invoice operations, AI workflow memory, and field lead tools built around real operating problems."
+                subtitle="Job-to-invoice operations, agent memory infrastructure, and field lead tools built around real operating problems."
                 tone="ice"
               />
 

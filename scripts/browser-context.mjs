@@ -7,7 +7,7 @@ const TARGETS = new Set(["local", "production", "compare"]);
 const target = (process.argv[2] ?? "local").toLowerCase();
 
 const LOCAL_URL = "http://localhost:3000";
-const PRODUCTION_URL = "https://john-rodriguez-portfolio.vercel.app";
+const PRODUCTION_URL = "https://johnrodriguez.vercel.app";
 
 if (!TARGETS.has(target)) {
   console.error("Usage: node scripts/browser-context.mjs [local|production|compare]");

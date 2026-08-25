@@ -1,8 +1,8 @@
-const DEFAULT_SITE_URL = "https://john-rodriguez-portfolio.vercel.app";
+const DEFAULT_SITE_URL = "https://johnrodriguez.vercel.app";
 
 export const portfolioSite = {
   name: "John Rodriguez",
-  shortName: "John Rodriguez Portfolio",
+  shortName: "John Rodriguez",
   title: "John Rodriguez | GTM Systems, RevOps, Internal Tools",
   description:
     "Portfolio for John Rodriguez, a GTM systems and automation builder focused on RevOps workflows, internal tools, lead flow, reporting, and AI-assisted operations.",
@@ -11,6 +11,7 @@ export const portfolioSite = {
   timezoneLabel: "Central TX | Remote-ready",
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
+  githubLabel: "Public GitHub",
   linkedin: "https://www.linkedin.com/in/john-rodriguez-626136387/",
   resume: "/resume/john-rodriguez-resume.pdf",
   replySla: "Replies within 24 hours on weekdays.",
@@ -94,7 +95,7 @@ export const portfolioProjects = [
     cardSolution:
       "A review-gated intake-to-archive pipeline with human-approved AI extraction, explicit workflow state, regenerated PDFs, and audit history.",
     cardMeta:
-      "Deployed and pilot-ready with server-enforced roles, CI, Vitest, Playwright, and production safety controls.",
+      "Private, deployed, and pilot-ready with server-enforced roles, CI, Vitest, Playwright, and production safety controls.",
     seoDescription:
       "MK Workbench is a deployed, pilot-ready job-to-invoice platform connecting intake, document review, job records, invoice generation, finalization, and archive.",
     summary:
@@ -153,59 +154,59 @@ export const portfolioProjects = [
   {
     slug: "memorex",
     title: "Memorex",
-    proofType: "AI workflow memory",
+    proofType: "Agent memory infrastructure",
     tagline:
-      "AI-native project memory for agent workflow continuity, decisions, traces, and handoff briefs.",
-    cardSummary: "Project memory for fragmented agent work.",
+      "An agent flight recorder, context compiler, and persistent project memory layer for AI coding workflows.",
+    cardSummary: "Deep project memory, compact context for the next run.",
     cardProblem:
-      "Agent-assisted work drops context between sessions, tools, decisions, and handoffs.",
+      "AI coding work loses decisions, failures, relationships, and handoff context across sessions and tools.",
     cardSolution:
-      "Event streams, trace views, memory ledgers, decisions, and generated handoff briefs.",
+      "Lifecycle capture, cited retrieval, scoped graph memory, generated context packs, and a project-first workspace.",
     cardMeta:
-      "Prototype validating AI-native project memory, handoff continuity, and context recovery.",
+      "Private, deployed product with real-project dogfood, SQLite/Postgres runtime proof, and healthy live endpoints.",
     seoDescription:
-      "Memorex is an AI-native project memory prototype for preserving task context, decisions, handoffs, and generated briefs across agent-assisted work.",
+      "Memorex is an agent flight recorder, context compiler, and persistent project memory layer with lifecycle capture, cited retrieval, scoped graph memory, and compact handoff context.",
     summary:
-      "Memorex validates a practical answer to a real LLM workflow problem: project context gets fragmented across sessions, tools, and implementation passes.",
+      "Memorex preserves what happened, why it happened, what broke, and what the next coding agent needs to know, then compiles that history into compact, cited context instead of replaying raw logs.",
     problem:
-      "Agent-assisted software work can move quickly, but important context often lives in chat fragments, issue comments, branch state, and memory notes. That makes the next pass slower and riskier.",
+      "Agent-assisted software work moves quickly, but decisions, failures, branch context, and handoff details fragment across tasks and tools. The next run either starts cold or consumes too much unfiltered history.",
     solution:
-      "Designed a project memory prototype around event streams, task context, memory ledgers, selected traces, generated briefs, and handoff-ready summaries.",
+      "Built a project-first memory system with task lifecycle capture, compact context packs, cited retrieval and expansion, scoped graph relationships, generated handoff briefs, a CLI, Codex integration, and local and hosted storage paths.",
     outcome:
-      "Prototype validating whether AI-native project memory can improve continuity between implementation passes.",
+      "A private, deployed agent-memory product with real-project dogfood, scoped graph memory, SQLite and Postgres runtime proof, and healthy live and readiness endpoints.",
     role:
-      "Product concept, workflow modeling, information architecture, implementation planning, and AI workflow design.",
-    stack: ["Next.js", "React", "Vercel", "Linear", "Miro", "AI workflows"],
-    cardStack: ["Next.js", "React", "Vercel", "Linear", "AI workflows"],
+      "Product concept, system architecture, lifecycle and retrieval design, full-stack implementation, Codex integration, storage contracts, testing, and deployment hardening.",
+    stack: ["Next.js", "TypeScript", "SQLite", "PostgreSQL", "MCP", "Codex plugin"],
+    cardStack: ["Next.js", "TypeScript", "SQLite", "PostgreSQL", "MCP"],
     status:
-      "Prototype built to validate AI-native project memory and handoff continuity.",
-    statusLabel: "Prototype",
-  validation: [
-      "Modeled event streams, memory ledgers, trace views, and generated briefs.",
-      "Focused the prototype on preserving project context across fragmented work.",
-      "Defined clear prototype boundaries for integrations, sync, and handoff behavior.",
+      "Private, deployed product in active real-project dogfood with healthy live and readiness endpoints.",
+    statusLabel: "Private / deployed",
+    validation: [
+      "Runs a project-first workspace, lifecycle API, CLI, and Codex integration against real task history.",
+      "Supports compact retrieval, citation expansion, scoped graph relationships, and generated context packs.",
+      "Proves local SQLite and hosted PostgreSQL runtime paths with health and readiness checks.",
     ],
     keyDecisions: [
       {
-        title: "Start with continuity",
+        title: "Store deep, send small",
         description:
-          "The product centers on what the next implementation pass needs to know, not on storing every possible artifact.",
+          "Raw history stays available, while normal agent runs receive compact, ranked context with citations back to source records.",
       },
       {
-        title: "Keep evidence visible",
+        title: "Scope memory at the boundary",
         description:
-          "Events, selected traces, and generated briefs are separate so summaries can stay reviewable.",
+          "Project, repository, and task identifiers narrow retrieval and lifecycle writes so context cannot silently cross the wrong boundary.",
       },
       {
-        title: "Design for operator trust",
+        title: "Keep evidence inspectable",
         description:
-          "The workflow favors clear context and handoff quality over black-box automation.",
+          "Summaries, relationships, and generated briefs retain citations so operators can inspect the records behind compressed context.",
       },
     ],
     nextSteps: [
-      "Tighten the bridge between task stages, selected traces, and generated briefs.",
-      "Clarify integration boundaries for future production work.",
-      "Add more validation around retrieval quality and stale context handling.",
+      "Broaden real-project dogfood and measure context quality across longer, concurrent workstreams.",
+      "Strengthen correction, redaction, and stale-context handling without bloating normal context packs.",
+      "Continue hardening retrieval and storage behavior under larger project histories.",
     ],
     image: {
       src: "/projects/memorex-product.png",
@@ -230,7 +231,7 @@ export const portfolioProjects = [
     cardSolution:
       "Map-first lead review, quick actions, CSV import, editable details, and activity capture.",
     cardMeta:
-      "Internal prototype with Convex persistence and core route smoke coverage.",
+      "Private internal prototype with Convex persistence and core route smoke coverage.",
     seoDescription:
       "Insight is a mobile-first field sales workflow prototype with map-centric leads, appointments, CSV import, Convex persistence, and route smoke coverage.",
     summary:
@@ -254,7 +255,7 @@ export const portfolioProjects = [
     ],
     cardStack: ["Next.js", "TypeScript", "Tailwind", "Convex", "Playwright"],
     status:
-      "Internal field workflow prototype with Convex-backed persistence and smoke-test coverage for core routes.",
+      "Private internal field workflow prototype with Convex-backed persistence and smoke-test coverage for core routes.",
     statusLabel: "Internal prototype",
     validation: [
       "Implemented schema, queries, mutations, seeded data, and core route smoke coverage.",

@@ -111,8 +111,10 @@ export function Button({
 
   if (as === "a" || href) {
     const isExternal = typeof href === "string" && /^[a-z]+:/i.test(href);
+    const isDocument =
+      typeof href === "string" && /\.(?:pdf|docx?|xlsx?|pptx?)(?:[?#]|$)/i.test(href);
 
-    if (isExternal) {
+    if (isExternal || isDocument) {
       return (
         <a
           href={href}
