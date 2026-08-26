@@ -252,73 +252,199 @@ function Nav({ items, activeId, scrolled, onGo }) {
   );
 }
 
-function ProjectCard({ project }) {
-  const cardStack = project.cardStack || project.stack;
+function ProjectDetails({ story, stack }) {
+  return (
+    <>
+      <dl className="border-y border-white/10">
+        {story.map((item) => (
+          <div
+            key={item.label}
+            className="grid gap-1 border-b border-white/10 py-3.5 last:border-b-0 sm:grid-cols-[8.25rem_1fr] sm:gap-5 sm:py-4"
+          >
+            <dt className="text-[10px] uppercase tracking-[0.18em] text-orange-200/70 sm:text-[11px]">
+              {item.label}
+            </dt>
+            <dd className="text-sm leading-6 text-white/72">{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div className="mt-5 flex flex-wrap gap-1.5 sm:mt-6 sm:gap-2">
+        {stack.map((item) => (
+          <span key={item} className={TOKENS.chip}>
+            {item}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function ProjectImage({ project, sizes }) {
+  return (
+    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 bg-black">
+      <Image
+        src={project.image.src}
+        alt={project.image.alt}
+        width={project.image.width}
+        height={project.image.height}
+        sizes={sizes}
+        className="h-full w-full object-cover object-top transition duration-500 motion-safe:group-hover:scale-[1.012] motion-reduce:transition-none"
+      />
+      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.04]" />
+    </div>
+  );
+}
+
+function ProjectPreview({ project }) {
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const mobilePreviewId = `${project.slug}-mobile-preview`;
 
   return (
-    <Card interactive className="h-full">
-      <div className="flex h-full flex-col">
-        <div className="relative overflow-hidden rounded-[22px] border border-white/10 bg-black/40">
-          <Image
-            src={project.image.src}
-            alt={project.image.alt}
-            width={project.image.width}
-            height={project.image.height}
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="h-40 w-full object-cover sm:h-48"
-          />
-        </div>
-
-        <div className="mt-4 sm:mt-5">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-sky-200/80 sm:text-[11px]">
-            Case study | {project.statusLabel}
-          </div>
-          <h3 className="mt-1 text-base font-bold text-white">{project.title}</h3>
-          <p className="mt-1.5 min-h-6 text-sm leading-6 text-sky-100/80 sm:mt-2">
-            {project.cardSummary}
-          </p>
-        </div>
-
-        <div className="mt-3.5 grid gap-2 text-sm leading-6 text-white/72 sm:mt-4 sm:gap-2.5">
-          <div className="min-h-[126px] rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
-            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/70 sm:text-[11px] sm:tracking-[0.18em]">Problem</div>
-            <p className="mt-1">{project.cardProblem}</p>
-          </div>
-          <div className="min-h-[126px] rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
-            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/75 sm:text-[11px] sm:tracking-[0.18em]">System response</div>
-            <p className="mt-1">{project.cardSolution}</p>
-          </div>
-          <div className="min-h-[126px] rounded-xl border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-3.5 sm:py-3">
-            <div className="text-[10px] uppercase tracking-[0.16em] text-orange-200/75 sm:text-[11px] sm:tracking-[0.18em]">Proof / status</div>
-            <p className="mt-1">{project.cardMeta}</p>
-          </div>
-        </div>
-
-        <div className="mt-3.5 flex min-h-[58px] flex-wrap content-start gap-1.5 sm:mt-4 sm:gap-2">
-          {cardStack.map((item) => (
-            <span key={item} className={TOKENS.chip}>
-              {item}
+    <>
+      <div className="w-full md:hidden">
+        <button
+          type="button"
+          aria-expanded={previewOpen}
+          aria-controls={mobilePreviewId}
+          onClick={() => setPreviewOpen((open) => !open)}
+          className="flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-xl border border-white/12 bg-white/[0.025] p-2 text-left outline-none transition hover:border-sky-300/35 hover:bg-white/[0.045] focus-visible:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+        >
+          <span className="relative h-14 w-20 flex-none overflow-hidden rounded-lg border border-white/10 bg-black">
+            <Image
+              src={project.image.src}
+              alt=""
+              fill
+              sizes="80px"
+              className="object-cover object-top opacity-85"
+            />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-semibold text-white/88">
+              {previewOpen ? "Hide product preview" : "View product preview"}
             </span>
-          ))}
-        </div>
-
-        <div className="mt-auto flex flex-col gap-2.5 pt-4 sm:flex-row sm:flex-wrap sm:gap-3 sm:pt-5">
-          <Button
-            href={project.primaryCta.href}
-            variant="primary"
-            className="sm:flex-1"
-            aria-label={`Read the ${project.title} case study`}
-          >
-            {project.primaryCta.label} <Icon name="arrow" className="h-4 w-4" />
-          </Button>
-          {project.secondaryCta ? (
-            <Button href={project.secondaryCta.href} variant="secondary" className="sm:flex-1">
-              {project.secondaryCta.label} <Icon name="arrow" className="h-4 w-4" />
-            </Button>
-          ) : null}
+            <span className="mt-0.5 block text-xs text-white/55">{project.title} interface</span>
+          </span>
+          <Icon
+            name="arrow"
+            className={cx(
+              "mr-1 h-4 w-4 flex-none text-sky-200 transition-transform duration-200 motion-reduce:transition-none",
+              previewOpen ? "rotate-[270deg]" : "rotate-90"
+            )}
+          />
+        </button>
+        <div
+          id={mobilePreviewId}
+          className={cx("pt-3", !previewOpen && "hidden")}
+        >
+          <ProjectImage project={project} sizes="calc(100vw - 3.5rem)" />
         </div>
       </div>
-    </Card>
+
+      <div className="hidden w-full md:block">
+        <ProjectImage project={project} sizes="(min-width: 1024px) 52vw, 100vw" />
+      </div>
+    </>
+  );
+}
+
+function ProjectShowcase({ project, index }) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const cardStack = project.cardStack || project.stack;
+  const imageFirst = index % 2 === 0;
+  const projectNumber = String(index + 1).padStart(2, "0");
+  const mobileDetailsId = `${project.slug}-mobile-details`;
+  const story = [
+    { label: "Problem", value: project.cardProblem },
+    { label: "System response", value: project.cardSolution },
+    { label: "Proof / status", value: project.cardMeta },
+  ];
+
+  return (
+    <article className="group relative overflow-hidden rounded-2xl border border-white/12 bg-white/[0.025] transition duration-300 hover:border-sky-300/25">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgba(56,189,248,0.07),transparent_40%)] opacity-70" />
+
+      <div className="relative grid lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
+        <div
+          className={cx(
+            "relative min-w-0 border-b border-white/10 bg-black/55 p-3 sm:p-4 lg:flex lg:items-center lg:border-b-0 lg:p-6 xl:p-8",
+            imageFirst ? "lg:border-r" : "lg:order-2 lg:border-l"
+          )}
+        >
+          <ProjectPreview project={project} />
+        </div>
+
+        <div className="flex min-w-0 flex-col p-5 sm:p-7 lg:p-8 xl:p-10">
+          <div className="flex items-center justify-between gap-4 text-[11px] uppercase tracking-[0.2em] text-sky-200/80">
+            <span>Case study / {project.statusLabel}</span>
+            <span className="font-mono text-white/35" aria-hidden="true">
+              {projectNumber}
+            </span>
+          </div>
+
+          <h3 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            {project.title}
+          </h3>
+          <p className="mt-2 max-w-[38rem] text-base leading-7 text-sky-100/78 sm:text-lg">
+            {project.cardSummary}
+          </p>
+
+          <div className="mt-5 grid grid-cols-2 gap-2.5 md:hidden">
+            <button
+              type="button"
+              aria-expanded={detailsOpen}
+              aria-controls={mobileDetailsId}
+              onClick={() => setDetailsOpen((open) => !open)}
+              className="flex min-h-11 min-w-0 items-center justify-between gap-2 rounded-xl border border-white/12 bg-white/[0.025] px-3 text-sm font-semibold text-white/85 outline-none transition hover:border-sky-300/35 hover:bg-white/[0.045] focus-visible:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            >
+              <span className="truncate">{detailsOpen ? "Hide details" : "Details"}</span>
+              <Icon
+                name="arrow"
+                className={cx(
+                  "h-4 w-4 flex-none text-sky-200 transition-transform duration-200 motion-reduce:transition-none",
+                  detailsOpen ? "rotate-[270deg]" : "rotate-90"
+                )}
+              />
+            </button>
+            <Button
+              href={project.primaryCta.href}
+              variant="primary"
+              className="w-full min-w-0 px-3"
+              aria-label={`Open the ${project.title} case study`}
+            >
+              {project.primaryCta.label} <Icon name="arrow" className="h-4 w-4" />
+            </Button>
+          </div>
+
+          <div
+            id={mobileDetailsId}
+            className={cx("pt-5 md:hidden", !detailsOpen && "hidden")}
+          >
+            <ProjectDetails story={story} stack={cardStack} />
+          </div>
+
+          <div className="mt-6 hidden md:block sm:mt-7">
+            <ProjectDetails story={story} stack={cardStack} />
+          </div>
+
+          <div className="mt-auto hidden flex-col gap-2.5 pt-5 md:flex md:flex-row md:flex-wrap md:gap-3 md:pt-7">
+            <Button
+              href={project.primaryCta.href}
+              variant="primary"
+              className="w-full sm:w-auto"
+              aria-label={`Read the ${project.title} case study`}
+            >
+              {project.primaryCta.label} <Icon name="arrow" className="h-4 w-4" />
+            </Button>
+            {project.secondaryCta ? (
+              <Button href={project.secondaryCta.href} variant="secondary" className="w-full sm:w-auto">
+                {project.secondaryCta.label} <Icon name="arrow" className="h-4 w-4" />
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -732,9 +858,9 @@ export function PortfolioHome() {
                 tone="ice"
               />
 
-              <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
-                {portfolioProjects.map((project) => (
-                  <ProjectCard key={project.slug} project={project} />
+              <div className="space-y-10 sm:space-y-12 lg:space-y-14">
+                {portfolioProjects.map((project, index) => (
+                  <ProjectShowcase key={project.slug} project={project} index={index} />
                 ))}
               </div>
             </section>

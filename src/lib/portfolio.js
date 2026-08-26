@@ -147,7 +147,7 @@ export const portfolioProjects = [
       height: 900,
     },
     primaryCta: {
-      label: "Read case study",
+      label: "Case study",
       href: "/projects/mk-workbench",
     },
   },
@@ -215,7 +215,7 @@ export const portfolioProjects = [
       height: 900,
     },
     primaryCta: {
-      label: "Read case study",
+      label: "Case study",
       href: "/projects/memorex",
     },
   },
@@ -291,7 +291,7 @@ export const portfolioProjects = [
       height: 1800,
     },
     primaryCta: {
-      label: "Read case study",
+      label: "Case study",
       href: "/projects/insight",
     },
   },
