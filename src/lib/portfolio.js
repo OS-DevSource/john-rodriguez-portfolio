@@ -20,18 +20,18 @@ export const portfolioSite = {
 };
 
 export const heroContent = {
-  eyebrow: "GTM SYSTEMS | REVOPS | INTERNAL TOOLS",
-  headlineLead: "Systems builder for",
-  headlineAccent: "GTM teams, internal tools, and automation.",
+  eyebrow: "REVOPS | AI WORKFLOWS | INTERNAL TOOLS",
+  headlineLead: "John Rodriguez",
+  headlineAccent: "builds evidence-bound operational systems from messy workflows.",
   headline:
-    "Systems builder for GTM teams, internal tools, and automation.",
+    "John Rodriguez builds evidence-bound operational systems from messy workflows.",
   summary:
-    "I turn messy handoffs, lead flow, reporting gaps, and manual workflows into usable systems teams can actually run.",
+    "I build job-to-invoice, agent-memory, and field-sales tools that keep context, workflow state, review gates, and next actions visible.",
   callout:
-    "I work where RevOps, product thinking, and web app execution meet: lifecycle rules, intake design, integrations, dashboards, and field-ready UI.",
-  profileTitle: "GTM systems, AI workflow automation, and internal tools.",
+    "The pattern is consistent: preserve context, make workflow state explicit, keep human review where judgment matters, and build for the people doing the work.",
+  profileTitle: "Operational systems, AI workflows, and internal tools.",
   profileSignal:
-    "Practical systems that keep teams aligned as volume, handoffs, and complexity grow.",
+    "Systems that preserve context, expose state, and keep review where judgment matters.",
 };
 
 export const aboutContent = {
@@ -299,8 +299,8 @@ export const portfolioProjects = [
 
 export const navigationItems = [
   { id: "home", label: "Home" },
-  { id: "about", label: "About" },
   { id: "projects", label: "Projects" },
+  { id: "about", label: "About" },
   { id: "strengths", label: "Strengths" },
   { id: "contact", label: "Contact" },
 ];

@@ -102,16 +102,11 @@ function useActiveSection(sectionIds) {
   return activeId;
 }
 
-function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant = "mobile" }) {
-  const isDesktop = variant === "desktop";
-
+function ProfileSummary({ mailto }) {
   return (
     <Card
       interactive
-      className={cx(
-        "border-white/8 bg-white/[0.02] max-md:max-w-full",
-        isDesktop ? "md:max-w-none" : "max-w-md"
-      )}
+      className="border-white/8 bg-white/[0.02] md:max-w-none"
     >
       <div className="flex items-center gap-3.5 sm:gap-4">
         <div className="relative flex-none rounded-full">
@@ -122,7 +117,6 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
             width={72}
             height={72}
             sizes="(min-width: 640px) 72px, 64px"
-            priority={isDesktop}
             className="relative aspect-square h-16 w-16 rounded-full border border-white/10 object-cover sm:h-[72px] sm:w-[72px]"
           />
         </div>
@@ -156,23 +150,12 @@ function ProfileSummary({ mailto, showHeroCtas = false, onViewProjects, variant 
         </Button>
         <Button
           href={mailto}
-          variant={isDesktop ? "tertiary" : "secondary"}
-          className={cx(
-            "h-9 px-3 text-xs",
-            isDesktop ? null : "border-sky-400/40 hover:border-sky-300/55"
-          )}
+          variant="tertiary"
+          className="h-9 px-3 text-xs"
         >
           <Icon name="mail" className="h-4 w-4" /> Email
         </Button>
       </div>
-
-      {showHeroCtas ? (
-        <div className="mt-3.5 grid gap-2.5">
-          <Button type="button" onClick={onViewProjects} className="w-full">
-            View case studies <Icon name="arrow" className="h-4 w-4" />
-          </Button>
-        </div>
-      ) : null}
 
       <div className="mt-2.5 text-sm leading-6 text-white/75">{heroContent.profileSignal}</div>
       <div className="mt-3.5 flex flex-wrap gap-2 text-xs text-white/70">
@@ -189,22 +172,22 @@ function Nav({ items, activeId, scrolled, onGo }) {
   return (
     <div
       className={cx(
-        "rounded-2xl border border-white/10",
+        "w-fit rounded-2xl border border-white/10 md:w-auto",
         scrolled ? "bg-black/70 backdrop-blur" : "bg-black/40 backdrop-blur",
-        "px-3.5 py-2.5 sm:px-4 sm:py-3"
+        "px-2 py-1.5 sm:px-4 sm:py-3"
       )}
     >
       <div className="flex items-center justify-between">
         <button
           type="button"
           onClick={() => onGo("home")}
-          className="flex items-center gap-2.5 rounded-xl text-left outline-none transition focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:gap-3"
+          className="flex min-h-11 min-w-11 items-center gap-2.5 rounded-xl text-left outline-none transition focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:gap-3"
           aria-label="Go to homepage hero"
         >
           <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.03] sm:h-10 sm:w-10">
             <span className="text-xs font-extrabold text-white sm:text-sm">JR</span>
           </div>
-          <div className="leading-tight">
+          <div className="hidden leading-tight sm:block">
             <div className="text-[13px] font-semibold text-white sm:text-sm">{portfolioSite.name}</div>
             <div className="text-[11px] text-white/70 sm:text-xs">Systems builder</div>
           </div>
@@ -220,7 +203,7 @@ function Nav({ items, activeId, scrolled, onGo }) {
                 type="button"
                 onClick={() => onGo(item.id)}
                 className={cx(
-                  "relative rounded-md text-sm font-semibold outline-none transition focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-4 focus-visible:ring-offset-black",
+                  "relative min-h-11 rounded-md px-1 text-sm font-semibold outline-none transition focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-4 focus-visible:ring-offset-black",
                   isActive ? "text-white" : "text-white/70 hover:text-white"
                 )}
                 aria-current={isActive ? "true" : undefined}
@@ -239,11 +222,11 @@ function Nav({ items, activeId, scrolled, onGo }) {
           })}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button href={portfolioSite.github} variant="secondary" className="hidden md:inline-flex">
+        <div className="hidden items-center gap-2 lg:flex">
+          <Button href={portfolioSite.github} variant="secondary">
             <Icon name="github" className="h-4 w-4" /> GitHub
           </Button>
-          <Button href={portfolioSite.linkedin} variant="secondary" className="hidden md:inline-flex">
+          <Button href={portfolioSite.linkedin} variant="secondary">
             <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
           </Button>
         </div>
@@ -720,17 +703,14 @@ export function PortfolioHome() {
                 <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
                 <div className="pointer-events-none absolute left-24 top-8 hidden h-[420px] w-[420px] rounded-full bg-orange-400/[0.05] blur-3xl md:block" />
 
-                <div className="grid gap-10 max-md:gap-5 md:grid-cols-[1.2fr_0.8fr] md:items-start">
+                <div className="grid gap-10 max-lg:gap-5 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
                   <div className="min-w-0">
                     <div className={cx(TOKENS.eyebrow, "text-sky-200/92")}>{heroContent.eyebrow}</div>
-                    <h1
-                      className={cx(
-                        TOKENS.h1,
-                        "mt-3 max-w-3xl max-md:mt-2 max-md:max-w-full max-md:text-[clamp(2.2rem,11vw,3.25rem)] max-md:leading-[1.04] sm:text-[3.9rem]"
-                      )}
-                    >
-                        {heroContent.headlineLead}{" "}
-                      <span className="bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)]">
+                    <h1 className="mt-3 max-w-3xl font-extrabold tracking-tight max-md:mt-2 max-md:max-w-full">
+                      <span className="block text-[clamp(2.65rem,13vw,5rem)] leading-[0.98] text-white lg:text-[4.5rem] xl:text-[5rem]">
+                        {heroContent.headlineLead}
+                      </span>{" "}
+                      <span className="mt-2 block bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-[clamp(2rem,8vw,3.75rem)] leading-[1.03] text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)] sm:mt-3 lg:text-[3.25rem] xl:text-[3.75rem]">
                         {heroContent.headlineAccent}
                       </span>
                     </h1>
@@ -739,25 +719,26 @@ export function PortfolioHome() {
                       {heroContent.summary}
                     </p>
 
-                    <div className="mt-3.5 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white/70 sm:mt-4 sm:py-3.5">
-                      {heroContent.callout}
-                    </div>
-
-                    <div className="mt-4 md:hidden">
-                      <div className="space-y-3">
-                        <ProfileSummary
-                          mailto={mailto}
-                          variant="mobile"
-                          showHeroCtas
-                          onViewProjects={() => go("projects")}
-                        />
-                        <AvailabilityPill label={portfolioSite.availability} />
+                    <div className="mt-5 flex flex-col items-start gap-3 lg:hidden">
+                      <Button type="button" onClick={() => go("projects")} className="w-full sm:w-auto">
+                        View selected work <Icon name="arrow" className="h-4 w-4" />
+                      </Button>
+                      <div className="flex flex-wrap items-center gap-2.5">
+                        <AvailabilityPill label={portfolioSite.timezoneLabel} />
+                        <Button
+                          href={portfolioSite.resume}
+                          variant="tertiary"
+                          className="px-3"
+                          aria-label="Open John Rodriguez's resume"
+                        >
+                          Resume
+                        </Button>
                       </div>
                     </div>
 
-                    <div className="mt-6 hidden flex-wrap items-center gap-3 md:flex">
+                    <div className="mt-5 hidden flex-wrap items-center gap-3 lg:flex">
                       <Button type="button" onClick={() => go("projects")}>
-                        View case studies <Icon name="arrow" className="h-4 w-4" />
+                        View selected work <Icon name="arrow" className="h-4 w-4" />
                       </Button>
                       <Button href={mailto} variant="secondary">
                         <Icon name="mail" className="h-4 w-4" /> Email me
@@ -766,15 +747,36 @@ export function PortfolioHome() {
                         <Icon name="pin" className="h-4 w-4" /> {portfolioSite.location}
                       </div>
                     </div>
+
+                    <div className="mt-4 hidden max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white/70 sm:py-3.5 lg:block">
+                      {heroContent.callout}
+                    </div>
                   </div>
 
-                  <div className="hidden min-w-0 md:block md:pt-1">
+                  <div className="hidden min-w-0 lg:block lg:pt-1">
                     <div className="space-y-3">
-                      <ProfileSummary mailto={mailto} variant="desktop" />
+                      <ProfileSummary mailto={mailto} />
                       <AvailabilityPill label={portfolioSite.availability} />
                     </div>
                   </div>
                 </div>
+              </div>
+            </section>
+
+            <ChapterBreak />
+
+            <section id="projects" className="scroll-mt-28">
+              <SectionTitle
+                eyebrow="SELECTED WORK"
+                title="Operational systems, with the proof attached."
+                subtitle="Job-to-invoice, agent-memory, and field-sales systems shown with the operating problem, current status, and implementation proof."
+                tone="ice"
+              />
+
+              <div className="space-y-10 sm:space-y-12 lg:space-y-14">
+                {portfolioProjects.map((project, index) => (
+                  <ProjectShowcase key={project.slug} project={project} index={index} />
+                ))}
               </div>
             </section>
 
@@ -845,23 +847,6 @@ export function PortfolioHome() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
-
-            <ChapterBreak />
-
-            <section id="projects" className="scroll-mt-28">
-              <SectionTitle
-                eyebrow="PROJECTS"
-                title="Selected systems work."
-                subtitle="Job-to-invoice operations, agent memory infrastructure, and field lead tools built around real operating problems."
-                tone="ice"
-              />
-
-              <div className="space-y-10 sm:space-y-12 lg:space-y-14">
-                {portfolioProjects.map((project, index) => (
-                  <ProjectShowcase key={project.slug} project={project} index={index} />
-                ))}
               </div>
             </section>
 
