@@ -88,16 +88,16 @@ export const portfolioProjects = [
     title: "MK Workbench",
     proofType: "Applied AI / operations",
     tagline:
-      "A deployed, pilot-ready job-to-invoice system for field service operations.",
+      "A private production job-to-invoice system for field service operations.",
     cardSummary: "A job becomes billable through a workflow, not memory.",
     cardProblem:
       "Photos, notes, line items, customer details, and invoices can get scattered across tools and manual handoffs.",
     cardSolution:
       "A review-gated intake-to-archive pipeline with human-approved AI extraction, explicit workflow state, regenerated PDFs, and audit history.",
     cardMeta:
-      "Private, deployed, and pilot-ready with server-enforced roles, CI, Vitest, Playwright, and production safety controls.",
+      "Private and in production with server-enforced roles, CI, Vitest, Playwright, and production safety controls.",
     seoDescription:
-      "MK Workbench is a deployed, pilot-ready job-to-invoice platform connecting intake, document review, job records, invoice generation, finalization, and archive.",
+      "MK Workbench is a private production job-to-invoice platform connecting intake, document review, job records, invoice generation, finalization, and archive.",
     summary:
       "MK Workbench preserves source material, extracts what it can, and routes every job through operational review, invoice review, finalization, and archive.",
     problem:
@@ -105,14 +105,14 @@ export const portfolioProjects = [
     solution:
       "Built a Convex-backed workflow state machine for intake, review, invoice, finalization, and archive. OpenAI image extraction stays evidence-bound and review-only, and every important action writes to an audit log.",
     outcome:
-      "A private, deployed and pilot-ready platform with explicit workflow state, role enforcement, automated coverage, and production safety controls.",
+      "A private production platform with explicit workflow state, role enforcement, automated coverage, and production safety controls.",
     role:
       "Product design, full-stack implementation, AI extraction guardrails, authentication and permissions, document generation, testing, and production safety.",
     stack: ["React", "Vite", "Convex", "OpenAI", "Vitest", "Playwright"],
     cardStack: ["React", "TypeScript", "Convex", "OpenAI", "Playwright"],
     status:
-      "Private, deployed and pilot-ready job-to-invoice workflow platform.",
-    statusLabel: "Deployed / pilot-ready",
+      "Private production job-to-invoice workflow platform.",
+    statusLabel: "Private / production",
     validation: [
       "Uses Convex-backed data, storage, authentication, and server-enforced roles.",
       "Keeps OpenAI image extraction and OCR behind an explicit human review gate.",
