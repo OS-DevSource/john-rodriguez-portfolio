@@ -7,6 +7,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // Nested worktrees carry their own source and generated output.
+    ".worktrees/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
