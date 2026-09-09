@@ -11,10 +11,10 @@ export const alt = `${portfolioSite.name} portfolio social preview`;
 
 export default function TwitterImage() {
   return renderSocialImage({
-    eyebrow: "Operator-builder",
+    eyebrow: "Portfolio",
     title: heroContent.headline,
-    body: heroContent.signal,
+    body: heroContent.summary,
     accent: "#fdba74",
-    footer: "Proof-driven portfolio",
+    footer: "AI evaluation, software, and operations",
   });
 }

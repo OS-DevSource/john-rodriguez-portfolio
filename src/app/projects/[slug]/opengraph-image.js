@@ -17,6 +17,6 @@ export default async function ProjectOpenGraphImage({ params }) {
     title: project?.title || portfolioSite.name,
     body: project?.tagline || portfolioSite.description,
     accent: "#7dd3fc",
-    footer: project?.status || "Proof-driven portfolio",
+    footer: project?.statusLabel || "Proof-driven portfolio",
   });
 }

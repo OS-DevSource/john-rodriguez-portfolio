@@ -15,6 +15,6 @@ export default function OpenGraphImage() {
     title: heroContent.headline,
     body: heroContent.summary,
     accent: "#7dd3fc",
-    footer: "GTM systems, web apps, and automation",
+    footer: "AI evaluation, software, and operations",
   });
 }
