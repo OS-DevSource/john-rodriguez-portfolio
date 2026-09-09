@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { AllowanceVisual } from "./allowance-visual";
 
 import { buildMailtoLink, portfolioSite } from "@/lib/portfolio";
 
@@ -120,7 +121,7 @@ export function ProjectCaseStudyPage({ project }) {
               </div>
 
               <Card interactive>
-                <div className="relative overflow-hidden rounded-[22px] border border-white/10 bg-black/40">
+                {project.slug === "allowance" ? <AllowanceVisual priority /> : <div className="relative overflow-hidden rounded-[22px] border border-white/10 bg-black/40">
                   <Image
                     src={project.image.src}
                     alt={project.image.alt}
@@ -128,9 +129,9 @@ export function ProjectCaseStudyPage({ project }) {
                     height={project.image.height}
                     priority
                     sizes="(min-width: 768px) 40vw, 100vw"
-                    className="h-auto w-full object-cover"
+                    className={cx("h-auto w-full object-contain", project.image.fit === "contain" && "max-h-[440px] p-6")}
                   />
-                </div>
+                </div>}
                 <div className="mt-5 grid gap-3 text-sm leading-6 text-white/74">
                   <div>
                     <div className="text-[11px] uppercase tracking-[0.18em] text-sky-200/90">Role</div>
@@ -146,17 +147,33 @@ export function ProjectCaseStudyPage({ project }) {
               </Card>
             </section>
 
+            {project.contextImage ? (
+              <section className="mt-12" aria-labelledby="desktop-context-title">
+                <h2 id="desktop-context-title" className={TOKENS.h2}>The same reading, alongside the work.</h2>
+                <p className={cx(TOKENS.body, "mt-3 max-w-3xl")}>
+                  This desktop capture shows Allowance and the account usage menu both at 53% remaining.
+                  The pinned companion keeps that reading visible while the main workspace stays open.
+                </p>
+                <figure className="mt-6">
+                  <a href={project.contextImage.src} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-2xl border border-white/10 outline-none focus-visible:ring-2 focus-visible:ring-sky-300" aria-label="Open the full desktop screenshot in a new tab">
+                    <Image {...project.contextImage} alt={project.contextImage.alt} sizes="(min-width: 1200px) 1100px, 100vw" className="h-auto w-full" />
+                  </a>
+                  <figcaption className="mt-3 text-sm text-white/55">Actual desktop capture, September 9, 2026. Open the image to inspect it at full size.</figcaption>
+                </figure>
+              </section>
+            ) : null}
+
             <section className="mt-12">
               <div className="mb-5">
                 <div className="text-[11px] uppercase tracking-[0.22em] text-sky-200/90">
-                  Operating context
+                  The problem
                 </div>
                 <h2 className={cx(TOKENS.h2, "mt-2")}>What needed to change.</h2>
               </div>
 
               <div className="grid gap-6 md:grid-cols-2">
                 <DetailCard label="Problem">{project.problem}</DetailCard>
-                <DetailCard label="System response">{project.solution}</DetailCard>
+                <DetailCard label="What I built">{project.solution}</DetailCard>
               </div>
             </section>
 
@@ -178,7 +195,7 @@ export function ProjectCaseStudyPage({ project }) {
                     ))}
                   </div>
                 </FactCard>
-                <FactCard label="Proof / validation">
+                <FactCard label="Validation">
                   <ul className="space-y-2">
                     {(project.validation || [project.outcome]).filter(Boolean).slice(0, 3).map((item) => (
                       <li key={item} className="flex gap-2.5">
@@ -211,9 +228,9 @@ export function ProjectCaseStudyPage({ project }) {
                     <div className="text-[11px] uppercase tracking-[0.2em] text-sky-200/92">
                       Work together
                     </div>
-                    <h2 className={cx(TOKENS.h2, "mt-2")}>Need practical systems work?</h2>
+                    <h2 className={cx(TOKENS.h2, "mt-2")}>Have a workflow that needs work?</h2>
                     <p className={cx(TOKENS.body, "mt-3")}>
-                      I can help clarify the workflow, build the interface, and connect reporting to how the work actually runs.
+                      Tell me what your team is trying to do and where the current process gets in the way.
                     </p>
                   </div>
 

@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import {
   aboutContent,
   buildMailtoLink,
-  certificationContent,
   heroContent,
   navigationItems,
   portfolioProjects,
@@ -14,9 +13,10 @@ import {
   strengths,
 } from "@/lib/portfolio";
 
+import { AllowanceVisual } from "./allowance-visual";
+import { Credentials } from "./credentials";
 import { ContactForm } from "./contact-form";
 import {
-  AvailabilityPill,
   Backdrop,
   Button,
   Card,
@@ -157,25 +157,23 @@ function ProfileSummary({ mailto }) {
         </Button>
       </div>
 
-      <div className="mt-2.5 text-sm leading-6 text-white/75">{heroContent.profileSignal}</div>
-      <div className="mt-3.5 flex flex-wrap gap-2 text-xs text-white/70">
-        <span className="rounded-full border border-white/15 px-2.5 py-1">{portfolioSite.location}</span>
-        <span className="rounded-full border border-white/15 px-2.5 py-1">
-          {portfolioSite.timezoneLabel}
-        </span>
-      </div>
+      <div className="mt-2.5 hidden text-sm leading-6 text-white/75 lg:block">{heroContent.profileSignal}</div>
+
     </Card>
   );
 }
 
 function Nav({ items, activeId, scrolled, onGo }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div
       className={cx(
-        "w-fit rounded-2xl border border-white/10 md:w-auto",
+        "w-full rounded-xl border border-white/10 md:rounded-2xl",
         scrolled ? "bg-black/70 backdrop-blur" : "bg-black/40 backdrop-blur",
-        "px-2 py-1.5 sm:px-4 sm:py-3"
+        "px-3 py-1 md:px-4 md:py-3"
       )}
+      onKeyDown={(event) => { if (event.key === "Escape") setMenuOpen(false); }}
     >
       <div className="flex items-center justify-between">
         <button
@@ -184,13 +182,17 @@ function Nav({ items, activeId, scrolled, onGo }) {
           className="flex min-h-11 min-w-11 items-center gap-2.5 rounded-xl text-left outline-none transition focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:gap-3"
           aria-label="Go to homepage hero"
         >
-          <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.03] sm:h-10 sm:w-10">
+          <div className="hidden h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03] md:grid">
             <span className="text-xs font-extrabold text-white sm:text-sm">JR</span>
           </div>
-          <div className="hidden leading-tight sm:block">
+          <div className="leading-tight">
             <div className="text-[13px] font-semibold text-white sm:text-sm">{portfolioSite.name}</div>
-            <div className="text-[11px] text-white/70 sm:text-xs">Systems builder</div>
+            <div className="hidden text-xs text-white/70 md:block">Systems builder</div>
           </div>
+        </button>
+
+        <button type="button" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)} className="flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-white/80 md:hidden">
+          {menuOpen ? "Close" : "Menu"}<Icon name="arrow" className={cx("h-4 w-4", menuOpen ? "-rotate-90" : "rotate-90")} />
         </button>
 
         <div className="hidden items-center gap-6 md:flex">
@@ -231,6 +233,9 @@ function Nav({ items, activeId, scrolled, onGo }) {
           </Button>
         </div>
       </div>
+      <nav id="mobile-navigation" aria-label="Main navigation" className={cx("border-t border-white/10 py-2 md:hidden", !menuOpen && "hidden")}>
+        {items.map((item) => <button key={item.id} type="button" onClick={() => { onGo(item.id); setMenuOpen(false); }} aria-current={item.id === activeId ? "page" : undefined} className="min-h-11 rounded-lg px-3 text-sm text-white/80 hover:bg-white/5">{item.label}</button>)}
+      </nav>
     </div>
   );
 }
@@ -242,7 +247,7 @@ function ProjectDetails({ story, stack }) {
         {story.map((item) => (
           <div
             key={item.label}
-            className="grid gap-1 border-b border-white/10 py-3.5 last:border-b-0 sm:grid-cols-[8.25rem_1fr] sm:gap-5 sm:py-4"
+            className="grid gap-1 border-b border-white/10 py-3.5 last:border-b-0 lg:grid-cols-[8.25rem_1fr] lg:gap-5 sm:py-4"
           >
             <dt className="text-[10px] uppercase tracking-[0.18em] text-orange-200/70 sm:text-[11px]">
               {item.label}
@@ -264,6 +269,8 @@ function ProjectDetails({ story, stack }) {
 }
 
 function ProjectImage({ project, sizes }) {
+  if (project.slug === "allowance") return <AllowanceVisual />;
+
   return (
     <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 bg-black">
       <Image
@@ -272,7 +279,7 @@ function ProjectImage({ project, sizes }) {
         width={project.image.width}
         height={project.image.height}
         sizes={sizes}
-        className="h-full w-full object-cover object-top transition duration-500 motion-safe:group-hover:scale-[1.012] motion-reduce:transition-none"
+        className={cx("h-full w-full transition duration-500 motion-safe:group-hover:scale-[1.012] motion-reduce:transition-none", project.image.fit === "contain" ? "object-contain p-4 sm:p-6" : "object-cover object-top")}
       />
       <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.04]" />
     </div>
@@ -339,19 +346,19 @@ function ProjectShowcase({ project, index }) {
   const mobileDetailsId = `${project.slug}-mobile-details`;
   const story = [
     { label: "Problem", value: project.cardProblem },
-    { label: "System response", value: project.cardSolution },
-    { label: "Proof / status", value: project.cardMeta },
+    { label: "What I built", value: project.cardSolution },
+    { label: "In practice", value: project.cardMeta },
   ];
 
   return (
     <article className="group relative overflow-hidden rounded-2xl border border-white/12 bg-white/[0.025] transition duration-300 hover:border-sky-300/25">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_10%,rgba(56,189,248,0.07),transparent_40%)] opacity-70" />
 
-      <div className="relative grid lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
+      <div className="relative grid md:grid-cols-2 lg:grid-cols-[1.08fr_0.92fr] md:items-stretch">
         <div
           className={cx(
-            "relative min-w-0 border-b border-white/10 bg-black/55 p-3 sm:p-4 lg:flex lg:items-center lg:border-b-0 lg:p-6 xl:p-8",
-            imageFirst ? "lg:border-r" : "lg:order-2 lg:border-l"
+            "relative min-w-0 border-b border-white/10 bg-black/55 p-3 sm:p-4 md:flex md:items-center md:border-b-0 lg:p-6 xl:p-8",
+            imageFirst ? "md:border-r" : "md:order-2 md:border-l"
           )}
         >
           <ProjectPreview project={project} />
@@ -398,6 +405,8 @@ function ProjectShowcase({ project, index }) {
               {project.primaryCta.label} <Icon name="arrow" className="h-4 w-4" />
             </Button>
           </div>
+
+          {project.secondaryCta ? <a href={project.secondaryCta.href} className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm text-sky-200 underline underline-offset-4 md:hidden">{project.secondaryCta.label}<Icon name="arrow" className="h-4 w-4" /></a> : null}
 
           <div
             id={mobileDetailsId}
@@ -505,8 +514,8 @@ function ContactLinksCard({ mailto }) {
       </div>
 
       <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 text-sm leading-6 text-white/74 sm:p-5">
-        Good fits include GTM systems, RevOps workflows, internal tools,
-        AI-assisted operations, lead flow, reporting, and handoff design.
+        I’m interested in AI evaluation, software development, and tools that
+        make day-to-day operations easier.
       </div>
     </Card>
   );
@@ -697,7 +706,7 @@ export function PortfolioHome() {
             <Nav items={navigationItems} activeId={activeId} scrolled={scrolled} onGo={go} />
           </header>
 
-          <main id="main-content" className={TOKENS.sectionY} tabIndex={-1}>
+          <main id="main-content" className="py-6 md:py-10 lg:py-16" tabIndex={-1}>
             <section id="home" ref={homeRef} className="scroll-mt-28 max-md:-mt-2">
               <div className="relative">
                 <div className="pointer-events-none absolute -left-10 -top-10 hidden h-[420px] w-[420px] rounded-full bg-sky-400/[0.20] blur-3xl md:block" />
@@ -707,10 +716,10 @@ export function PortfolioHome() {
                   <div className="min-w-0">
                     <div className={cx(TOKENS.eyebrow, "text-sky-200/92")}>{heroContent.eyebrow}</div>
                     <h1 className="mt-3 max-w-3xl font-extrabold tracking-tight max-md:mt-2 max-md:max-w-full">
-                      <span className="block text-[clamp(2.65rem,13vw,5rem)] leading-[0.98] text-white lg:text-[4.5rem] xl:text-[5rem]">
+                      <span className="block text-[clamp(2rem,9vw,5rem)] leading-[0.98] text-white lg:text-[4.5rem] xl:text-[5rem]">
                         {heroContent.headlineLead}
                       </span>{" "}
-                      <span className="mt-2 block bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-[clamp(2rem,8vw,3.75rem)] leading-[1.03] text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)] sm:mt-3 lg:text-[3.25rem] xl:text-[3.75rem]">
+                      <span className="mt-2 block bg-gradient-to-r from-sky-200 via-sky-300 to-cyan-200 bg-clip-text text-[clamp(1.65rem,6.5vw,3.75rem)] leading-[1.03] text-transparent drop-shadow-[0_0_10px_rgba(56,189,248,0.32)] sm:mt-3 lg:text-[3.25rem] xl:text-[3.75rem]">
                         {heroContent.headlineAccent}
                       </span>
                     </h1>
@@ -719,44 +728,22 @@ export function PortfolioHome() {
                       {heroContent.summary}
                     </p>
 
-                    <div className="mt-5 flex flex-col items-start gap-3 lg:hidden">
-                      <Button type="button" onClick={() => go("projects")} className="w-full sm:w-auto">
-                        View selected work <Icon name="arrow" className="h-4 w-4" />
-                      </Button>
-                      <div className="flex flex-wrap items-center gap-2.5">
-                        <AvailabilityPill label={portfolioSite.timezoneLabel} />
-                        <Button
-                          href={portfolioSite.resume}
-                          variant="tertiary"
-                          className="px-3"
-                          aria-label="Open John Rodriguez's resume"
-                        >
-                          Resume
-                        </Button>
-                      </div>
+                    <div className="mt-5 flex flex-wrap items-center gap-3">
+                      <Button type="button" onClick={() => go("projects")} className="px-4">View selected work <Icon name="arrow" className="h-4 w-4" /></Button>
+                      <Button href={portfolioSite.resume} variant="secondary" className="px-4" aria-label="Open John Rodriguez's resume">Résumé <Icon name="arrow" className="h-4 w-4" /></Button>
                     </div>
+                    <p className="mt-4 max-w-2xl text-sm leading-6 text-white/65">{portfolioSite.availability}</p>
 
-                    <div className="mt-5 hidden flex-wrap items-center gap-3 lg:flex">
-                      <Button type="button" onClick={() => go("projects")}>
-                        View selected work <Icon name="arrow" className="h-4 w-4" />
-                      </Button>
-                      <Button href={mailto} variant="secondary">
-                        <Icon name="mail" className="h-4 w-4" /> Email me
-                      </Button>
-                      <div className="flex items-center gap-2 text-xs text-white/70">
-                        <Icon name="pin" className="h-4 w-4" /> {portfolioSite.location}
-                      </div>
-                    </div>
-
-                    <div className="mt-4 hidden max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white/70 sm:py-3.5 lg:block">
-                      {heroContent.callout}
-                    </div>
                   </div>
 
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-white/75 lg:hidden">
+                    <a href={portfolioSite.github} className="inline-flex min-h-11 items-center gap-2"><Icon name="github" className="h-4 w-4" />GitHub</a>
+                    <a href={portfolioSite.linkedin} className="inline-flex min-h-11 items-center gap-2"><Icon name="linkedin" className="h-4 w-4" />LinkedIn</a>
+                    <a href={mailto} className="inline-flex min-h-11 items-center gap-2"><Icon name="mail" className="h-4 w-4" />Email</a>
+                  </div>
                   <div className="hidden min-w-0 lg:block lg:pt-1">
                     <div className="space-y-3">
                       <ProfileSummary mailto={mailto} />
-                      <AvailabilityPill label={portfolioSite.availability} />
                     </div>
                   </div>
                 </div>
@@ -768,8 +755,8 @@ export function PortfolioHome() {
             <section id="projects" className="scroll-mt-28">
               <SectionTitle
                 eyebrow="SELECTED WORK"
-                title="Operational systems, with the proof attached."
-                subtitle="Job-to-invoice, agent-memory, and field-sales systems shown with the operating problem, current status, and implementation proof."
+                title="Software built around real work."
+                subtitle="Four projects: what they solve, how I built them, and where they stand today."
                 tone="ice"
               />
 
@@ -794,7 +781,7 @@ export function PortfolioHome() {
 
               <div className="grid gap-8 sm:gap-9 md:grid-cols-2">
                 <div>
-                  <h3 className={TOKENS.h3}>What you get</h3>
+                  <h3 className={TOKENS.h3}>What I bring</h3>
                   <ul className={cx("mt-3 space-y-2.5 sm:mt-3.5 sm:space-y-3", TOKENS.body)}>
                     {aboutContent.outcomes.map((item) => (
                       <li key={item} className="flex gap-3">
@@ -815,39 +802,8 @@ export function PortfolioHome() {
                 </div>
               </div>
 
-              <div className="mt-8 overflow-hidden rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.035] sm:mt-10">
-                <div className="grid items-center gap-0 md:grid-cols-[1.15fr_0.85fr]">
-                  <div className="relative overflow-hidden border-b border-white/10 bg-black md:border-b-0 md:border-r">
-                    <Image
-                      src={certificationContent.image.src}
-                      alt={certificationContent.image.alt}
-                      width={certificationContent.image.width}
-                      height={certificationContent.image.height}
-                      sizes="(min-width: 768px) 54vw, 100vw"
-                      className="h-auto w-full object-cover"
-                    />
-                  </div>
-                  <div className="p-5 sm:p-7 md:p-8">
-                    <div className="text-[11px] uppercase tracking-[0.22em] text-emerald-300/85">
-                      Professional certification
-                    </div>
-                    <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">
-                      {certificationContent.title}
-                    </h3>
-                    <p className="mt-3 text-[15px] leading-7 text-white/78">
-                      {certificationContent.description}
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2 text-xs text-white/70">
-                      <span className="rounded-full border border-white/15 px-2.5 py-1">
-                        Issued by {certificationContent.issuer}
-                      </span>
-                      <span className="rounded-full border border-white/15 px-2.5 py-1">
-                        {certificationContent.issued}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Credentials />
+
             </section>
 
             <ChapterBreak />
@@ -855,8 +811,8 @@ export function PortfolioHome() {
             <section id="strengths" className="scroll-mt-28">
               <SectionTitle
                 eyebrow="STRENGTHS"
-                title="Operating strengths."
-                subtitle="Where revenue workflow knowledge, automation, reporting, and practical product execution come together."
+                title="What I bring to a team."
+                subtitle="Experience evaluating AI, building applications, and running the operations they support."
                 tone="copper"
                 className="mb-8 sm:mb-9"
               />

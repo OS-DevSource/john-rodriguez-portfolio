@@ -185,12 +185,3 @@ export function SectionTitle({ eyebrow, title, subtitle, tone = "ice", className
     </div>
   );
 }
-
-export function AvailabilityPill({ label }) {
-  return (
-    <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.02] px-3 py-1 text-[11px] text-white/75 sm:gap-2 sm:text-xs">
-      <span className="h-2 w-2 rounded-full bg-sky-400 ring-1 ring-sky-300/55 shadow-[0_0_16px_rgba(56,189,248,0.76)]" />
-      {label}
-    </div>
-  );
-}

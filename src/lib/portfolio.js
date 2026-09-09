@@ -3,12 +3,10 @@ const DEFAULT_SITE_URL = "https://johnrodriguez.vercel.app";
 export const portfolioSite = {
   name: "John Rodriguez",
   shortName: "John Rodriguez",
-  title: "John Rodriguez | GTM Systems, RevOps, Internal Tools",
+  title: "John Rodriguez | AI Evaluation & Software Development",
   description:
-    "Portfolio for John Rodriguez, a GTM systems and automation builder focused on RevOps workflows, internal tools, lead flow, reporting, and AI-assisted operations.",
+    "John Rodriguez builds software for business operations and evaluates AI models. Explore his work in agent memory, field service, and sales tools, plus training and credentials.",
   url: process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL,
-  location: "Jarrell, TX (Central Time)",
-  timezoneLabel: "Central TX | Remote-ready",
   email: "os.devsource@gmail.com",
   github: "https://github.com/OS-DevSource",
   githubLabel: "Public GitHub",
@@ -16,46 +14,93 @@ export const portfolioSite = {
   resume: "/resume/john-rodriguez-resume.pdf",
   replySla: "Replies within 24 hours on weekdays.",
   availability:
-    "Open to product-minded ops, RevOps, automation, and internal tools work.",
+    "Open to AI evaluation, software development, and operations roles.",
 };
 
 export const heroContent = {
-  eyebrow: "REVOPS | AI WORKFLOWS | INTERNAL TOOLS",
+  eyebrow: "AI EVALUATION · SOFTWARE · OPERATIONS",
   headlineLead: "John Rodriguez",
-  headlineAccent: "builds evidence-bound operational systems from messy workflows.",
+  headlineAccent: "builds useful software and evaluates AI.",
   headline:
-    "John Rodriguez builds evidence-bound operational systems from messy workflows.",
+    "John Rodriguez builds useful software and evaluates AI.",
   summary:
-    "I build job-to-invoice, agent-memory, and field-sales tools that keep context, workflow state, review gates, and next actions visible.",
-  callout:
-    "The pattern is consistent: preserve context, make workflow state explicit, keep human review where judgment matters, and build for the people doing the work.",
-  profileTitle: "Operational systems, AI workflows, and internal tools.",
+    "I turn hands-on experience in sales and operations into useful software—and bring that same attention to detail to evaluating AI.",
+  profileTitle: "AI evaluator and software builder.",
   profileSignal:
-    "Systems that preserve context, expose state, and keep review where judgment matters.",
+    "From reviewing model responses to building the tools people use at work.",
 };
 
 export const aboutContent = {
-  title: "I build practical systems for revenue work that needs to move cleanly.",
+  title: "Built from experience on both sides of the software.",
   subtitle:
-    "My background is 15+ years in sales and marketing, now paired with hands-on building across lead flow, reporting visibility, handoffs, and AI-assisted workflows.",
+    "Before building software, I ran sales teams, managed stores, trained people, and owned the daily follow-through. Today I build applications and work as a paid AI trainer and LLM evaluator. That background helps me spot the gap between a convincing answer and something that works in practice.",
   outcomes: [
-    "Lead and lifecycle workflows with clear ownership, status, and next action.",
-    "Internal tools that make field activity, intake, reporting, and handoffs easier to run.",
-    "AI-assisted operating workflows that preserve context without pretending judgment can be automated away.",
+    "AI evaluation across coding, factuality, instruction following, and comparative tasks.",
+    "Applications that connect the everyday details: job photos, customer records, invoices, leads, and follow-up.",
+    "Sales and operations experience spanning team leadership, CRM workflows, hiring, and training.",
   ],
   process: [
-    "Start with the real workflow: who owns it, what breaks, and what signal the team needs.",
-    "Make states explicit so follow-up, reporting, and handoffs do not depend on memory.",
-    "Ship small, test the path, document decisions, and keep the interface usable under pressure.",
+    "Understand the job first. Talk through who does the work, where it stalls, and what they need next.",
+    "Build a usable path through it. Keep the source information close and make the next step clear.",
+    "Check the result. Test real tasks, investigate failures, and explain the decisions behind the work.",
   ],
 };
+
+export const trainingCredentials = [
+  {
+    image: { src: "/certifications/google-ai.jpg", width: 1400, height: 1082 },
+    pdf: "/certifications/google-ai.pdf",
+    title: "Google AI Professional Certificate",
+    issuer: "Google / Coursera",
+    date: "September 4, 2026",
+    description: "Completed all eight courses, covering practical AI use in research, communication, content creation, data analysis, and app building and deployment.",
+    href: "https://coursera.org/verify/professional-cert/II1LEJTA8C4N",
+  },
+  {
+    image: { src: "/certifications/python-functions.jpg", width: 1400, height: 1082 },
+    pdf: "/certifications/python-functions.pdf",
+    title: "Functions and Conditional Statements",
+    issuer: "Google / Coursera",
+    date: "September 8, 2026",
+    href: "https://coursera.org/verify/9Y6SBIVFCK4V",
+  },
+  {
+    image: { src: "/certifications/hello-python.jpg", width: 1400, height: 1082 },
+    pdf: "/certifications/hello-python.pdf",
+    title: "Hello, Python!",
+    issuer: "Google / Coursera",
+    date: "September 7, 2026",
+    href: "https://coursera.org/verify/KFUUXPV1VAEB",
+  },
+  {
+    image: { src: "/certifications/prompt-engineering.jpg", width: 1400, height: 1082 },
+    pdf: "/certifications/prompt-engineering.pdf",
+    title: "Advanced Prompt Engineering Techniques",
+    issuer: "LinkedIn Learning",
+    date: "August 31, 2026",
+  },
+  {
+    image: { src: "/certifications/large-language-models.jpg", width: 1400, height: 1082 },
+    pdf: "/certifications/large-language-models.pdf",
+    title: "Introduction to Large Language Models",
+    issuer: "LinkedIn Learning",
+    date: "August 28, 2026",
+  },
+  {
+    image: { src: "/certifications/data-annotation.jpg", width: 1400, height: 1082 },
+    pdf: "/certifications/data-annotation.pdf",
+    title: "Break into AI: Data Annotation Essentials",
+    issuer: "LinkedIn Learning",
+    date: "August 2026",
+  },
+];
 
 export const certificationContent = {
   title: "Certified by micro1",
   issuer: "micro1",
   issued: "August 2026",
   description:
-    "Recognized for outstanding performance during micro1's AI Interview, validating communication, accuracy, and task completion for AI project work.",
+    "Awarded for outstanding performance during micro1’s AI Interview.",
   image: {
     src: "/certifications/micro1-certification.jpg",
     alt: "Certified by micro1 certificate awarded to John Rodriguez for outstanding performance during micro1's AI Interview.",
@@ -66,19 +111,19 @@ export const certificationContent = {
 
 export const strengths = [
   {
-    title: "GTM workflow architecture",
+    title: "Sales & operations",
     description:
-      "I turn lead flow, lifecycle rules, routing, and handoffs into explicit operating systems that teams can follow and leaders can inspect.",
+      "I’ve owned the pipeline, trained the team, and managed the follow-up. I use that experience to build tools around how people actually work.",
   },
   {
-    title: "AI-assisted operations",
+    title: "AI evaluation",
     description:
-      "I design practical AI workflows around context capture, handoff quality, review discipline, and repeatable execution.",
+      "I compare model responses, write evaluation criteria, investigate unsupported claims, and explain why one response better meets the task.",
   },
   {
-    title: "Internal tool building",
+    title: "Software development",
     description:
-      "I build the forms, dashboards, maps, queues, and reporting surfaces that make operational work easier to use in the real world.",
+      "I take applications from workflow and interface design through implementation, automated testing, and deployment.",
   },
 ];
 
@@ -89,21 +134,21 @@ export const portfolioProjects = [
     proofType: "Applied AI / operations",
     tagline:
       "A private production job-to-invoice system for field service operations.",
-    cardSummary: "A job becomes billable through a workflow, not memory.",
+    cardSummary: "From job photos to a reviewed, ready-to-send invoice.",
     cardProblem:
       "Photos, notes, line items, customer details, and invoices can get scattered across tools and manual handoffs.",
     cardSolution:
-      "A review-gated intake-to-archive pipeline with human-approved AI extraction, explicit workflow state, regenerated PDFs, and audit history.",
+      "One place to review source documents, check AI-extracted details, manage the job, and prepare the invoice.",
     cardMeta:
-      "Private and in production with server-enforced roles, CI, Vitest, Playwright, and production safety controls.",
+      "Used in production by a plumbing business, with required review, user permissions, and automated tests.",
     seoDescription:
       "MK Workbench is a private production job-to-invoice platform connecting intake, document review, job records, invoice generation, finalization, and archive.",
     summary:
-      "MK Workbench preserves source material, extracts what it can, and routes every job through operational review, invoice review, finalization, and archive.",
+      "Built for a plumbing business, MK Workbench brings job documents, customer details, invoice drafting, and PDF generation into one mobile-ready application.",
     problem:
       "Field service jobs produce fragmented operational data: photos, texts, notes, addresses, line items, invoice terms, and PDFs. Reconstructing that story by hand makes billing slower and less trustworthy.",
     solution:
-      "Built a Convex-backed workflow state machine for intake, review, invoice, finalization, and archive. OpenAI image extraction stays evidence-bound and review-only, and every important action writes to an audit log.",
+      "Built a shared workspace for intake, job review, invoice drafting, and archive. AI proposes details from images; a person checks them before approval. Customer matching, user roles, and an audit trail support the daily workflow.",
     outcome:
       "A private production platform with explicit workflow state, role enforcement, automated coverage, and production safety controls.",
     role:
@@ -138,7 +183,7 @@ export const portfolioProjects = [
     nextSteps: [
       "Package more trade-specific intake and confidence views without weakening the human review gate.",
       "Extend controlled mobile worker submission and customer search flows.",
-      "Generalize the source-to-invoice pattern after the private operating loop remains dependable.",
+      "Explore other field-service workflows after validating changes in daily use.",
     ],
     image: {
       src: "/projects/mk-workbench-product.png",
@@ -156,35 +201,35 @@ export const portfolioProjects = [
     title: "Memorex",
     proofType: "Agent memory infrastructure",
     tagline:
-      "An agent flight recorder, context compiler, and persistent project memory layer for AI coding workflows.",
-    cardSummary: "Deep project memory, compact context for the next run.",
+      "Project memory that helps coding agents pick up where the last session left off.",
+    cardSummary: "The next session starts with the decisions behind the code.",
     cardProblem:
       "AI coding work loses decisions, failures, relationships, and handoff context across sessions and tools.",
     cardSolution:
-      "Lifecycle capture, cited retrieval, scoped graph memory, generated context packs, and a project-first workspace.",
+      "Captures decisions and checkpoints, then retrieves a compact summary with links back to the source.",
     cardMeta:
-      "Private, deployed product with real-project dogfood, SQLite/Postgres runtime proof, and healthy live endpoints.",
+      "Private product used in my development workflow, with a Codex plugin and local and hosted storage.",
     seoDescription:
-      "Memorex is an agent flight recorder, context compiler, and persistent project memory layer with lifecycle capture, cited retrieval, scoped graph memory, and compact handoff context.",
+      "Memorex preserves decisions and checkpoints across coding sessions, with cited retrieval, project-scoped memory, and a Codex plugin.",
     summary:
       "Memorex preserves what happened, why it happened, what broke, and what the next coding agent needs to know, then compiles that history into compact, cited context instead of replaying raw logs.",
     problem:
       "Agent-assisted software work moves quickly, but decisions, failures, branch context, and handoff details fragment across tasks and tools. The next run either starts cold or consumes too much unfiltered history.",
     solution:
-      "Built a project-first memory system with task lifecycle capture, compact context packs, cited retrieval and expansion, scoped graph relationships, generated handoff briefs, a CLI, Codex integration, and local and hosted storage paths.",
+      "Built a memory system that captures decisions and task checkpoints, finds relevant history, and supplies compact context with citations. The Codex plugin now includes automatic repository enrollment after setup, workspace coverage, and controls to pause or resume memory.",
     outcome:
-      "A private, deployed agent-memory product with real-project dogfood, scoped graph memory, SQLite and Postgres runtime proof, and healthy live and readiness endpoints.",
+      "A private agent-memory product used across my own projects, with a Codex plugin, cited retrieval, and controls for memory coverage.",
     role:
       "Product concept, system architecture, lifecycle and retrieval design, full-stack implementation, Codex integration, storage contracts, testing, and deployment hardening.",
     stack: ["Next.js", "TypeScript", "SQLite", "PostgreSQL", "MCP", "Codex plugin"],
     cardStack: ["Next.js", "TypeScript", "SQLite", "PostgreSQL", "MCP"],
     status:
-      "Private, deployed product in active real-project dogfood with healthy live and readiness endpoints.",
+      "Private product in active use across my development projects.",
     statusLabel: "Private / deployed",
     validation: [
-      "Runs a project-first workspace, lifecycle API, CLI, and Codex integration against real task history.",
-      "Supports compact retrieval, citation expansion, scoped graph relationships, and generated context packs.",
-      "Proves local SQLite and hosted PostgreSQL runtime paths with health and readiness checks.",
+      "Includes a workspace, CLI, and Codex plugin for capturing and retrieving project history.",
+      "Returns compact context with expandable citations and connections between related records.",
+      "Supports local and hosted storage, with controls to view, enable, or pause memory coverage.",
     ],
     keyDecisions: [
       {
@@ -204,7 +249,7 @@ export const portfolioProjects = [
       },
     ],
     nextSteps: [
-      "Broaden real-project dogfood and measure context quality across longer, concurrent workstreams.",
+      "Evaluate retrieval quality across longer projects and concurrent coding sessions.",
       "Strengthen correction, redaction, and stale-context handling without bloating normal context packs.",
       "Continue hardening retrieval and storage behavior under larger project histories.",
     ],
@@ -225,11 +270,11 @@ export const portfolioProjects = [
     proofType: "Field workflow app",
     tagline:
       "Mobile-first lead and appointment tracker for field sales, map workflows, and operational visibility.",
-    cardSummary: "Field workflow for mobile sales teams.",
+    cardSummary: "Leads, visits, and follow-up in one mobile workspace.",
     cardProblem:
       "Field teams lose time when lead status, appointments, notes, and map context split apart.",
     cardSolution:
-      "Map-first lead review, quick actions, CSV import, editable details, and activity capture.",
+      "Map-based lead review, quick field actions, duplicate-aware CSV imports, and shareable visit cards.",
     cardMeta:
       "Private internal prototype with Convex persistence and core route smoke coverage.",
     seoDescription:
@@ -239,7 +284,7 @@ export const portfolioProjects = [
     problem:
       "Field sales teams need quick context on phones: which leads are active, what happened today, where the next visit is, and which handoff or appointment needs attention.",
     solution:
-      "Built a map-centric workflow with geolocation, CSV import, editable lead details, quick actions, status control, Convex-backed persistence, and smoke-test coverage for core routes.",
+      "Built map-based lead review with live location, quick edits, appointment history, and duplicate-aware CSV imports. Shareable visit cards include revocation and open tracking.",
     outcome:
       "Internal field workflow prototype with Convex-backed persistence and smoke-test coverage for core routes.",
     role:
@@ -258,7 +303,7 @@ export const portfolioProjects = [
       "Private internal field workflow prototype with Convex-backed persistence and smoke-test coverage for core routes.",
     statusLabel: "Internal prototype",
     validation: [
-      "Implemented schema, queries, mutations, seeded data, and core route smoke coverage.",
+      "Built persistent lead and appointment records with event history and route smoke tests.",
       "Designed for one-handed mobile use and fast field review.",
       "Separated lead states, appointment activity, and operational visibility.",
     ],
@@ -294,6 +339,52 @@ export const portfolioProjects = [
       label: "Case study",
       href: "/projects/insight",
     },
+  },
+  {
+    slug: "allowance",
+    title: "Allowance",
+    proofType: "Native macOS app",
+    tagline: "A small macOS companion for checking remaining Codex capacity.",
+    cardSummary: "Know what’s left. Get back to your work.",
+    cardProblem: "Checking account limits interrupts the coding session, especially when several usage windows reset at different times.",
+    cardSolution: "A native menu-bar app with remaining capacity, local reset times, expandable details, and a window you can keep on top.",
+    cardMeta: "Open-source Swift app. Available to build from source; a notarized download is not yet available.",
+    seoDescription: "Allowance is John Rodriguez’s native macOS companion for Codex capacity, with a compact interface, local reset times, and accessible controls.",
+    summary: "I designed Allowance as a quiet companion to a coding session: a compact capacity display that expands when you need the details and stays out of the way when you don’t.",
+    problem: "Account limits are useful only if you can understand them at a glance. Multiple windows, reset dates, and stale readings can make a small status check harder than it needs to be.",
+    solution: "Built a native Swift app that reads account limits through the local Codex CLI. A shared refresh loop keeps the menu-bar companion current, while clear sign-in, network, and stale-data states explain when a reading needs attention.",
+    outcome: "A source release with a compact and expanded interface, keyboard controls, and support for reduced motion and transparency.",
+    role: "Product concept, visual design, native macOS implementation, CLI integration, original app artwork, and verification.",
+    stack: ["Swift", "SwiftUI", "AppKit", "Codex CLI", "XCTest"],
+    cardStack: ["Swift", "SwiftUI", "AppKit", "macOS"],
+    status: "Open-source release. Build locally with the documented Xcode and CLI requirements; no notarized download yet. Independent project, unaffiliated with OpenAI.",
+    statusLabel: "Open source / macOS",
+    validation: [
+      "Portable checks cover parsing, timeouts, CLI selection, and recovery after failure.",
+      "One refresh loop prevents duplicate account requests.",
+      "Unavailable readings stay distinct from a zero balance; stale readings retain their timestamp.",
+    ],
+    keyDecisions: [
+      { title: "Keep the first view small", description: "Show the main capacity reading first. Expand the other windows only when the user needs them." },
+      { title: "Make uncertainty visible", description: "Keep the last successful reading during a refresh failure and show that it is stale." },
+      { title: "Use the native desktop", description: "Support a pinnable window, keyboard access, and system motion and transparency preferences." },
+    ],
+    nextSteps: ["Broaden compatibility testing across macOS and Codex CLI versions.", "Prepare signing and notarization before offering a downloadable app."],
+    image: {
+      src: "/projects/allowance-expanded.png",
+      alt: "Allowance’s expanded macOS window showing capacity, reset times, and pin and refresh controls. Values reflect the screenshot capture time.",
+      width: 756,
+      height: 856,
+      fit: "contain",
+    },
+    contextImage: {
+      src: "/projects/allowance-desktop.png",
+      alt: "Actual desktop with Allowance pinned at the upper left showing 53% remaining, matching the account usage menu in the main workspace.",
+      width: 4480,
+      height: 2520,
+    },
+    primaryCta: { label: "Case study", href: "/projects/allowance" },
+    secondaryCta: { label: "View source", href: "https://github.com/OS-DevSource/allowance" },
   },
 ];
 

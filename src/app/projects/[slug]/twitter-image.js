@@ -17,6 +17,6 @@ export default async function ProjectTwitterImage({ params }) {
     title: project?.title || portfolioSite.name,
     body: project?.summary || portfolioSite.description,
     accent: "#fdba74",
-    footer: "GTM systems, apps, and automation",
+    footer: "AI evaluation, software, and operations",
   });
 }

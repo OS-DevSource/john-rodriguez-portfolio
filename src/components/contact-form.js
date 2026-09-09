@@ -79,7 +79,7 @@ export function ContactForm() {
     <>
       <h3 className="text-base font-bold text-white">Message</h3>
       <p className={cx(TOKENS.muted, "mt-2")}>
-        For roles, client work, or workflow advisory.
+        For job opportunities and project inquiries.
       </p>
 
       <form
@@ -165,7 +165,7 @@ export function ContactForm() {
             )}
           />
           <p id="contact-message-help" className={helperClassName}>
-            Include the role, workflow, timeline, and system problem.
+            Tell me about the role or project and your timeline.
           </p>
         </div>
 
