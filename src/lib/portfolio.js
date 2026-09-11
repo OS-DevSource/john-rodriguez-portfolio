@@ -371,11 +371,10 @@ export const portfolioProjects = [
     ],
     nextSteps: ["Broaden compatibility testing across macOS and Codex CLI versions.", "Prepare signing and notarization before offering a downloadable app."],
     image: {
-      src: "/projects/allowance-expanded.png",
-      alt: "Allowance’s expanded macOS window showing capacity, reset times, and pin and refresh controls. Values reflect the screenshot capture time.",
-      width: 756,
-      height: 856,
-      fit: "contain",
+      src: "/projects/allowance-product.png",
+      alt: "Allowance’s expanded and compact macOS windows showing capacity, reset times, usage details, and window controls. Values reflect the screenshot capture time.",
+      width: 1448,
+      height: 1086,
     },
     contextImage: {
       src: "/projects/allowance-desktop.png",
