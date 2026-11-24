@@ -17,7 +17,7 @@ export function Credentials() {
           <details
             key={credential.title}
             name="credentials"
-            className="group overflow-hidden rounded-2xl border border-white/12 bg-emerald-400/[0.035] transition duration-300 hover:border-sky-300/25 focus-within:border-sky-300/50"
+            className="group overflow-hidden credential-surface transition duration-300 hover:border-sky-300/25 focus-within:border-sky-300/50"
           >
             <summary className="flex min-h-16 cursor-pointer list-none items-center gap-3 px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sky-300 sm:gap-4 [&::-webkit-details-marker]:hidden">
               <Image

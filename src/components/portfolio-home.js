@@ -5,6 +5,7 @@ import phoneJobNote from "../../public/projects/job-note-phone.webp";
 
 import { getProjectBySlug, heroContent, portfolioSite } from "@/lib/portfolio";
 import { AllowanceVisual } from "./allowance-visual";
+import { PrinterStage } from "./printer-stage";
 import { Credentials } from "./credentials";
 import { ContactForm } from "./contact-form";
 import { Icon } from "./portfolio-ui";
@@ -24,7 +25,7 @@ function ProjectLink({ project }) {
 
 function TicketPress() {
   return (
-    <figure className="ticket-press">
+    <PrinterStage>
       <div className="press-stage">
         <picture>
           <source media="(max-width: 599px)" srcSet={phoneJobNote.src} />
@@ -36,11 +37,21 @@ function TicketPress() {
             fetchPriority="high"
           />
         </picture>
+        <canvas
+          className="printer-orbit"
+          tabIndex={-1}
+          aria-hidden="true"
+          role="slider"
+          aria-label="Turn the ticket printer"
+          aria-describedby="printer-keyboard"
+          aria-valuemin={-32}
+          aria-valuemax={32}
+          aria-valuenow={0}
+        />
         <details className="press-control">
-          <summary>
-            <span className="press-idle">Review sample ticket</span>
-            <span className="press-done">Return to job note</span>
-            <Icon name="arrow" className="h-4 w-4" />
+          <summary aria-describedby="printer-instructions">
+            <span className="press-idle sr-only">Review sample ticket</span>
+            <span className="press-done sr-only">Return to job note</span>
           </summary>
           <div
             className="reviewed-press"
@@ -49,11 +60,21 @@ function TicketPress() {
           />
         </details>
       </div>
-      <figcaption className="sr-only">
-        A miniature of the job-to-invoice workflow. All ticket details are
-        invented.
+      <figcaption className="instrument-caption">
+        <span className="instrument-label">
+          Sample ticket <span className="ticket-number">/ 014</span>
+        </span>
+        <span id="printer-instructions">
+          <span className="orbit-instruction">Drag to turn · </span>
+          <span className="ticket-review">Press the orange key to review</span>
+          <span className="ticket-return">Press the key to start again</span>
+        </span>
       </figcaption>
-    </figure>
+      <span id="printer-keyboard" className="sr-only">Use the arrow keys to turn, Home to reset, and Enter to press the review key.</span>
+      <span className="sr-only">
+        The ticket uses invented plumbing job details.
+      </span>
+    </PrinterStage>
   );
 }
 

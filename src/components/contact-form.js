@@ -20,7 +20,7 @@ const defaultMailto = buildMailtoLink({
 });
 
 const fieldClassName =
-  "h-12 w-full rounded-xl border border-white/15 bg-black/40 px-4 text-sm text-white placeholder:text-white/45 outline-none transition focus:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-70";
+  "contact-field h-12 w-full px-4 text-sm placeholder:text-white/50 disabled:cursor-not-allowed disabled:opacity-70";
 
 const labelClassName = "text-sm font-semibold text-white";
 

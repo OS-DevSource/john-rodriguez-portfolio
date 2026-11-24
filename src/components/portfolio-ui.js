@@ -15,13 +15,10 @@ export const TOKENS = {
     "transition hover:border-white/20 hover:bg-white/[0.04] focus-within:border-sky-300/50",
   cardPad: "p-5 sm:p-6",
   chip: "rounded-full border border-white/15 bg-transparent px-2.5 py-1 text-xs text-white/75",
-  btnBase:
-    "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-70",
-  btnPrimary:
-    "bg-sky-500 text-black hover:bg-sky-400 shadow-[0_0_0_1px_rgba(56,189,248,0.4)]",
-  btnSecondary:
-    "border border-sky-400/55 bg-white/[0.02] text-white hover:border-sky-300/70 hover:bg-white/[0.04]",
-  btnTertiary: "bg-transparent text-orange-300 hover:text-orange-200",
+  btnBase: "portfolio-button",
+  btnPrimary: "primary",
+  btnSecondary: "secondary",
+  btnTertiary: "tertiary",
 };
 
 export function cx(...parts) {

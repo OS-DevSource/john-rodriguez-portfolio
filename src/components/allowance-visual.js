@@ -9,7 +9,7 @@ const allowancePreview = {
 
 export function AllowanceVisual({ priority = false }) {
   return (
-    <figure className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 bg-[#071016]">
+    <figure className="relative aspect-[4/3] w-full overflow-hidden product-frame">
       <Image
         src={allowancePreview.src}
         alt={allowancePreview.alt}
