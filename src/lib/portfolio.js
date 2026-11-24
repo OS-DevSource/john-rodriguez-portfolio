@@ -196,7 +196,7 @@ export const portfolioProjects = [
     validation: [
       "Tests cover parsing, timeouts, CLI selection, and recovery after failure.",
       "Unavailable readings stay distinct from zero. An older reading keeps its timestamp.",
-      "The desktop capture shows the companion and the account menu reporting the same value."
+      "The compact and expanded windows share the same reading."
     ],
     statusLabel: "Open source for macOS",
     stack: [
@@ -208,15 +208,15 @@ export const portfolioProjects = [
     ],
     image: {
       src: "/projects/allowance-product.png",
-      alt: "Allowance’s expanded and compact macOS windows showing capacity, reset times, usage details, and window controls. Values reflect the screenshot capture time.",
+      alt: "Allowance’s expanded and compact macOS windows showing the available usage windows and pin controls, with account readings covered.",
       width: 1448,
       height: 1086
     },
     contextImage: {
       src: "/projects/allowance-desktop.png",
-      alt: "Actual desktop with Allowance pinned at the upper left showing 53% remaining, matching the account usage menu in the main workspace.",
-      width: 4480,
-      height: 2520
+      alt: "Cropped desktop capture with the compact Allowance window pinned and account readings covered.",
+      width: 940,
+      height: 585
     },
     primaryCta: {
       label: "Case study",

@@ -266,3 +266,51 @@ a {
   .lower-section { padding-top: 85px; }
   .engineering-layout { grid-template-columns: 1fr 1fr; gap: 65px; }
 }
+
+/* The projected artwork has no canvas or render loop. Only the selected part moves. */
+.proof-instrument { min-width: 0; margin: 0; }
+.proof-stage { position: relative; display: block; aspect-ratio: 25 / 16; content-visibility: auto; }
+.proof-stage > picture, .proof-stage img, .proof-stage > svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; user-select: none; }
+.proof-caption { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; border-top: 1px solid var(--rule); padding: 12px 0 0; margin: 0 3%; }
+.proof-label, .meter-reading span { display: block; font: 500 var(--caption-size)/1.5 var(--font-geist-mono), monospace; color: var(--muted); }
+.proof-label { margin-bottom: 6px; }
+.window-choices { display: flex; gap: 3px; }
+.window-choices label, .drawer-action { display: inline-flex; align-items: center; min-height: 44px; color: var(--ice); font-weight: 600; font-size: .875rem; cursor: pointer; }
+.window-choices label { position: relative; border: 1px solid var(--rule); border-radius: 4px; padding: 0 11px; }
+.window-choices input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; }
+.window-choices label:has(:checked) { background: var(--enamel); box-shadow: var(--surface-light); border-color: #75999c; color: var(--foreground); }
+.window-choices label:focus-within { outline: 2px solid var(--ice); outline-offset: 2px; }
+.meter-reading { text-align: right; }
+.meter-reading strong, .drawer-caption strong { font-size: clamp(1rem,1.9vw,1.28rem); font-weight: 600; letter-spacing: -.035em; }
+.meter-reading strong { color: var(--paper); font-variant-numeric: tabular-nums; }
+.meter-needle { transform: rotate(-19.84deg); transition: transform 360ms cubic-bezier(.22,.85,.27,1.08); }
+.capacity-meter:has([value="weekly"]:checked) .meter-needle { transform: rotate(27.28deg); }
+#weekly-capacity, .capacity-meter:has([value="weekly"]:checked) #short-capacity { display: none; }
+.capacity-meter:has([value="weekly"]:checked) #weekly-capacity { display: block; }
+.source-drawer summary { display: block; cursor: pointer; touch-action: pan-y pinch-zoom; }
+.source-drawer summary::-webkit-details-marker { display: none; }
+.source-record { transform: translateY(18px); fill: var(--ink); font-family: var(--font-geist-mono), monospace; transition: transform 360ms cubic-bezier(.22,.81,.3,1); }
+.source-drawer details[open] .source-record { transform: translate(5px,-108px) rotate(-2deg); }
+.close-record, details[open] .open-record { display: none; }
+details[open] .close-record { display: inline; }
+.drawer-action { color: var(--ice); }
+.source-drawer summary:hover .drawer-action { text-decoration: underline; text-underline-offset: .25em; }
+.record-transcript { margin: 12px 3% 0; padding-left: 12px; border-left: 2px solid var(--copper); font-size: .875rem; line-height: 1.55; color: var(--muted); }
+.record-transcript b { color: var(--foreground); }
+.memory-feature { border-top: 1px solid var(--rule); }
+.proof-stage {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent), linear-gradient(transparent, #000 4%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+.meter-key { position: absolute; transform: translate(-50%, -50%); width: max(44px, 7%); height: max(44px, 11%); border-radius: 50%; cursor: pointer; touch-action: manipulation; }
+.short-key { left: 21.432%; top: 80.04%; }
+.weekly-key { left: 68.366%; top: 86.366%; }
+.meter-key:hover::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; box-shadow: 0 0 0 2px var(--ice); }
+.proof-screens { display: grid; align-items: start; gap: 22px 32px; margin-block: 26px; }
+.proof-screens .context-image { margin: 0; max-width: 760px; }
+@media (min-width: 830px) {
+  .proof-screens:has(.pinned-capture) { grid-template-columns: 1.5fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .meter-needle, .source-record { transition: none; }
+}

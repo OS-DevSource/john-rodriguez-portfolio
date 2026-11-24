@@ -4,7 +4,7 @@ import jobNote from "../../public/projects/job-note.webp";
 import phoneJobNote from "../../public/projects/job-note-phone.webp";
 
 import { getProjectBySlug, heroContent, portfolioSite } from "@/lib/portfolio";
-import { AllowanceVisual } from "./allowance-visual";
+import { CapacityMeter, SourceDrawer } from "./project-instruments";
 import { PrinterStage } from "./printer-stage";
 import { Credentials } from "./credentials";
 import { ContactForm } from "./contact-form";
@@ -93,7 +93,8 @@ function TicketPress() {
 export function PortfolioHome() {
   const workbench = getProjectBySlug("mk-workbench");
   const allowance = getProjectBySlug("allowance");
-  const supportingProjects = ["memorex", "insight"].map(getProjectBySlug);
+  const memorex = getProjectBySlug("memorex");
+  const insight = getProjectBySlug("insight");
 
   return (
     <div className="portfolio-shell" id="home">
@@ -152,7 +153,7 @@ export function PortfolioHome() {
           </article>
 
           <article className="allowance-feature">
-            <AllowanceVisual />
+            <CapacityMeter />
             <div>
               <p className="kicker">{allowance.category}</p>
               <h3>{allowance.title}</h3>
@@ -170,21 +171,33 @@ export function PortfolioHome() {
             </div>
           </article>
 
-          {supportingProjects.map((project) => (
-            <article className="project-row" key={project.slug}>
-              <Image
-                {...project.image}
-                alt={project.image.alt}
-                sizes="(min-width: 640px) 190px, 94px"
-              />
-              <div>
-                <p className="kicker">{project.category}</p>
-                <h3>{project.title}</h3>
-                <p className="body-copy">{project.tagline}</p>
-              </div>
-              <ProjectLink project={project} />
-            </article>
-          ))}
+          <article className="feature memory-feature">
+            <div>
+              <p className="kicker">{memorex.category}</p>
+              <h3>{memorex.title}</h3>
+              <p className="feature-line">{memorex.tagline}</p>
+              <p className="body-copy">
+                My next coding session starts with a short brief. Each decision
+                links back to the record that explains it.
+              </p>
+              <ProjectLink project={memorex} />
+            </div>
+            <SourceDrawer />
+          </article>
+
+          <article className="project-row">
+            <Image
+              {...insight.image}
+              alt={insight.image.alt}
+              sizes="(min-width: 640px) 190px, 94px"
+            />
+            <div>
+              <p className="kicker">{insight.category}</p>
+              <h3>{insight.title}</h3>
+              <p className="body-copy">{insight.tagline}</p>
+            </div>
+            <ProjectLink project={insight} />
+          </article>
         </section>
 
         <section

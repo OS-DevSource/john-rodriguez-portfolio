@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { AllowanceVisual } from "./allowance-visual";
+import { CapacityMeter, SourceDrawer } from "./project-instruments";
 import { Icon } from "./portfolio-ui";
 import { WorkbenchSample } from "./workbench-sample";
 
 export function ProjectCaseStudyPage({ project }) {
+  const hasInstrument = ["allowance", "memorex"].includes(project.slug);
   return (
     <div className="portfolio-shell">
       <a href="#main-content" className="skip-link">
@@ -37,7 +38,9 @@ export function ProjectCaseStudyPage({ project }) {
           {project.slug === "mk-workbench" ? (
             <WorkbenchSample />
           ) : project.slug === "allowance" ? (
-            <AllowanceVisual priority />
+            <CapacityMeter priority />
+          ) : project.slug === "memorex" ? (
+            <SourceDrawer priority />
           ) : (
             <figure className="case-image">
               <Image
@@ -46,11 +49,7 @@ export function ProjectCaseStudyPage({ project }) {
                 sizes="(min-width: 830px) 580px, 100vw"
                 priority
               />
-              <figcaption>
-                {project.slug === "memorex"
-                  ? "Project memory console with seeded events."
-                  : "Field sales queue with sample leads."}
-              </figcaption>
+              <figcaption>Field sales queue with sample leads.</figcaption>
             </figure>
           )}
         </section>
@@ -74,25 +73,45 @@ export function ProjectCaseStudyPage({ project }) {
           </dl>
         </section>
 
-        {project.contextImage && (
-          <figure className="context-image">
-            <a
-              href={project.contextImage.src}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open full desktop screenshot"
-            >
-              <Image
-                {...project.contextImage}
-                alt={project.contextImage.alt}
-                sizes="(min-width: 1200px) 1120px, 100vw"
-              />
-            </a>
-            <figcaption>
-              Desktop capture, September 2026. The pinned companion and the
-              account menu both show 53% remaining.
-            </figcaption>
-          </figure>
+        {hasInstrument && (
+          <section aria-labelledby="app-heading">
+            <h2 id="app-heading" className="section-rule">
+              In the app
+            </h2>
+            <div className="proof-screens">
+              <figure className="context-image">
+                <Image
+                  {...project.image}
+                  alt={project.image.alt}
+                  sizes="(min-width: 830px) 700px, 100vw"
+                />
+                <figcaption>
+                  {project.slug === "allowance"
+                    ? "Expanded and compact windows. Account readings are covered."
+                    : "The Memorex console with seeded project events."}
+                </figcaption>
+              </figure>
+              {project.contextImage && (
+                <figure className="context-image pinned-capture">
+                  <a
+                    href={project.contextImage.src}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Open cropped desktop screenshot"
+                  >
+                    <Image
+                      {...project.contextImage}
+                      alt={project.contextImage.alt}
+                      sizes="(min-width: 830px) 460px, 100vw"
+                    />
+                  </a>
+                  <figcaption>
+                    The compact window pinned on the desktop.
+                  </figcaption>
+                </figure>
+              )}
+            </div>
+          </section>
         )}
 
         <section aria-labelledby="build-heading">
