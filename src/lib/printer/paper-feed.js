@@ -28,13 +28,13 @@ const ACROSS = [358.05, 80.75];
 
 // Print the foot of the invoice first. The finished sheet reads upright from the slot.
 const lines = [
-  [81, 51, "INVOICE"],
-  [121, 30, "No. 014"],
-  [215, 42, "Sink trap"],
-  [264, 42, "repair"],
-  [347, 24, "PARTS"],
-  [399, 38, "1 × elbow"],
-  [510, 35, "REVIEWED"],
+  [76, 44, "INVOICE"],
+  [121, 26, "No. 014"],
+  [215, 36, "Sink trap"],
+  [264, 36, "repair"],
+  [347, 21, "PARTS"],
+  [399, 33, "1 × elbow"],
+  [510, 30, "REVIEWED"],
 ];
 const rules = [148, 295, 450, 532];
 
