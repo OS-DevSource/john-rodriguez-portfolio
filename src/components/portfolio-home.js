@@ -41,6 +41,7 @@ function TicketPress() {
 }
 
 export function PortfolioHome() {
+  const showContactForm = Boolean(process.env.FORMSPREE_FORM_ID?.trim());
   const workbench = getProjectBySlug("mk-workbench");
   const allowance = getProjectBySlug("allowance");
   const memorex = getProjectBySlug("memorex");
@@ -103,7 +104,6 @@ export function PortfolioHome() {
           </article>
 
           <article className="allowance-feature">
-            <CapacityMeter />
             <div>
               <p className="kicker">{allowance.category}</p>
               <h3>{allowance.title}</h3>
@@ -119,6 +119,7 @@ export function PortfolioHome() {
                 </a>
               </div>
             </div>
+            <CapacityMeter />
           </article>
 
           <article className="feature memory-feature">
@@ -208,13 +209,18 @@ export function PortfolioHome() {
                 I’m open to projects and roles in software, operations, and AI
                 evaluation.
               </p>
-              <a className="text-link" href={`mailto:${portfolioSite.email}`}>
+              <a
+                className={showContactForm ? "text-link" : "contact-action"}
+                href={`mailto:${portfolioSite.email}`}
+              >
                 {portfolioSite.email} <Icon name="arrow" className="h-4 w-4" />
               </a>
             </div>
-            <div>
-              <ContactForm />
-            </div>
+            {showContactForm && (
+              <div>
+                <ContactForm />
+              </div>
+            )}
           </div>
         </section>
       </main>

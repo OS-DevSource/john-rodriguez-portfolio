@@ -16,7 +16,7 @@ function jsonResponse(body, status) {
 }
 
 export async function POST(request) {
-  const formId = process.env.FORMSPREE_FORM_ID;
+  const formId = process.env.FORMSPREE_FORM_ID?.trim();
 
   if (!formId) {
     return jsonResponse(

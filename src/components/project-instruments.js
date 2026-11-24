@@ -81,11 +81,11 @@ export function CapacityMeter({ priority }) {
         <div className="meter-reading" aria-live="polite">
           <p id="short-capacity">
             <strong>34% left</strong>
-            <span>Resets at 4 pm</span>
+            <span>Resets at 4&nbsp;pm</span>
           </p>
           <p id="weekly-capacity">
             <strong>72% left</strong>
-            <span>Resets Friday at 9 am</span>
+            <span>Resets Friday at 9&nbsp;am</span>
           </p>
         </div>
       </figcaption>

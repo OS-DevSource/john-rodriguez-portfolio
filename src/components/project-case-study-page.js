@@ -5,6 +5,26 @@ import { CapacityMeter, SourceDrawer } from "./project-instruments";
 import { Icon } from "./portfolio-ui";
 import { WorkbenchSample } from "./workbench-sample";
 
+function ProofPhoto({ image, sizes, label, className, priority, children }) {
+  return (
+    <a
+      className="proof-photo"
+      href={image.src}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Open ${label} at full size in a new tab`}
+    >
+      <figure className={className}>
+        <Image {...image} alt={image.alt} sizes={sizes} priority={priority} />
+        <figcaption>
+          {children}
+          <span className="photo-link">View full size ↗</span>
+        </figcaption>
+      </figure>
+    </a>
+  );
+}
+
 export function ProjectCaseStudyPage({ project }) {
   const hasInstrument = ["allowance", "memorex"].includes(project.slug);
   return (
@@ -42,15 +62,15 @@ export function ProjectCaseStudyPage({ project }) {
           ) : project.slug === "memorex" ? (
             <SourceDrawer priority />
           ) : (
-            <figure className="case-image">
-              <Image
-                {...project.image}
-                alt={project.image.alt}
-                sizes="(min-width: 830px) 580px, 100vw"
-                priority
-              />
-              <figcaption>Field sales queue with sample leads.</figcaption>
-            </figure>
+            <ProofPhoto
+              image={project.image}
+              label="Insight sales queue"
+              className="case-image"
+              sizes="(min-width: 830px) 580px, 100vw"
+              priority
+            >
+              Field sales queue with sample leads.
+            </ProofPhoto>
           )}
         </section>
         <section aria-labelledby="workflow-heading">
@@ -79,36 +99,25 @@ export function ProjectCaseStudyPage({ project }) {
               In the app
             </h2>
             <div className="proof-screens">
-              <figure className="context-image">
-                <Image
-                  {...project.image}
-                  alt={project.image.alt}
-                  sizes="(min-width: 830px) 700px, 100vw"
-                />
-                <figcaption>
-                  {project.slug === "allowance"
-                    ? "Expanded and compact windows. Account readings are covered."
-                    : "The Memorex console with seeded project events."}
-                </figcaption>
-              </figure>
+              <ProofPhoto
+                image={project.image}
+                label={`${project.title} app screenshot`}
+                className="context-image"
+                sizes="(min-width: 830px) 700px, 100vw"
+              >
+                {project.slug === "allowance"
+                  ? "Expanded and compact windows. Account readings are covered."
+                  : "The Memorex console with seeded project events."}
+              </ProofPhoto>
               {project.contextImage && (
-                <figure className="context-image pinned-capture">
-                  <a
-                    href={project.contextImage.src}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Open cropped desktop screenshot"
-                  >
-                    <Image
-                      {...project.contextImage}
-                      alt={project.contextImage.alt}
-                      sizes="(min-width: 830px) 460px, 100vw"
-                    />
-                  </a>
-                  <figcaption>
-                    The compact window pinned on the desktop.
-                  </figcaption>
-                </figure>
+                <ProofPhoto
+                  image={project.contextImage}
+                  label="pinned Allowance window"
+                  className="context-image pinned-capture"
+                  sizes="(min-width: 830px) 460px, 100vw"
+                >
+                  The compact window pinned on the desktop.
+                </ProofPhoto>
               )}
             </div>
           </section>

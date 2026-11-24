@@ -13,10 +13,9 @@ export default async function ProjectTwitterImage({ params }) {
   const project = getProjectBySlug(slug);
 
   return renderSocialImage({
-    eyebrow: "Project proof",
+    eyebrow: "Case study",
     title: project?.title || portfolioSite.name,
     body: project?.summary || portfolioSite.description,
-    accent: "#fdba74",
-    footer: "AI evaluation, software, and operations",
+    footer: project?.statusLabel || "Case study",
   });
 }

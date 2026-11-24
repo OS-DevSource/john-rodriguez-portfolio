@@ -14,7 +14,6 @@ export default function TwitterImage() {
     eyebrow: "Portfolio",
     title: heroContent.headline,
     body: heroContent.summary,
-    accent: "#fdba74",
     footer: "AI evaluation, software, and operations",
   });
 }

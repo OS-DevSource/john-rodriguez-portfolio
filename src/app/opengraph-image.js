@@ -14,7 +14,6 @@ export default function OpenGraphImage() {
     eyebrow: "Portfolio",
     title: heroContent.headline,
     body: heroContent.summary,
-    accent: "#7dd3fc",
     footer: "AI evaluation, software, and operations",
   });
 }

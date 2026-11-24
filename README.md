@@ -1,5 +1,5 @@
 # john-rodriguez-portfolio
-Personal portfolio website for John Rodriguez. Built with a neon dark UI, showcasing projects, skills, and contact info. Deployed via Vercel.
+John Rodriguez’s portfolio includes four software case studies, interactive project samples, and a direct email contact. Set `FORMSPREE_FORM_ID` before building to also show the contact form.
 
 ## Browser Investigation Workflow
 

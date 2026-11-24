@@ -9,7 +9,7 @@ export const socialImageSize = {
 
 export const socialImageContentType = "image/png";
 
-export function renderSocialImage({ eyebrow, title, body, accent, footer }) {
+export function renderSocialImage({ eyebrow, title, body, footer }) {
   return new ImageResponse(
     (
       <div
@@ -19,8 +19,8 @@ export function renderSocialImage({ eyebrow, title, body, accent, footer }) {
           height: "100%",
           padding: "48px",
           background:
-            "radial-gradient(circle at 14% 18%, rgba(56, 189, 248, 0.28), rgba(56, 189, 248, 0) 42%), radial-gradient(circle at 84% 20%, rgba(249, 115, 22, 0.18), rgba(249, 115, 22, 0) 38%), linear-gradient(180deg, #020617 0%, #000000 100%)",
-          color: "#f8fafc",
+            "linear-gradient(138deg, #18363b 0%, #0a1317 72%)",
+          color: "#eff6f5",
           fontFamily: "sans-serif",
         }}
       >
@@ -28,11 +28,9 @@ export function renderSocialImage({ eyebrow, title, body, accent, footer }) {
           style={{
             display: "flex",
             flex: 1,
-            border: "1px solid rgba(255, 255, 255, 0.12)",
-            borderRadius: "36px",
+            border: "1px solid #344b50",
+            borderRadius: "6px",
             padding: "40px",
-            background: "rgba(255, 255, 255, 0.03)",
-            boxShadow: "0 24px 80px rgba(2, 6, 23, 0.45)",
           }}
         >
           <div
@@ -59,16 +57,14 @@ export function renderSocialImage({ eyebrow, title, body, accent, footer }) {
                   fontSize: "18px",
                   textTransform: "uppercase",
                   letterSpacing: "0.24em",
-                  color: accent || "#bae6fd",
+                  color: "#b0e9fa",
                 }}
               >
                 <div
                   style={{
-                    width: "12px",
-                    height: "12px",
-                    borderRadius: "999px",
-                    background: accent || "#38bdf8",
-                    boxShadow: `0 0 24px ${accent || "rgba(56, 189, 248, 0.9)"}`,
+                    width: "24px",
+                    height: "3px",
+                    background: "#e7a677",
                   }}
                 />
                 <span>{eyebrow}</span>
@@ -94,7 +90,7 @@ export function renderSocialImage({ eyebrow, title, body, accent, footer }) {
                   style={{
                     fontSize: "26px",
                     lineHeight: 1.45,
-                    color: "rgba(248, 250, 252, 0.8)",
+                    color: "#d4e2e4",
                   }}
                 >
                   {body}
@@ -107,7 +103,7 @@ export function renderSocialImage({ eyebrow, title, body, accent, footer }) {
                 justifyContent: "space-between",
                 alignItems: "center",
                 fontSize: "18px",
-                color: "rgba(248, 250, 252, 0.64)",
+                color: "#b4c8cc",
               }}
             >
               <div style={{ display: "flex", gap: "14px", alignItems: "center" }}>

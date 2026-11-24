@@ -28,8 +28,8 @@ export function Credentials() {
                 className="h-10 w-14 flex-none rounded border border-white/10 object-contain"
               />
               <span className="min-w-0 flex-1">
-                <span className="block text-[10px] font-normal uppercase leading-5 tracking-[0.18em] text-orange-200/70 sm:text-[11px]">{credential.title}</span>
-                <span className="mt-1 block text-sm font-normal leading-6 text-white/72">{credential.issuer} · {credential.date}</span>
+                <span className="block credential-title">{credential.title}</span>
+                <span className="mt-1 block text-xs leading-5 text-white/72">{credential.issuer} · {credential.date}</span>
               </span>
               <Icon name="arrow" className="h-4 w-4 flex-none rotate-90 text-emerald-200 transition-transform group-open:-rotate-90 motion-reduce:transition-none" />
             </summary>
@@ -49,7 +49,7 @@ export function Credentials() {
                 />
               </a>
               <div className="p-5 sm:p-7 md:p-8">
-                <h4 className="text-[10px] font-normal uppercase leading-5 tracking-[0.18em] text-orange-200/70 sm:text-[11px]">{credential.title}</h4>
+                <h4 className="credential-title">{credential.title}</h4>
                 {credential.description ? <p className="mt-3 text-sm font-normal leading-6 text-white/72">{credential.description}</p> : null}
                 <p className="mt-4 text-sm font-normal leading-6 text-white/72">Issued by {credential.issuer}<br />{credential.date}</p>
                 <div className="mt-5 flex flex-wrap gap-3">
