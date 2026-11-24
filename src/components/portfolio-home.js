@@ -73,15 +73,19 @@ export function PortfolioHome() {
               John <span>Rodriguez</span>
             </h1>
             <p className="hero-line">{heroContent.summary}</p>
-            <a className="contact-action" href="#contact">
-              Get in touch <Icon name="arrow" className="h-4 w-4" />
-            </a>
+            <div className="hero-actions">
+              <a className="contact-action" href="#projects">
+                See my work <Icon name="arrow" className="h-4 w-4" />
+              </a>
+              <a className="quiet-link" href="#contact">Contact</a>
+            </div>
           </div>
           <TicketPress />
         </section>
 
         <section
           id="projects"
+          tabIndex={-1}
           className="frame work"
           aria-labelledby="work-title"
         >

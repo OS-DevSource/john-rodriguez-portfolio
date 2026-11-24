@@ -87,7 +87,7 @@ export function ProjectCaseStudyPage({ project }) {
               <dd>{project.solution}</dd>
             </div>
             <div>
-              <dt>In use</dt>
+              <dt>{project.outcomeLabel || "In use"}</dt>
               <dd>{project.outcome}</dd>
             </div>
           </dl>
