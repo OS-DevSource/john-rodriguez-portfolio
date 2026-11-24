@@ -93,7 +93,7 @@ export const portfolioProjects = [
     problem: "A photo from the job and a note from the plumber can arrive separately. The person billing the job needs to know which customer, work, and parts they belong to.",
     solution: "The app reads the source material and suggests invoice details. A person checks the draft against the original, fixes anything missing, then approves it for the invoice.",
     outcomeLabel: "The result",
-    outcome: "Approved job details carry through to the invoice PDF.",
+    outcome: "A plumbing business uses MK Workbench to review jobs and prepare invoices.",
     role: "I designed and built the application, from the mobile intake screen to permissions, PDF generation, and tests.",
     validation: [
       "A reviewer must approve extracted details before they become invoice records.",
