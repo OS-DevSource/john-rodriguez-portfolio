@@ -32,12 +32,12 @@ export function CapacityMeter({ priority }) {
           {/* Orthographic face projection from the modeled dial. */}
           <g transform="matrix(1.61841 .13959 0 1.65349 448.386 447.798)">
             <g className="meter-needle">
-              <path fill="#783f27" d="M-4 10 -1.6 -128 1.6 -128 4 10Z" />
-              <path fill="#c35d32" d="M-2 10 -.5 -128 1 -128 1 10Z" />
+              <path fill="#3787a6" d="M-4 10 -1.6 -128 1.6 -128 4 10Z" />
+              <path fill="#b5f1ff" d="M-2 10 -.5 -128 1 -128 1 10Z" />
             </g>
-            <circle r="8" fill="#75523a" />
-            <circle r="5.4" fill="#cd9871" />
-            <circle r="2.2" fill="#345053" />
+            <circle r="8" fill="#384e60" />
+            <circle r="5.4" fill="#c8dbe6" />
+            <circle r="2.2" fill="#234054" />
           </g>
         </svg>
         <label
@@ -111,16 +111,16 @@ export function SourceDrawer({ priority }) {
                     width="344"
                     height="175"
                     rx="4"
-                    fill="#f3ecda"
-                    stroke="#a89c83"
+                    fill="#e4ebf1"
+                    stroke="#8a99a8"
                     strokeWidth="1.5"
                   />
                   <path
                     d="M0 40H344 M0 82H344 M0 110H344 M0 138H344"
-                    stroke="#b1c2b9"
+                    stroke="#a6bac9"
                     strokeWidth="1.1"
                   />
-                  <path d="M17 0V175" stroke="#c38d79" />
+                  <path d="M17 0V175" stroke="#7195b4" />
                   <text
                     x="31"
                     y="28"

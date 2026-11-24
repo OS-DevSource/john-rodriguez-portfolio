@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import jobNote from "../../public/projects/job-note.webp";
-import phoneJobNote from "../../public/projects/job-note-phone.webp";
+import printer from "../../public/projects/ticket-printer.webp";
+import phonePrinter from "../../public/projects/ticket-printer-small.webp";
 
 import { getProjectBySlug, heroContent, portfolioSite } from "@/lib/portfolio";
 import { CapacityMeter, SourceDrawer } from "./project-instruments";
@@ -26,66 +26,16 @@ function ProjectLink({ project }) {
 function TicketPress() {
   return (
     <PrinterStage>
-      <div className="press-stage">
-        <picture>
-          <source media="(max-width: 599px)" srcSet={phoneJobNote.src} />
-          <Image
-            src={jobNote}
-            alt="A miniature teal ticket printer holds a plumbing job note beside a copper elbow fitting."
-            unoptimized
-            loading="eager"
-            fetchPriority="high"
-          />
-        </picture>
-        <canvas
-          className="printer-orbit"
-          tabIndex={-1}
-          aria-hidden="true"
-          role="slider"
-          aria-label="Turn the ticket printer"
-          aria-describedby="printer-keyboard"
-          aria-valuemin={-32}
-          aria-valuemax={32}
-          aria-valuenow={0}
+      <picture>
+        <source media="(max-width: 599px)" srcSet={phonePrinter.src} />
+        <Image
+          src={printer}
+          alt="A thermal ticket printer with an orange print key, next to a plumbing job note and an elbow fitting."
+          unoptimized
+          loading="eager"
+          fetchPriority="high"
         />
-        <details className="press-control">
-          <summary aria-describedby="printer-instructions">
-            <span className="press-idle sr-only">Review sample ticket</span>
-            <span className="press-done sr-only">Return to job note</span>
-          </summary>
-          <div
-            className="reviewed-press"
-            role="img"
-            aria-label="The reviewed ticket now reads Invoice. The sample repair has been checked."
-          />
-        </details>
-      </div>
-      <figcaption className="instrument-caption">
-        <span className="instrument-label">
-          <span className="ticket-review">Sample ticket</span>
-          <span className="ticket-return">Sample invoice</span>{" "}
-          <span className="ticket-number">/ 014</span>
-        </span>
-        <span id="printer-instructions">
-          <span className="orbit-instruction">Drag to turn · </span>
-          <span className="ticket-review">Press</span>
-          <span className="ticket-return">Reset</span>{" "}
-          <span className="caption-key" aria-hidden="true">
-            ✓
-          </span>
-          <span className="sr-only">
-            {" "}
-            by pressing the orange key on the printer
-          </span>
-        </span>
-      </figcaption>
-      <span id="printer-keyboard" className="sr-only">
-        Use the arrow keys to turn, Home to reset, and Enter to press the review
-        key.
-      </span>
-      <span className="sr-only">
-        The ticket uses invented plumbing job details.
-      </span>
+      </picture>
     </PrinterStage>
   );
 }
