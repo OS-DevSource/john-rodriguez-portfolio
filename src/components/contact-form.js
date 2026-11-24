@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 import { buildMailtoLink, portfolioSite } from "@/lib/portfolio";
 
-import { Button, Icon, TOKENS, cx } from "./portfolio-ui";
+import { Button, Icon, cx } from "./portfolio-ui";
 
 const FORM_STATUS = {
   idle: "idle",
@@ -23,7 +23,7 @@ const fieldClassName =
   "h-12 w-full rounded-xl border border-white/15 bg-black/40 px-4 text-sm text-white placeholder:text-white/45 outline-none transition focus:border-sky-300 focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-not-allowed disabled:opacity-70";
 
 const labelClassName = "text-sm font-semibold text-white";
-const helperClassName = "text-xs leading-5 text-white/70";
+
 
 export function ContactForm() {
   const formRef = useRef(null);
@@ -77,12 +77,13 @@ export function ContactForm() {
 
   return (
     <>
-      <h3 className="text-base font-bold text-white">Message</h3>
-      <p className={cx(TOKENS.muted, "mt-2")}>
-        For job opportunities and project inquiries.
-      </p>
+      <h3 className="text-base font-bold text-white">Send a note</h3>
+      <noscript><style>{".contact-layout form { display: none; }"}</style>
+        <p className="mt-2 text-sm">Email John directly using the address in this section.</p>
+      </noscript>
 
       <form
+        method="post"
         ref={formRef}
         className="mt-5 grid gap-3.5 sm:mt-6 sm:gap-4"
         onSubmit={handleSubmit}
@@ -99,12 +100,9 @@ export function ContactForm() {
               name="name"
               autoComplete="name"
               placeholder="Your name"
-              aria-describedby="contact-name-help contact-form-status"
+              aria-describedby="contact-form-status"
               className={fieldClassName}
             />
-            <p id="contact-name-help" className={helperClassName}>
-              Preferred reply name.
-            </p>
           </div>
 
           <div className="grid gap-1.5">
@@ -118,12 +116,9 @@ export function ContactForm() {
               name="email"
               autoComplete="email"
               placeholder="you@example.com"
-              aria-describedby="contact-email-help contact-form-status"
+              aria-describedby="contact-form-status"
               className={fieldClassName}
             />
-            <p id="contact-email-help" className={helperClassName}>
-              Used only for follow-up.
-            </p>
           </div>
         </div>
 
@@ -135,13 +130,10 @@ export function ContactForm() {
             id="contact-company"
             name="company"
             autoComplete="organization"
-            placeholder="Company or team, if relevant"
-            aria-describedby="contact-company-help contact-form-status"
+            placeholder="Company or team (optional)"
+            aria-describedby="contact-form-status"
             className={fieldClassName}
           />
-          <p id="contact-company-help" className={helperClassName}>
-            Optional context for team or project scope.
-          </p>
         </div>
 
         <div aria-hidden="true" className="hidden">
@@ -158,15 +150,12 @@ export function ContactForm() {
             name="message"
             placeholder="What are you trying to build or fix?"
             rows={5}
-            aria-describedby="contact-message-help contact-form-status"
+            aria-describedby="contact-form-status"
             className={cx(
               fieldClassName,
               "min-h-[140px] py-3 leading-6 sm:min-h-[152px]"
             )}
           />
-          <p id="contact-message-help" className={helperClassName}>
-            Tell me about the role or project and your timeline.
-          </p>
         </div>
 
         <div className="mt-0.5 flex flex-col gap-2.5 sm:mt-1 sm:flex-row sm:items-center sm:gap-3">
