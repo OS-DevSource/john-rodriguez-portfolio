@@ -1,7 +1,7 @@
 """Blender background export of the approved scene, without rendering any frames.
-Usage: Blender -b -t 1 --python export-mesh.py -- printer.py public/projects/printer.mesh
+Usage: Blender -b -t 1 --python scripts/export-printer-mesh.py -- printer.py public/projects/printer.mesh.gz
 """
-import math
+import gzip
 from pathlib import Path
 import struct
 import sys
@@ -38,5 +38,6 @@ for obj in bpy.context.scene.objects:
     evaluated.to_mesh_clear()
 assert len(lookup) < 65536
 header = struct.pack("<4sII", b"JRP1", len(lookup), len(indices))
-Path(output_name).write_bytes(header + vertices + struct.pack(f"<{len(indices)}H", *indices))
+payload = header + vertices + struct.pack(f"<{len(indices)}H", *indices)
+Path(output_name).write_bytes(gzip.compress(payload, mtime=0))
 print(f"Exported {len(lookup)} vertices and {len(indices)//3} triangles to {output_name}")

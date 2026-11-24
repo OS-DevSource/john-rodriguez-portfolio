@@ -4,6 +4,9 @@ const REST_ELEVATION = 0.6644223;
 const TARGET = [-0.42, -0.03, 0.58];
 const KEY = [1.47, -0.4, 1.407];
 const STRIDE = 14;
+const LIGHTING_ANGLE = Math.PI / 5;
+const DEPTH_WIDTH = 640;
+const DEPTH_HEIGHT = Math.round((DEPTH_WIDTH * 5) / 7);
 
 function camera(yaw, pitch) {
   const a = REST_AZIMUTH + yaw;
@@ -37,12 +40,14 @@ layout(location=0) in vec3 position;
 layout(location=1) in vec3 normal;
 layout(location=2) in vec3 material;
 layout(location=3) in float key;
-uniform mat4 camera, rest;
+uniform mat4 camera, rest, leftCamera, rightCamera;
 uniform float travel;
-out vec3 reference, surface, paint;
+out vec3 reference, leftRef, rightRef, surface, paint;
 void main() {
   vec3 p = position / 4096.0;
   reference = (rest * vec4(p, 1)).xyz * 0.5 + 0.5;
+  leftRef = (leftCamera * vec4(p, 1)).xyz * 0.5 + 0.5;
+  rightRef = (rightCamera * vec4(p, 1)).xyz * 0.5 + 0.5;
   p.z -= key * travel;
   gl_Position = camera * vec4(p, 1);
   surface = normal;
@@ -51,17 +56,35 @@ void main() {
 
 const fragmentSource = `#version 300 es
 precision highp float;
-uniform sampler2D artwork, depthMap;
-in vec3 reference, surface, paint;
+uniform sampler2D artwork, depthMap, turnArtwork;
+uniform bool hasTurnArtwork;
+uniform mat4 rest, leftCamera, rightCamera;
+in vec3 reference, leftRef, rightRef, surface, paint;
 out vec4 color;
+
+float confidence(vec3 ref, float view, mat4 projection, vec3 n, float alpha) {
+  vec2 uv = clamp(ref.xy, vec2(0.0009), vec2(0.9991));
+  float stored = texture(depthMap, vec2((view + uv.x) / 3.0, uv.y)).r;
+  vec3 eye = -normalize(vec3(projection[0].z, projection[1].z, projection[2].z));
+  float facing = smoothstep(0.045, 0.24, abs(dot(eye, n)));
+  return facing * (1.0 - smoothstep(0.0012, 0.0035, ref.z - stored)) * smoothstep(0.64, 0.97, alpha);
+}
+
 void main() {
   vec3 n = normalize(surface);
   float diffuse = max(dot(n, normalize(vec3(-0.4,-0.45,0.82))), 0.0);
   vec3 exposed = paint * (0.48 + 0.40 * diffuse);
   vec4 ink = texture(artwork, reference.xy);
-  float gap = reference.z - texture(depthMap, reference.xy).r;
-  float visibility = (1.0 - smoothstep(0.0015, 0.004, gap)) * smoothstep(0.64, 0.97, ink.a);
-  color = vec4(mix(exposed, ink.rgb, visibility), 1.0);
+  float front = confidence(reference, 0.0, rest, n, ink.a);
+  if (hasTurnArtwork && front < 0.999) {
+    vec4 l = texture(turnArtwork, vec2(leftRef.x * 0.5, leftRef.y));
+    vec4 r = texture(turnArtwork, vec2(0.5 + rightRef.x * 0.5, rightRef.y));
+    float wl = confidence(leftRef, 1.0, leftCamera, n, l.a);
+    float wr = confidence(rightRef, 2.0, rightCamera, n, r.a);
+    vec3 lit = (l.rgb * wl + r.rgb * wr) / max(wl + wr, 0.001);
+    exposed = mix(exposed, lit, max(wl, wr));
+  }
+  color = vec4(mix(exposed, ink.rgb, front), 1.0);
 }`;
 
 function makeProgram(gl, fragment) {
@@ -107,10 +130,12 @@ export async function createPrinter(canvas, poster, signal) {
   signal.addEventListener("abort", cleanup, { once: true });
 
   try {
-    const response = await fetch("/projects/printer.mesh", { signal });
+    const response = await fetch("/projects/printer.mesh.gz", { signal });
     if (!response.ok) throw new Error("Printer geometry unavailable");
     const [bytes] = await Promise.all([
-      response.arrayBuffer(),
+      new Response(
+        response.body.pipeThrough(new DecompressionStream("gzip")),
+      ).arrayBuffer(),
       poster.decode(),
     ]);
     signal.throwIfAborted();
@@ -147,11 +172,20 @@ export async function createPrinter(canvas, poster, signal) {
     const program = makeProgram(gl, fragmentSource);
     dispose.push(() => gl.deleteProgram(program));
     const rest = camera(0, 0);
+    const left = camera(-LIGHTING_ANGLE, 0);
+    const right = camera(LIGHTING_ANGLE, 0);
     const uniforms = Object.fromEntries(
-      ["camera", "rest", "travel", "artwork", "depthMap"].map((key) => [
-        key,
-        gl.getUniformLocation(program, key),
-      ]),
+      [
+        "camera",
+        "rest",
+        "leftCamera",
+        "rightCamera",
+        "travel",
+        "artwork",
+        "depthMap",
+        "turnArtwork",
+        "hasTurnArtwork",
+      ].map((key) => [key, gl.getUniformLocation(program, key)]),
     );
     const texture = (filter) => {
       const tex = gl.createTexture();
@@ -163,8 +197,8 @@ export async function createPrinter(canvas, poster, signal) {
       dispose.push(() => gl.deleteTexture(tex));
       return tex;
     };
-    const paint = (image) => {
-      gl.activeTexture(gl.TEXTURE0);
+    const paint = (image, unit = gl.TEXTURE0) => {
+      gl.activeTexture(unit);
       const tex = texture(gl.LINEAR);
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
       gl.texImage2D(
@@ -186,8 +220,8 @@ export async function createPrinter(canvas, poster, signal) {
       gl.TEXTURE_2D,
       0,
       gl.DEPTH_COMPONENT16,
-      700,
-      500,
+      DEPTH_WIDTH * 3,
+      DEPTH_HEIGHT,
       0,
       gl.DEPTH_COMPONENT,
       gl.UNSIGNED_SHORT,
@@ -212,25 +246,39 @@ export async function createPrinter(canvas, poster, signal) {
       "#version 300 es\nprecision mediump float; void main() {}",
     );
     gl.useProgram(depthProgram);
-    gl.uniformMatrix4fv(
-      gl.getUniformLocation(depthProgram, "camera"),
-      false,
-      rest,
-    );
     gl.enable(gl.DEPTH_TEST);
-    gl.viewport(0, 0, 700, 500);
     gl.clear(gl.DEPTH_BUFFER_BIT);
-    gl.drawElements(gl.TRIANGLES, count, gl.UNSIGNED_SHORT, 0);
+    const depthCamera = gl.getUniformLocation(depthProgram, "camera");
+    [rest, left, right].forEach((view, index) => {
+      gl.viewport(index * DEPTH_WIDTH, 0, DEPTH_WIDTH, DEPTH_HEIGHT);
+      gl.uniformMatrix4fv(depthCamera, false, view);
+      gl.drawElements(gl.TRIANGLES, count, gl.UNSIGNED_SHORT, 0);
+    });
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.deleteFramebuffer(fbo);
     gl.deleteProgram(depthProgram);
 
     gl.useProgram(program);
     gl.uniformMatrix4fv(uniforms.rest, false, rest);
+    gl.uniformMatrix4fv(uniforms.leftCamera, false, left);
+    gl.uniformMatrix4fv(uniforms.rightCamera, false, right);
     gl.uniform1i(uniforms.artwork, 0);
+    gl.uniform1i(uniforms.turnArtwork, 2);
+    gl.activeTexture(gl.TEXTURE2);
+    gl.bindTexture(gl.TEXTURE_2D, job);
     gl.uniform1i(uniforms.depthMap, 1);
-    let invoice, invoicePromise;
+    let invoice, invoicePromise, lightingPromise;
     return {
+      prepareLighting() {
+        lightingPromise ??= loadImage("/projects/printer-sides.webp").then(
+          (image) => {
+            signal.throwIfAborted();
+            paint(image, gl.TEXTURE2);
+            gl.uniform1i(uniforms.hasTurnArtwork, 1);
+          },
+        );
+        return lightingPromise;
+      },
       prepareInvoice() {
         invoicePromise ??= loadImage("/projects/reviewed-invoice.webp").then(
           (image) => {

@@ -137,7 +137,7 @@ a {
 .ticket-press[data-ready] .press-stage { touch-action: pan-y pinch-zoom; cursor: grab; }
 .ticket-press[data-ready] .printer-orbit { pointer-events: auto; }
 .ticket-press[data-dragging] .press-stage { cursor: grabbing; }
-.ticket-press[data-turned] .printer-orbit { opacity: 1; }
+.ticket-press[data-turned] .printer-orbit { opacity: 1; filter: drop-shadow(1px 4px 4px #01060878); }
 .ticket-press[data-turned] .press-stage::before {
   content: ""; position: absolute; inset: 45% 6% 12% 10%;
   background: radial-gradient(ellipse, #02070785, transparent 69%); z-index: -1;
@@ -150,7 +150,7 @@ a {
   cursor: pointer; list-style: none; touch-action: pan-y pinch-zoom;
 }
 .press-control summary::-webkit-details-marker { display: none; }
-.press-control summary:hover, .press-control summary:focus-visible { outline: 1px solid var(--copper); outline-offset: 1px; }
+.press-control summary:focus-visible { outline: 1px solid var(--copper); outline-offset: 1px; }
 .press-done, .press-control[open] .press-idle, .orbit-instruction { display: none; }
 .press-control[open] .press-done, .ticket-press[data-ready] .orbit-instruction { display: inline; }
 .reviewed-press { position: absolute; inset: 0; pointer-events: none; background: center / cover; }
@@ -162,7 +162,8 @@ a {
 }
 .instrument-caption { justify-content: space-between; padding: 12px 0 0; margin-inline: 3%; border-top: 1px solid var(--rule); }
 .instrument-label, .sample-top span:first-child { color: var(--foreground); font-weight: 600; }
-.ticket-number { color: var(--copper); }
+.instrument-caption .ticket-number, .sample-top .ticket-number { color: var(--copper); }
+.caption-key { display: inline-grid; place-items: center; vertical-align: middle; width: 1.4em; height: 1.18em; border-radius: 3px; background: var(--copper); box-shadow: inset 0 1px 0 #ffe0bf, 0 1px 0 #8d5d3c; color: #263437; font-weight: 780; }
 .ticket-return, .ticket-press:has(details[open]) .ticket-review { display: none; }
 .ticket-press:has(details[open]) .ticket-return { display: inline; }
 .section-rule { display: flex; align-items: center; gap: 18px; color: var(--ice); font-size: 12px; font-weight: 550; text-transform: uppercase; letter-spacing: .16em; }

@@ -67,6 +67,14 @@ export function PrinterStage({ children }) {
       stage.style.removeProperty("--key-y");
       if (document.activeElement === canvas) key.focus({ preventScroll: true });
     }
+    function prepareLighting() {
+      renderer
+        ?.prepareLighting()
+        .then(schedule)
+        .catch(() => {
+          // The material colors still cover exposed edges when extra lighting is unavailable.
+        });
+    }
     function start() {
       if (starting || signal.aborted) return;
       starting = true;
@@ -107,11 +115,14 @@ export function PrinterStage({ children }) {
       controller.abort();
     });
     on(document, "visibilitychange", schedule);
+    on(stage, "pointerenter", prepareLighting);
+    on(canvas, "focus", prepareLighting);
     on(stage, "pointerdown", (event) => {
       if (!event.isPrimary || event.button !== 0) return;
       movedKey = false;
       start();
       if (!renderer) return;
+      prepareLighting();
       drag = {
         id: event.pointerId,
         x: event.clientX,

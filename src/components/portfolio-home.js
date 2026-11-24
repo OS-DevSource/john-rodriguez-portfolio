@@ -62,15 +62,27 @@ function TicketPress() {
       </div>
       <figcaption className="instrument-caption">
         <span className="instrument-label">
-          Sample ticket <span className="ticket-number">/ 014</span>
+          <span className="ticket-review">Sample ticket</span>
+          <span className="ticket-return">Sample invoice</span>{" "}
+          <span className="ticket-number">/ 014</span>
         </span>
         <span id="printer-instructions">
           <span className="orbit-instruction">Drag to turn · </span>
-          <span className="ticket-review">Press the orange key to review</span>
-          <span className="ticket-return">Press the key to start again</span>
+          <span className="ticket-review">Press</span>
+          <span className="ticket-return">Reset</span>{" "}
+          <span className="caption-key" aria-hidden="true">
+            ✓
+          </span>
+          <span className="sr-only">
+            {" "}
+            by pressing the orange key on the printer
+          </span>
         </span>
       </figcaption>
-      <span id="printer-keyboard" className="sr-only">Use the arrow keys to turn, Home to reset, and Enter to press the review key.</span>
+      <span id="printer-keyboard" className="sr-only">
+        Use the arrow keys to turn, Home to reset, and Enter to press the review
+        key.
+      </span>
       <span className="sr-only">
         The ticket uses invented plumbing job details.
       </span>
