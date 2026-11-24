@@ -24,7 +24,6 @@ const fieldClassName =
 
 const labelClassName = "text-sm font-semibold text-white";
 
-
 export function ContactForm() {
   const formRef = useRef(null);
   const [status, setStatus] = useState(FORM_STATUS.idle);
@@ -78,7 +77,8 @@ export function ContactForm() {
   return (
     <>
       <h3 className="text-base font-bold text-white">Send a note</h3>
-      <noscript><style>{".contact-layout form { display: none; }"}</style>
+      <noscript>
+        <style>{".contact-layout form { display: none; }"}</style>
         <p className="mt-2 text-sm">Email John directly using the address in this section.</p>
       </noscript>
 

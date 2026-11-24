@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import jobNote from "../../public/projects/job-note.webp";
+import phoneJobNote from "../../public/projects/job-note-phone.webp";
 
 import { getProjectBySlug, heroContent, portfolioSite } from "@/lib/portfolio";
 import { AllowanceVisual } from "./allowance-visual";
@@ -25,13 +26,16 @@ function TicketPress() {
   return (
     <figure className="ticket-press">
       <div className="press-stage">
-        <Image
-          src={jobNote}
-          alt="A miniature teal ticket printer holds a plumbing job note beside a copper elbow fitting."
-          sizes="(min-width: 1200px) 620px, (min-width: 830px) 52vw, (min-width: 600px) 520px, 100vw"
-          loading="eager"
-          fetchPriority="high"
-        />
+        <picture>
+          <source media="(max-width: 599px)" srcSet={phoneJobNote.src} />
+          <Image
+            src={jobNote}
+            alt="A miniature teal ticket printer holds a plumbing job note beside a copper elbow fitting."
+            unoptimized
+            loading="eager"
+            fetchPriority="high"
+          />
+        </picture>
         <details className="press-control">
           <summary>
             <span className="press-idle">Review sample ticket</span>
