@@ -21,20 +21,22 @@ const GUIDE = [
   [572, 284.75, 690.14],
 ];
 const WIDTH = 320;
+const SIDE_MARGIN = 34;
+const PRINT_WIDTH = WIDTH - 2 * SIDE_MARGIN;
 export const LENGTH = GUIDE.at(-1)[0];
 const ACROSS = [358.05, 80.75];
 
 // Print the foot of the invoice first. The finished sheet reads upright from the slot.
 const lines = [
-  [73, 56, "INVOICE"],
-  [117, 33, "No. 014"],
-  [216, 46, "Sink trap"],
-  [268, 46, "repair"],
-  [350, 26, "PARTS"],
-  [406, 42, "1 × elbow"],
-  [525, 38, "REVIEWED"],
+  [81, 51, "INVOICE"],
+  [121, 30, "No. 014"],
+  [215, 42, "Sink trap"],
+  [264, 42, "repair"],
+  [347, 24, "PARTS"],
+  [399, 38, "1 × elbow"],
+  [510, 35, "REVIEWED"],
 ];
-const rules = [144, 297, 461, 546];
+const rules = [148, 295, 450, 532];
 
 export function createFeed(canvas) {
   const context = canvas.getContext("2d");
@@ -74,10 +76,10 @@ export function createFeed(canvas) {
     for (const [y, size, text] of lines) {
       if (y + size * 0.25 < top || y - size > bottom) continue;
       head.font = `bold ${size}px ${text === "INVOICE" ? "Arial, sans-serif" : "monospace"}`;
-      head.fillText(text, 22, y, WIDTH - 44);
+      head.fillText(text, SIDE_MARGIN, y, PRINT_WIDTH);
     }
     for (const y of rules) {
-      if (y + 2 >= top && y <= bottom) head.fillRect(22, y, WIDTH - 44, 2);
+      if (y + 2 >= top && y <= bottom) head.fillRect(SIDE_MARGIN, y, PRINT_WIDTH, 2);
     }
     head.restore();
     printed = next;
